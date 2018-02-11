@@ -75,9 +75,10 @@
 				out.println(request.getParameter("password"));
 			}
 		%>
+		<div id="alert"></div>
 		<div class="well">
 			<form class="form-horizontal" name="loginform" method="POST" action="<%request.getRequestURL(); %>" onsubmit="return validate()">
-				<div id="alert"></div>
+				
 				<fieldset>
 			    		<legend><center>Login</center></legend>
 			    		<div class="form-group">
@@ -102,7 +103,7 @@
 				    </div>
 				    <div class="form-group">
 				    		<div class="col-lg-1">
-				        		<button type="submit" class="btn btn-primary">Submit</button>
+				        		<button type="submit" class="btn btn-primary">Login</button>
 				      	</div>
 				    </div>
 			    	</fieldset>
