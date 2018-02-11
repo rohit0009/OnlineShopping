@@ -11,7 +11,7 @@
 	<style>
 		@media (min-width: 1200px){
 			.container {
-			    width: 1000px;
+			    width: 400px;
 			}
 		}
 	</style>
@@ -81,23 +81,27 @@
 				<fieldset>
 			    		<legend><center>Login</center></legend>
 			    		<div class="form-group">
-				    		<label for="inputEmail" class="col-lg-2 control-label">Email</label>
-				    		<div class="col-lg-4">
+			    			<label class="col-lg-9 lead control-label">Enter Credentials</label>
+			    		</div>
+			    		<div class="form-group">
+				    		<label class="col-lg-1 control-label">Email</label>
+				    	</div>
+				    	<div class="form-group">
+				    		<div class="col-lg-12">
 				    			<input type="text" class="form-control" name="email" id="email" placeholder="Email">
-				    		</div>
-				    		<div class="col-lg-offset-1 col-lg-5 visible-lg">
-				    			<p class="lead">Enter Login Credentials</p>
 				    		</div>
 				    </div>
 				    
 				    <div class="form-group">
-				    		<label for="inputEmail" class="col-lg-2 control-label">Password</label>
-				    		<div class="col-lg-4">
+				    		<label class="col-lg-1 control-label">Password</label>
+				    	</div>
+				    	<div class="form-group">
+				    		<div class="col-lg-12">
 				    			<input type="password" class="form-control" name="password" id="password" placeholder="Password">
 				    		</div>
 				    </div>
 				    <div class="form-group">
-				    		<div class="col-lg-10 col-lg-offset-2">
+				    		<div class="col-lg-1">
 				        		<button type="submit" class="btn btn-primary">Submit</button>
 				      	</div>
 				    </div>
