@@ -52,7 +52,7 @@
 							{   
 								//if(userid_validation(inputUsername,5,12))
 								//{  
-									if(passid_validation(inputPassword,8,12))
+									if(passid_validation(password,8,12))
 									{  
 										if(phone.value.length == 10)
 										{
