@@ -12,7 +12,7 @@ public class First extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		PrintWriter pw = resp.getWriter();
-		pw.println("Hello "+req.getParameter("n1"));
+		pw.println("Neha "+req.getParameter("n1"));
 		pw.println(req.getParameter("n2"));
 	}
 }
