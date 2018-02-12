@@ -224,14 +224,17 @@
 	      <div class="col-lg-10">
 	        <div class="radio">
 	          <label>
+	          <div class="col-lg-2 control-label">
 	            <input type="radio" name="sex" id="optionsRadios1" value="female" checked="">
 	            Female
+	          </div>
 	          </label>
-	        </div>
-	        <div class="radio">
+	        
 	          <label>
+	          <div class="col-lg-2 control-label">
 	            <input type="radio" name="sex" id="optionsRadios2" value="male">
 	            Male
+	          </div>
 	          </label>
 	        </div>
 	      </div>
@@ -239,6 +242,7 @@
 	    
 	    <div class="form-group">
 	      <div class="col-lg-12 col-lg-offset-2">
+	      <div>
 	        <button type="reset" class="btn btn-default">Cancel</button>
 	        <button type="submit" class="btn btn-primary">Submit</button>
 	      </div>
