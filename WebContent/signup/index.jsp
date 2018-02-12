@@ -17,6 +17,15 @@
 		//out.println(request.getRequestURI());
 	
 	%>
+	
+	<style>
+		@media (min-width: 1200px){
+			.container {
+			    width: 500px;
+			}
+		}
+	</style>
+	
 	<script>
 		function validateForm()
 		{
@@ -165,46 +174,54 @@
 </head>
 <body>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="../bootstrap/js/bootstrap.min.js"></script>
+	
     
+    <div class="container">
+    <div id="alert"></div>
+    <div class="well">
     <form class="form-horizontal" name="signupForm" action="<%request.getRequestURL(); %>" method ="POST" onsubmit="return validateForm()">
-    	  <div id="alert"></div>
+    	  
 	  <fieldset>
-	    <legend>Signup Here</legend>
+	    <legend><center>Signup Here</center></legend>
+	    
 	    <div class="form-group">
 	      <label for="firstName" class="col-lg-2 control-label">First Name</label>
-	      <div class="col-lg-3">
+	      <div class="col-lg-10 control-label">
 	        <input type="text" class="form-control" id="fname" placeholder="First Name">
 	      </div>
 	    </div>
+	   
 	    <div class="form-group">
 	      <label for="lastName" class="col-lg-2 control-label">Last Name</label>
-	      <div class="col-lg-3">
+	      <div class="col-lg-10 control-label">
 	        <input type="text" class="form-control" id="lname" placeholder="Last Name">
 	      </div>
 	    </div>
+	   
 	    <div class="form-group">
 	      <label for="inputEmail" class="col-lg-2 control-label">Email</label>
-	      <div class="col-lg-3">
+	      <div class="col-lg-10 control-label">
 	        <input type="text" class="form-control" id="inputEmail" placeholder="Email">
 	      </div>
 	    </div>
+	   
 	    <div class="form-group">
 	      <label for="inputPassword" class="col-lg-2 control-label">Password</label>
-	      <div class="col-lg-3">
+	      <div class="col-lg-10 control-label">
 	        <input type="password" class="form-control" id="inputPassword" placeholder="Password">
 	      </div>
 	    </div>
+	    
 	    <div class="form-group">
 	      <label for="contactNo" class="col-lg-2 control-label">Contact</label>
-	      <div class="col-lg-3">
+	      <div class="col-lg-10 control-label">
 	        <input type="text" class="form-control" id="contactNo" placeholder="Contact Number">
 	      </div>
 	    </div>
+	   
 	    <div class="form-group">
 	      <label class="col-lg-2 control-label"></label>
-	      <div class="col-lg-3">
+	      <div class="col-lg-10">
 	        <div class="radio">
 	          <label>
 	            <input type="radio" name="sex" id="optionsRadios1" value="female" checked="">
@@ -219,19 +236,23 @@
 	        </div>
 	      </div>
 	    </div>
+	    
 	    <div class="form-group">
-	      <div class="col-lg-3 col-lg-offset-2">
+	      <div class="col-lg-12 col-lg-offset-2">
 	        <button type="reset" class="btn btn-default">Cancel</button>
 	        <button type="submit" class="btn btn-primary">Submit</button>
 	      </div>
 	    </div>
 	  </fieldset>
 	</form>
+	</div>
+	</div>
 	
 	<%
 		out.println(request.getMethod());
 	%>
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>
 
 </body>
 </html>
