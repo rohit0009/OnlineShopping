@@ -1,3 +1,5 @@
+package osp;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -18,3 +20,4 @@ public class First extends HttpServlet{
 		pw.println(req.getParameter("n2"));
 	}
 }
+
