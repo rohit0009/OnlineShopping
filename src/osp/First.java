@@ -15,7 +15,7 @@ public class First extends HttpServlet{
 		// TODO Auto-generated method stub
 		PrintWriter pw = resp.getWriter();
 
-		pw.println("Neha bye"+req.getParameter("n1"));
+		pw.println("Rohit");
 		
 		pw.println(req.getParameter("n2"));
 	}
