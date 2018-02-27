@@ -85,7 +85,6 @@
 						else
 						{
 							document.getElementById("alert").innerHTML = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>Select your Gender.</div>';
-							lname.focus();
 						}
 					}
 				}
