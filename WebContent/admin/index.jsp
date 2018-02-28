@@ -37,23 +37,27 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">Reports</a></li>
-            <li><a href="#">Analytics</a></li>
-            <li><a href="#">Export</a></li>
+            <li class="active"><a href="#">Add Product <span class="sr-only">(current)</span></a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="">Nav item</a></li>
-            <li><a href="">Nav item again</a></li>
-            <li><a href="">One more nav</a></li>
-            <li><a href="">Another nav item</a></li>
-            <li><a href="">More navigation</a></li>
+            <li><a href="">Add Supplier</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="">Nav item again</a></li>
-            <li><a href="">One more nav</a></li>
-            <li><a href="">Another nav item</a></li>
+            <li><a href="">Add Discount Coupon</a></li>
+            <li><a href="">Remove Discount Coupon</a></li>
           </ul>
+          <ul class="nav nav-sidebar">
+	          <li><a href="#" id="btn-1" data-toggle="collapse" data-target="#submenu1" aria-expanded="false">Coupon <span class="caret"></span></a>
+			      <ul class="nav collapse" id="submenu1" role="menu" aria-labelledby="btn-1">
+			        <li><a href="">Add Discount Coupon</a></li>
+            			<li><a href="">Remove Discount Coupon</a></li>
+			      </ul>
+			  </li>
+          </ul>
+          <ul class="nav nav-sidebar">
+          	<li><a href="">Search Supplier</a></li>
+	      	<li><a href="">Search Customer</a></li>
+	      </ul>
         </div>
        </div>
       </div>
