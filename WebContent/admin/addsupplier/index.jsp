@@ -180,9 +180,9 @@
         			<p class="lead">
         			
         				 <div class="container">
-        				 
+        				 <div id="alert"></div>
         				 <form class="form-horizontal" name="supplierForm" action="<%request.getRequestURL(); %>" method ="POST" onsubmit="return validateForm()">
-    	  
+    	  				
 	  					<fieldset>
 					    <legend><center>Supplier Details</center></legend>
 					    
@@ -237,6 +237,7 @@
 					    
 					  
 					  </fieldset>
+					  
 					</form>
         			
         			</p><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
