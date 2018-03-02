@@ -213,43 +213,43 @@
 	    <legend><center>Signup Here</center></legend>
 	    
 	    <div class="form-group">
-	      <label for="firstName" class="col-lg-2 control-label">First Name</label>
-	      <div class="col-lg-10 control-label">
+	      <label for="firstName" class="col-lg-4 control-label">First Name<span style="color: red;">*</span></label>
+	      <div class="col-lg-8 control-label">
 	        <input type="text" class="form-control" name ="fname" id="fname" placeholder="First Name">
 	      </div>
 	    </div>
 	   
 	    <div class="form-group">
-	      <label for="lastName" class="col-lg-2 control-label">Last Name</label>
-	      <div class="col-lg-10 control-label">
+	      <label for="lastName" class="col-lg-4 control-label">Last Name<span style="color: red;">*</span></label>
+	      <div class="col-lg-8 control-label">
 	        <input type="text" class="form-control" name ="lname" id="lname" placeholder="Last Name">
 	      </div>
 	    </div>
 	   
 	    <div class="form-group">
-	      <label for="inputEmail" class="col-lg-2 control-label">Email</label>
-	      <div class="col-lg-10 control-label">
+	      <label for="inputEmail" class="col-lg-4 control-label">Email<span style="color: red;">*</span></label>
+	      <div class="col-lg-8 control-label">
 	        <input type="text" class="form-control" name ="inputEmail" id="inputEmail" placeholder="Email">
 	      </div>
 	    </div>
 	   
 	    <div class="form-group">
-	      <label for="inputPassword" class="col-lg-2 control-label">Password</label>
-	      <div class="col-lg-10 control-label">
+	      <label for="inputPassword" class="col-lg-4 control-label">Password<span style="color: red;">*</span></label>
+	      <div class="col-lg-8 control-label">
 	        <input type="password" class="form-control" name ="inputPassword" id="inputPassword" placeholder="Password">
 	      </div>
 	    </div>
 	    
 	    <div class="form-group">
-	      <label for="contactNo" class="col-lg-2 control-label">Contact</label>
-	      <div class="col-lg-10 control-label">
+	      <label for="contactNo" class="col-lg-4 control-label">Contact<span style="color: red;">*</span></label>
+	      <div class="col-lg-8 control-label">
 	        <input type="text" class="form-control" name ="contactNo" id="contactNo" placeholder="Contact Number">
 	      </div>
 	    </div>
 	   
 	    <div class="form-group">
-	      <label class="col-lg-2 control-label"></label>
-	      <div class="col-lg-10">
+	      <label class="col-lg-4 control-label">Gender<span style="color: red;">*</span></label>
+	      <div class="col-lg-8">
 	        <div class="radio">
 	          <label>
 	          <div class="col-lg-2 control-label">

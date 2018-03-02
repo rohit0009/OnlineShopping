@@ -1,10 +1,12 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 	<title>Welcome</title>
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    
     
 	<link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css">
 	<link href="dashboard.css" rel="stylesheet">
@@ -24,7 +26,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Go to Site</a></li>
+            <li><a href="..">Go to Site</a></li>
             <li class="active"><a href="#">Dashboard</a></li>
             <li><a href="#">Profile</a></li>
             	<li><a href="#">Logout</a></li>
