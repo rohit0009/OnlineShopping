@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="osp.User"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -176,7 +176,36 @@
 	
     
     <div class="container">
-    <div id="alert"></div>
+    <div id="alert">
+    		<%
+    			if(request.getMethod().equalsIgnoreCase("post"))
+    			{
+	    			User usr = new User();
+	    			if( usr.getStatus().contains("ERROR"))
+	    			{
+	    				out.print("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+usr.getStatus()+"</div>");
+	    			}
+	    			else
+	    			{
+	    				usr.setU_fname(request.getParameter("fname"));
+	    				usr.setU_lname(request.getParameter("lname"));
+	    				usr.setEmail(request.getParameter("inputEmail"));
+	    				usr.setPassword(request.getParameter("inputPassword"));
+	    				usr.setContact(Long.parseLong(request.getParameter("contactNo")) );
+	    				usr.setGender(request.getParameter("sex").charAt(0));
+	    				String res = usr.register();
+	    				if(res.contains("ERROR"))
+	    				{
+	    					out.print("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+res+"</div>");
+	    				}
+	    				else
+	    				{
+	    					out.print("<div class=\"alert alert-dismissible alert-success\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+res+"</div>");
+	    				}
+	    			}
+    			}
+    		%>
+    </div>
     <div class="well">
     <form class="form-horizontal" name="signupForm" action="<%request.getRequestURL(); %>" method ="POST" onsubmit="return validateForm()">
     	  
@@ -186,35 +215,35 @@
 	    <div class="form-group">
 	      <label for="firstName" class="col-lg-2 control-label">First Name</label>
 	      <div class="col-lg-10 control-label">
-	        <input type="text" class="form-control" id="fname" placeholder="First Name">
+	        <input type="text" class="form-control" name ="fname" id="fname" placeholder="First Name">
 	      </div>
 	    </div>
 	   
 	    <div class="form-group">
 	      <label for="lastName" class="col-lg-2 control-label">Last Name</label>
 	      <div class="col-lg-10 control-label">
-	        <input type="text" class="form-control" id="lname" placeholder="Last Name">
+	        <input type="text" class="form-control" name ="lname" id="lname" placeholder="Last Name">
 	      </div>
 	    </div>
 	   
 	    <div class="form-group">
 	      <label for="inputEmail" class="col-lg-2 control-label">Email</label>
 	      <div class="col-lg-10 control-label">
-	        <input type="text" class="form-control" id="inputEmail" placeholder="Email">
+	        <input type="text" class="form-control" name ="inputEmail" id="inputEmail" placeholder="Email">
 	      </div>
 	    </div>
 	   
 	    <div class="form-group">
 	      <label for="inputPassword" class="col-lg-2 control-label">Password</label>
 	      <div class="col-lg-10 control-label">
-	        <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+	        <input type="password" class="form-control" name ="inputPassword" id="inputPassword" placeholder="Password">
 	      </div>
 	    </div>
 	    
 	    <div class="form-group">
 	      <label for="contactNo" class="col-lg-2 control-label">Contact</label>
 	      <div class="col-lg-10 control-label">
-	        <input type="text" class="form-control" id="contactNo" placeholder="Contact Number">
+	        <input type="text" class="form-control" name ="contactNo" id="contactNo" placeholder="Contact Number">
 	      </div>
 	    </div>
 	   
@@ -224,14 +253,14 @@
 	        <div class="radio">
 	          <label>
 	          <div class="col-lg-2 control-label">
-	            <input type="radio" name="sex" id="optionsRadios1" value="female" checked="">
+	            <input type="radio" name="sex" id="optionsRadios1" value="f" checked="">
 	            Female
 	          </div>
 	          </label>
 	        
 	          <label>
 	          <div class="col-lg-2 control-label">
-	            <input type="radio" name="sex" id="optionsRadios2" value="male">
+	            <input type="radio" name="sex" id="optionsRadios2" value="m">
 	            Male
 	          </div>
 	          </label>
