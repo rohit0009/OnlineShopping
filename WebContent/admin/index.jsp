@@ -22,12 +22,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Online Shopping</a>
+          <a class="navbar-brand" href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping"); %>">Online Shopping</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="..">Go to Site</a></li>
-            <li class="active"><a href="#">Dashboard</a></li>
+            <li class="active"><a>Dashboard</a></li>
             <li><a href="#">Profile</a></li>
             	<li><a href="#">Logout</a></li>
           </ul>
@@ -43,8 +43,8 @@
             <li><a href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/admin/addsupplier"); %>">Add Supplier</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-          	<li><a href="">Search Supplier</a></li>
-	      	<li><a href="">Search Customer</a></li>
+          	<li><a href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/admin/search/supplier"); %>">Search Supplier</a></li>
+	      	<li><a href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/admin/search/customer"); %>">Search Customer</a></li>
 	      </ul>
 	      <ul class="nav nav-sidebar">
 	          <li><a href="#" id="btn-1" data-toggle="collapse" data-target="#submenu1" aria-expanded="false">Coupon <span class="caret"></span></a>
