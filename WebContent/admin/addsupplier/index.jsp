@@ -10,16 +10,6 @@
     <link href="../dashboard.css" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	
-	<%
-	out.println(request.getServletPath());
-	if("post".equalsIgnoreCase(request.getMethod()))
-	{
-		out.println(request.getRequestURL());
-	}
-		//out.println(request.getRequestURI());
-	
-	%>
-	
 	<script>
 	function validateForm()
 	{
@@ -159,18 +149,18 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li><a href="<%out.println(request.getRequestURL()+"addproduct"); %>">Add Product</a></li>
-            <li class="active"><a href="#">Add Supplier</a></li>
+            <li><a href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/admin/addproduct"); %>">Add Product</a></li>
+            <li class="active"><a>Add Supplier</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-          	<li><a href="">Search Supplier</a></li>
-	      	<li><a href="">Search Customer</a></li>
+          	<li><a href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/admin/search/supplier"); %>">Search Supplier</a></li>
+	      	<li><a href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/admin/search/customer"); %>">Search Customer</a></li>
 	      </ul>
 	      <ul class="nav nav-sidebar">
 	          <li><a href="#" id="btn-1" data-toggle="collapse" data-target="#submenu1" aria-expanded="false">Coupon <span class="caret"></span></a>
 			      <ul class="nav collapse" id="submenu1" role="menu" aria-labelledby="btn-1">
-			        <li><a href="<%out.println(request.getRequestURL()+"coupon/add"); %>">Add Discount Coupon</a></li>
-            			<li><a href="<%out.println(request.getRequestURL()+"coupon/remove"); %>">Remove Discount Coupon</a></li>
+			        <li><a href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/admin/coupon/add"); %>">Add Discount Coupon</a></li>
+            			<li><a href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/admin/coupon/remove"); %>">Remove Discount Coupon</a></li>
 			      </ul>
 			  </li>
           </ul>
@@ -187,36 +177,36 @@
 					    <legend><center>Supplier Details</center></legend>
 					    
 					    <div class="form-group">
-					      <label for="firstName" class="col-lg-2 control-label">First Name</label>
-					      <div class="col-lg-10 control-label">
+					      <label for="firstName" class="col-lg-3 control-label">First Name</label>
+					      <div class="col-lg-9 control-label">
 					        <input type="text" class="form-control" name ="fname" id="fname" placeholder="First Name">
 					      </div>
 					    </div>
 					   
 					    <div class="form-group">
-					      <label for="lastName" class="col-lg-2 control-label">Last Name</label>
-					      <div class="col-lg-10 control-label">
+					      <label for="lastName" class="col-lg-3 control-label">Last Name</label>
+					      <div class="col-lg-9 control-label">
 					        <input type="text" class="form-control" name ="lname" id="lname" placeholder="Last Name">
 					      </div>
 					    </div>
 					   
 					    <div class="form-group">
-					      <label for="inputEmail" class="col-lg-2 control-label">Email</label>
-					      <div class="col-lg-10 control-label">
+					      <label for="inputEmail" class="col-lg-3 control-label">Email</label>
+					      <div class="col-lg-9 control-label">
 					        <input type="text" class="form-control" name ="inputEmail" id="inputEmail" placeholder="Email">
 					      </div>
 					    </div>
 					    
 					    <div class="form-group">
-					      <label for="contactNo" class="col-lg-2 control-label">Contact</label>
-					      <div class="col-lg-10 control-label">
+					      <label for="contactNo" class="col-lg-3 control-label">Contact</label>
+					      <div class="col-lg-9 control-label">
 					        <input type="text" class="form-control" name ="contactNo" id="contactNo" placeholder="Contact Number">
 					      </div>
 					    </div>
 					    
 					    <div class="form-group">
-					      <label for="product_id" class="col-lg-2 control-label">Product</label>
-					      <div class="col-lg-10 control-label">
+					      <label for="product_id" class="col-lg-3 control-label">Product</label>
+					      <div class="col-lg-9 control-label">
 					      <select multiple="" class="form-control" id="p_id">
 					        <option>1</option>
 					        <option>2</option>
@@ -228,7 +218,7 @@
 					    </div>
 					    
 					    <div class="form-group">
-					      <div class="col-lg-12 col-lg-offset-2">
+					      <div class="col-lg-12 col-lg-offset-5">
 					      <div>
 					        <button type="reset" class="btn btn-default">Cancel</button>
 					        <button type="submit" class="btn btn-primary">Submit</button>
