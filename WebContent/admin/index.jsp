@@ -39,8 +39,8 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li><a href="<%out.println(request.getRequestURL()+"addproduct"); %>">Add Product <span class="sr-only">(current)</span></a></li>
-            <li><a href="<%out.println(request.getRequestURL()+"addsupplier"); %>">Add Supplier</a></li>
+            <li><a href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/admin/addproduct"); %>">Add Product <span class="sr-only">(current)</span></a></li>
+            <li><a href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/admin/addsupplier"); %>">Add Supplier</a></li>
           </ul>
           <ul class="nav nav-sidebar">
           	<li><a href="">Search Supplier</a></li>
@@ -49,8 +49,8 @@
 	      <ul class="nav nav-sidebar">
 	          <li><a href="#" id="btn-1" data-toggle="collapse" data-target="#submenu1" aria-expanded="false">Coupon <span class="caret"></span></a>
 			      <ul class="nav collapse" id="submenu1" role="menu" aria-labelledby="btn-1">
-			        <li><a href="<%out.println(request.getRequestURL()+"coupon/add"); %>">Add Discount Coupon</a></li>
-            			<li><a href="<%out.println(request.getRequestURL()+"coupon/remove"); %>">Remove Discount Coupon</a></li>
+			        <li><a href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/admin/coupon/add"); %>">Add Discount Coupon</a></li>
+            			<li><a href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/admin/coupon/remove"); %>">Remove Discount Coupon</a></li>
 			      </ul>
 			  </li>
           </ul>
