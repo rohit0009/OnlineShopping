@@ -6,6 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import java.util.Properties;    
+import javax.mail.*;    
+import javax.mail.internet.*; 
+
 public class User {
 	private int u_id;
 	private String u_fname = null;
@@ -47,6 +51,7 @@ public class User {
 				{
 					if(rs.getString(4).equals(email))
 					{
+						db.destroy();
 						result = "ERROR : Email Id entered already exists!";
 						return result;
 					}
@@ -60,17 +65,31 @@ public class User {
 				pstmt.setString(6, ""+gender);
 				pstmt.setInt(7, 1001);
 				if(pstmt.executeUpdate() > 0)
+				{
+					String msg = "<html><body style='border: 2px solid #228B22;padding: 50px;'><p style='font-size: 30px;color: #4CAF50;text-align: center'>WELCOME to Online Shopping</p><div style='text-indent: 50px;text-align: justify;letter-spacing: 2px;'>Hello "+u_fname+" "+u_lname+" you have successfully registerd.<br>Details are:<br>Email is : "+email+"<br>Password is : "+password+"<br>Thankyou for Registration.</div></body></html>";
+					if (MyMailer.send("shoponlineimcc@gmail.com","imccshop",email,"Registration Details",msg).contains("ERROR")) // sender E-mail, password, to E-mail, subject, message
+					{
+						db.destroy();
+						return "SUCCESS : You are Registered. ERROR : Failed to send Mail.";
+					}
+					db.destroy();
 					return "SUCCESS : You are Registered.";
+				}
 				else
+				{
+					db.destroy();
 					return "ERROR : Query Failed";
+				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				db.destroy();
 				return "ERROR : Something went wrong!";
 			}
 		}
 		else
 		{
+			db.destroy();
 			return "ERROR : Connection not Successfull";
 		}
 	}
@@ -143,4 +162,35 @@ public class User {
 	public void setGender(char gender) {
 		this.gender = gender;
 	}
+}
+class MyMailer{  
+    public static String send(String from,String password,String to,String sub,String msg)
+    {
+          Properties props = new Properties();    
+          props.put("mail.smtp.host" , "smtp.gmail.com");    
+          props.put("mail.smtp.socketFactory.port" , "465");    
+          props.put("mail.smtp.socketFactory.class" , "javax.net.ssl.SSLSocketFactory");    
+          props.put("mail.smtp.auth", "true");    
+          props.put("mail.smtp.port", "465");
+          
+          Session session = Session.getDefaultInstance(props,    
+           new javax.mail.Authenticator() {    
+           protected PasswordAuthentication getPasswordAuthentication() {    
+           return new PasswordAuthentication(from,password);  
+           }    
+          });
+          try {    
+              MimeMessage message = new MimeMessage(session);
+              message.setContent(msg, "text/html; charset=utf-8");
+              message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));    
+              message.setSubject(sub);
+              Transport.send(message);
+             }
+          catch (MessagingException e)
+          {
+        	  	e.printStackTrace();
+        	  	return "ERROR : Runtime Error occured while sending mail";
+        	  }
+          return "SUCCESS : Mail Sent.";
+       }  
 }
