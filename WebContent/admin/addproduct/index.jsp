@@ -117,7 +117,7 @@
           </ul>
         </div>
         	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        		<form class="form-horizontal" action="" method="POST" enctype="multipart/form-data">
+        		<form class="form-horizontal" action="${ pageContext.request.contextPath }/add" method="POST" enctype="multipart/form-data">
 				<div class="jumbotron">
 					<legend>Add Product</legend>
 					  <div class="row">
@@ -160,6 +160,11 @@
 						      	<div class="col-lg-5 preview-3" style="border: 1px solid black">
 						      		<p>No Preview Available</p>
 						      	</div>
+						    </div>
+						    <div class="form-group">
+						    		<div class="col-lg-5">
+						    			<input type="submit" class="btn btn-success col-lg-offset-5" value="Add Product">
+						    		</div>
 						    </div>
 					    </div>
 					  </div>

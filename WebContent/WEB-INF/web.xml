@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
-	<servlet>
-	 	<servlet-name>T1</servlet-name>
-	 	<servlet-class>First</servlet-class>
-	</servlet>
-  	<servlet-mapping>
-  		<servlet-name>T1</servlet-name>
-  		<url-pattern>/test</url-pattern>
-  	</servlet-mapping>
+<web-app>
+  <servlet>
+    <servlet-name>T1</servlet-name>
+    <servlet-class>First</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>T1</servlet-name>
+    <url-pattern>/test</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>AddProductServlet</servlet-name>
+    <servlet-class>osp.AddProductServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddProductServlet</servlet-name>
+    <url-pattern>/add</url-pattern>
+  </servlet-mapping>
 </web-app>
