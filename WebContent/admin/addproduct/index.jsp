@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.io.*,org.apache.tomcat.util.http.fileupload.*,org.apache.tomcat.util.http.fileupload.disk.*,org.apache.tomcat.util.http.fileupload.servlet.*,javax.servlet.*,javax.servlet.http.*,java.util.*,java.util.Map.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -60,7 +60,7 @@
 			    }
 			}
 		function validFileType(file) {
-			var fileTypes = ['image/jpeg','image/png']
+			var fileTypes = ['image/jpeg','image/png' ,'image/jpg']
 		  for(var i = 0; i < fileTypes.length; i++) {
 		    if(file.type === fileTypes[i]) {
 		      return true;
@@ -117,7 +117,73 @@
           </ul>
         </div>
         	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        		<form class="form-horizontal" action="${ pageContext.request.contextPath }/add" method="POST" enctype="multipart/form-data">
+        		<div id="alert">
+				<%
+					if(request.getMethod().equalsIgnoreCase("post"))
+					{
+						String path = "/Users/rohitshewale/Documents/eclipse-workspace/OnlineShopping/WebContent/images";
+						//PrintWriter out = resp.getWriter();
+						//out.println(req.getParameter("pname"));
+						FileItemFactory itemFactory = new DiskFileItemFactory();
+						ServletFileUpload fileUpload = new ServletFileUpload(itemFactory);
+						try {
+							Map<String,List<FileItem>> items = fileUpload.parseParameterMap(request);
+							
+							for(Entry<String, List<FileItem>> mapitem : items.entrySet())
+							{
+								//System.out.println(FileItem);
+								Iterator<FileItem> itr = mapitem.getValue().iterator();
+								while(itr.hasNext())
+								{
+									FileItem item = itr.next();
+									if (item.isFormField())
+									{
+										String name = item.getFieldName();
+									    String value = item.getString();
+									    
+									}
+									if(!item.isFormField())
+									{
+										String fieldName = item.getFieldName();
+									    String fileName = item.getName();
+									    String contentType = item.getContentType();
+									    boolean isInMemory = item.isInMemory();
+									    long sizeInBytes = item.getSize();
+									    File uploadDir = new File(path);
+										out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+uploadDir.isDirectory()+"</div>");
+										if(contentType.equals("image/jpeg") || contentType.equals("image/png"))
+										{
+											File file = File.createTempFile("img", ".jpeg", uploadDir);
+											item.write(file);
+										}
+									    //System.out.println(fieldName+" "+fileName+" "+contentType+" "+isInMemory+" "+sizeInBytes);
+									}
+									
+								}
+								
+								//String contentType = item.getContentType();
+		//						if(!contentType.equals("image/png"))
+		//						{
+		//							out.println("not supported format");
+		//							return;
+		//						}
+								
+		//						File uploadDir = new File(path);
+		//						out.println(uploadDir.isDirectory());
+		//						File file = File.createTempFile("img", ".jpg", uploadDir);
+		//						item.write(file);
+							}
+							
+							
+							
+						}catch (Exception e) {
+							// TODO: handle exception
+							e.printStackTrace();
+						}
+					}
+				%>
+			</div>
+        		<form class="form-horizontal" action="<%request.getRequestURL(); %>" method="POST" enctype="multipart/form-data">
 				<div class="jumbotron">
 					<legend>Add Product</legend>
 					  <div class="row">
