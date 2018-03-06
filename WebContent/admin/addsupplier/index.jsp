@@ -122,38 +122,6 @@
 <title>Add Suppliers</title>
 </head>
 <body>
-
-<div class = "container">
-<div id = "alert">
-<%
-	if(request.getMethod().equalsIgnoreCase("post"))
-	{
-		Supplier sup = new Supplier();
-		if( sup.getStatus().contains("ERROR"))
-		{
-			out.print("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+sup.getStatus()+"</div>");
-		}
-		else
-		{
-			sup.setS_fname(request.getParameter("fname"));
-			sup.setS_lname(request.getParameter("lname"));
-			sup.setEmail(request.getParameter("inputEmail"));
-			sup.setContact(Long.parseLong(request.getParameter("contactNo")) );
-			String res = sup.addSupplier();
-			if(res.contains("ERROR"))
-			{
-				out.print("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+res+"</div>");
-			}
-			else
-			{
-				out.print("<div class=\"alert alert-dismissible alert-success\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+res+"</div>");
-			}
-		}
-	}
-%>
-</div>
-</div>
-
 <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -198,6 +166,32 @@
         </div>
         	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         		<div class="jumbotron">
+				<%
+					if(request.getMethod().equalsIgnoreCase("post"))
+					{
+						Supplier sup = new Supplier();
+						if( sup.getStatus().contains("ERROR"))
+						{
+							out.print("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+sup.getStatus()+"</div>");
+						}
+						else
+						{
+							sup.setS_fname(request.getParameter("fname"));
+							sup.setS_lname(request.getParameter("lname"));
+							sup.setEmail(request.getParameter("inputEmail"));
+							sup.setContact(Long.parseLong(request.getParameter("contactNo")) );
+							String res = sup.addSupplier();
+							if(res.contains("ERROR"))
+							{
+								out.print("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+res+"</div>");
+							}
+							else
+							{
+								out.print("<div class=\"alert alert-dismissible alert-success\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+res+"</div>");
+							}
+						}
+					}
+				%>
         			<p class="lead">
         			
         				 <div class="container">
