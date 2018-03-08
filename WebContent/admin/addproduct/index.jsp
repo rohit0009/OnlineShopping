@@ -204,6 +204,21 @@
 						        		<textarea rows="4" cols="10" class="form-control" id="desc" name="desc"></textarea>
 						      	</div>
 						    </div>
+						    
+						    <div class="form-group">
+						    		<label class="col-lg-2 control-label" style="text-align: center;">Color </label>
+						      	<div class="col-lg-5">
+						        		<input type="text" class="form-control" id="colour" name="colour" placeholder="Colour">
+						      	</div>
+						    </div>	
+						    
+						    <div class="form-group">
+						    		<label class="col-lg-2 control-label" style="text-align: center;">Brand </label>
+						      	<div class="col-lg-5">
+						        		<input type="text" class="form-control" id="brand" name="brand" placeholder="Product Brand">
+						      	</div>
+						    </div>
+						    
 						    <div class="form-group">
 						    		<label class="col-lg-2 control-label" style="text-align: center;">Ideal For </label>
 						      	<div class="col-lg-5">
@@ -231,7 +246,54 @@
 						        			%>
 						        		</select>
 						      	</div>
-						    </div>						    
+						    </div>
+						    
+						    <div class="form-group">
+						    		<label class="col-lg-2 control-label" style="text-align: center;">Size </label>
+						      	<div class="col-lg-5">
+						        		<select name="size" id="size">
+						        			<%
+						        				out.println("<option value=\'1\'>Choose an OPTION</option>");
+						        				out.println("<option value=\'men\'>XS</option>");
+						        				out.println("<option value=\'women\'>S</option>");
+						        				out.println("<option value=\'women\'>M</option>");
+						        				out.println("<option value=\'women\'>L</option>");
+						        				out.println("<option value=\'women\'>XL</option>");
+						        			%>
+						        		</select>
+						      	</div>
+						    </div>
+						    
+						    <div class="form-group">
+						    		<label class="col-lg-2 control-label" style="text-align: center;">Fabric </label>
+						      	<div class="col-lg-5">
+						        		<select name="fabric" id="fabric">
+						        			<%
+						        				out.println("<option value=\'1\'>Choose an OPTION</option>");
+						        				out.println("<option value=\'men\'>Cotton</option>");
+						        				out.println("<option value=\'women\'>Silk</option>");
+						        				out.println("<option value=\'women\'>Linen</option>");
+						        				out.println("<option value=\'women\'>Wool</option>");
+						        				out.println("<option value=\'women\'>Jute</option>");
+						        				out.println("<option value=\'women\'>Gerogette</option>");
+						        			%>
+						        		</select>
+						      	</div>
+						    </div>
+						    
+						    <div class="form-group">
+						    		<label class="col-lg-2 control-label" style="text-align: center;">Neck Type </label>
+						      	<div class="col-lg-5">
+						        		<select name="neck_type" id="neck_type">
+						        			<%
+						        				out.println("<option value=\'1\'>Choose an OPTION</option>");
+						        				out.println("<option value=\'men\'>V</option>");
+						        				out.println("<option value=\'women\'>Round</option>");
+						        				out.println("<option value=\'women\'>Square</option>");
+						        			%>
+						        		</select>
+						      	</div>
+						    </div>	    
 						    
 						    <div class="form-group">
 						    		<label class="col-lg-2 control-label" style="text-align: center;">Image 1</label>
