@@ -1,3 +1,4 @@
+<%@page import="osp.Product"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.io.*,org.apache.tomcat.util.http.fileupload.*,org.apache.tomcat.util.http.fileupload.disk.*,org.apache.tomcat.util.http.fileupload.servlet.*,javax.servlet.*,javax.servlet.http.*,java.util.*,java.util.Map.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -15,6 +16,12 @@
 			}
 	</style>
 	<script>
+		$(document).ready(function(){
+		   $('#ideal_for').change(function(){
+			   $('#category [value="1"]').attr("selected",true);
+		       $('#submitaddP').click();
+		    });
+		});
 		function updatePreview(str) {
 			var preview = document.querySelector('.preview-'+str);
 			var input = document.getElementById('file'+str);
@@ -74,6 +81,9 @@
 	</script>
 </head>
 <body>
+	<%!
+		Product product =null;
+	%>
 	<nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -122,8 +132,7 @@
 					if(request.getMethod().equalsIgnoreCase("post"))
 					{
 						String path = "/Users/rohitshewale/Documents/eclipse-workspace/OnlineShopping/WebContent/images";
-						//PrintWriter out = resp.getWriter();
-						//out.println(req.getParameter("pname"));
+						
 						FileItemFactory itemFactory = new DiskFileItemFactory();
 						ServletFileUpload fileUpload = new ServletFileUpload(itemFactory);
 						try {
@@ -131,47 +140,42 @@
 							
 							for(Entry<String, List<FileItem>> mapitem : items.entrySet())
 							{
-								//System.out.println(FileItem);
-								Iterator<FileItem> itr = mapitem.getValue().iterator();
-								while(itr.hasNext())
+								int flag ;
+								FileItem item = mapitem.getValue().get(0);
+								
+								if (item.isFormField())
 								{
-									FileItem item = itr.next();
-									if (item.isFormField())
+									flag = 0;
+									String name = item.getFieldName();
+									if(name.equalsIgnoreCase("pname") || name.equalsIgnoreCase("ideal_for") || name.equalsIgnoreCase("desc"))
 									{
-										String name = item.getFieldName();
 									    String value = item.getString();
-									    
+									    if(value.equalsIgnoreCase(""))
+									    		flag = 1;
+									    System.out.println(name+" "+value);
 									}
-									if(!item.isFormField())
+									if (flag == 0)
 									{
-										String fieldName = item.getFieldName();
-									    String fileName = item.getName();
-									    String contentType = item.getContentType();
-									    boolean isInMemory = item.isInMemory();
-									    long sizeInBytes = item.getSize();
-									    File uploadDir = new File(path);
-										out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+uploadDir.isDirectory()+"</div>");
-										if(contentType.equals("image/jpeg") || contentType.equals("image/png"))
-										{
-											File file = File.createTempFile("img", ".jpeg", uploadDir);
-											item.write(file);
-										}
-									    //System.out.println(fieldName+" "+fileName+" "+contentType+" "+isInMemory+" "+sizeInBytes);
+										System.out.println("ERROR : ");
+										break;
 									}
-									
+								}
+								if(!item.isFormField())
+								{
+									String fieldName = item.getFieldName();
+								    String fileName = item.getName();
+								    String contentType = item.getContentType();
+								    boolean isInMemory = item.isInMemory();
+								    long sizeInBytes = item.getSize();
+								    File uploadDir = new File(path);
+									out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+uploadDir.isDirectory()+"</div>");
+									if(contentType.equals("image/jpeg") || contentType.equals("image/png"))
+									{
+										File file = File.createTempFile("img", ".jpeg", uploadDir);
+										item.write(file);
+									}
 								}
 								
-								//String contentType = item.getContentType();
-		//						if(!contentType.equals("image/png"))
-		//						{
-		//							out.println("not supported format");
-		//							return;
-		//						}
-								
-		//						File uploadDir = new File(path);
-		//						out.println(uploadDir.isDirectory());
-		//						File file = File.createTempFile("img", ".jpg", uploadDir);
-		//						item.write(file);
 							}
 							
 							
@@ -201,6 +205,35 @@
 						      	</div>
 						    </div>
 						    <div class="form-group">
+						    		<label class="col-lg-2 control-label" style="text-align: center;">Ideal For </label>
+						      	<div class="col-lg-5">
+						        		<select name="ideal_for" id="ideal_for">
+						        			<%
+						        				out.println("<option value=\'1\'>Choose an OPTION</option>");
+						        				out.println("<option value=\'men\'>Men</option>");
+						        				out.println("<option value=\'women\'>Women</option>");
+						        			%>
+						        		</select>
+						      	</div>
+						    </div>
+						    
+						    <div class="form-group">
+						    		<label class="col-lg-2 control-label" style="text-align: center;">Category </label>
+						      	<div class="col-lg-5">
+						        		<select name="category" id = "category">
+						        			<option value='1'>Choose Category</option>
+						        			<%
+						        				/* String []cat_arr = product.get_categories();
+						        				for(String cat : cat_arr)
+						        				{
+						        					out.println("<option value=\'\'>"+cat+"</option>");
+						        				} */
+						        			%>
+						        		</select>
+						      	</div>
+						    </div>						    
+						    
+						    <div class="form-group">
 						    		<label class="col-lg-2 control-label" style="text-align: center;">Image 1</label>
 						      	<div class="col-lg-5">
 						        		<input type="file" id="file1" accept=".png,.jpeg,.jpg" name="file1" onchange="updatePreview('1')">
@@ -229,11 +262,11 @@
 						    </div>
 						    <div class="form-group">
 						    		<div class="col-lg-5">
-						    			<input type="submit" class="btn btn-success col-lg-offset-5" value="Add Product">
+						    			<input type="submit" class="btn btn-success col-lg-offset-5" id="submitaddP" name="submitaddP" value="Add Product">
 						    		</div>
 						    </div>
 					    </div>
-					  </div>
+				  </div>
 				</div>
 			</form>
         	</div>
