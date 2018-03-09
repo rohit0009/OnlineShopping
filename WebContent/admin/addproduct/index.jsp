@@ -16,12 +16,11 @@
 			}
 	</style>
 	<script>
-		$(document).ready(function(){
-		   $('#ideal_for').change(function(){
-			   $('#category [value="1"]').attr("selected",true);
-		       $('#submitaddP').click();
-		    });
-		});
+		function reset_cat()
+		{
+		   $('#category [value="1"]').attr("selected",true);
+	       $('#submitaddP').click();
+		}
 		function updatePreview(str) {
 			var preview = document.querySelector('.preview-'+str);
 			var input = document.getElementById('file'+str);
@@ -147,6 +146,7 @@
 								{
 									flag = 0;
 									String name = item.getFieldName();
+									System.out.println("1 "+name);
 									if(name.equalsIgnoreCase("pname") || name.equalsIgnoreCase("ideal_for") || name.equalsIgnoreCase("desc"))
 									{
 									    String value = item.getString();
@@ -154,7 +154,7 @@
 									    		flag = 1;
 									    System.out.println(name+" "+value);
 									}
-									if (flag == 0)
+									if (flag == 1)
 									{
 										System.out.println("ERROR : ");
 										break;
@@ -187,7 +187,7 @@
 					}
 				%>
 			</div>
-        		<form class="form-horizontal" action="<%request.getRequestURL(); %>" method="POST" enctype="multipart/form-data">
+        		<form class="form-horizontal" action="<%request.getRequestURL(); %>" method="POST" enctype="multipart/form-data" onsubmit="return validate()">
 				<div class="jumbotron">
 					<legend>Add Product</legend>
 					  <div class="row">
@@ -222,7 +222,7 @@
 						    <div class="form-group">
 						    		<label class="col-lg-2 control-label" style="text-align: center;">Ideal For </label>
 						      	<div class="col-lg-5">
-						        		<select name="ideal_for" id="ideal_for">
+						        		<select name="ideal_for" id="ideal_for" onchange="reset_cat()">
 						        			<%
 						        				out.println("<option value=\'1\'>Choose an OPTION</option>");
 						        				out.println("<option value=\'men\'>Men</option>");
@@ -237,6 +237,9 @@
 						      	<div class="col-lg-5">
 						        		<select name="category" id = "category">
 						        			<option value='1'>Choose Category</option>
+						        			<option value='2'>Category 1</option>
+						        			<option value='3'>Category 2</option>
+						        			<option value='4'>Category 3</option>
 						        			<%
 						        				/* String []cat_arr = product.get_categories();
 						        				for(String cat : cat_arr)
