@@ -37,7 +37,12 @@ public class Product extends Category{
 	
 	
 	
-	
+	/**
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
 	/**
 	 * @return the pid
 	 */

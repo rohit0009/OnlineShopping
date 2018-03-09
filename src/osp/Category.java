@@ -2,15 +2,20 @@ package osp;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Category {
 	private int cat_id;
 	private String cat_name = "",cat_desc = "";
 	Database db;
 	Connection conn=null;
-	ResultSet rs = null;
-	Statement st = null;
+	private ResultSet rs = null;
+	private Statement st = null;
 	
 	
 	public Category()
@@ -21,9 +26,38 @@ public class Category {
 	
 	public String[] get_categories(String ideal_for)
 	{
-		String arr[] = new String[]{"asd","ad"};
+		String arr[];
+		if("".equalsIgnoreCase(ideal_for))
+		{
+			arr = new String[] {};
+			return arr;
+		}
 		
-		return arr;
+		String pattern = "\\b"+ideal_for+"\\b";
+        Pattern p=Pattern.compile(pattern,Pattern.CASE_INSENSITIVE);
+        Matcher m;
+        List<String> list = new ArrayList<String>();
+		try {
+			st = conn.createStatement();
+			rs = st.executeQuery("select cat_name from category");
+			
+			while(rs.next())
+			{
+				m=p.matcher(rs.getString(1));
+				if(m.find())
+				{
+					list.add(rs.getString(1));
+				}
+			}
+			arr = new String[list.size()];
+			list.toArray(arr);
+			return arr;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			arr = new String[] {};
+			return arr;
+		}
 	}
 	
 	

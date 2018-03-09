@@ -28,8 +28,10 @@
 			var desc = document.getElementById('desc');
 			var colour = document.getElementById('colour');
 			var brand = document.getElementById('brand');
-			//var ideal_for = document.getElementById('ideal_for');
+			var ideal_for = document.getElementById('ideal_for');
 			var file1 = document.getElementById('file1');
+			var file2 = document.getElementById('file2');
+			var file3 = document.getElementById('file3');
 			
 			alert(pname.value + " " + desc.value + " " + colour.value + " " + brand.value +" " + file1.value);
 			return false;
@@ -95,6 +97,11 @@
 <body>
 	<%!
 		Product product =null;
+		HashMap<String , String> map= null;
+		FileItemFactory itemFactory = null;
+		ServletFileUpload fileUpload = null;
+		String path = "/Users/rohitshewale/Documents/eclipse-workspace/OnlineShopping/WebContent/images";
+		int fully_validated_data = 0;
 	%>
 	<nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
@@ -141,66 +148,84 @@
         	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         		<div id="alert">
 				<%
+					out.print(request.getMethod());
+					out.print("women does not".contains("men"));
+					map = new HashMap<String , String>();
+					itemFactory = new DiskFileItemFactory();
+					fileUpload = new ServletFileUpload(itemFactory);
+					product = new Product();
+
 					if(request.getMethod().equalsIgnoreCase("post"))
 					{
-						String path = "/Users/rohitshewale/Documents/eclipse-workspace/OnlineShopping/WebContent/images";
-						
-						FileItemFactory itemFactory = new DiskFileItemFactory();
-						ServletFileUpload fileUpload = new ServletFileUpload(itemFactory);
 						try {
 							Map<String,List<FileItem>> items = fileUpload.parseParameterMap(request);
 							
 							for(Entry<String, List<FileItem>> mapitem : items.entrySet())
 							{
-								int flag ;
 								FileItem item = mapitem.getValue().get(0);
 								
 								if (item.isFormField())
 								{
-									flag = 0;
+									
 									String name = item.getFieldName();
-									System.out.println("1 "+name);
-									if(name.equalsIgnoreCase("pname") || name.equalsIgnoreCase("ideal_for") || name.equalsIgnoreCase("desc"))
-									{
-									    String value = item.getString();
-									    if(value.equalsIgnoreCase(""))
-									    		flag = 1;
-									    System.out.println(name+" "+value);
-									}
-									if (flag == 1)
+									/* String value = item.getString();
+									System.out.println(name+" "+value); */
+									
+								    String value = item.getString();
+								    if(value.equalsIgnoreCase(""))
+								    		map.put(name, null);
+								    else
+								    		map.put(name, value);
+								    //System.out.println(name+" "+value);
+									
+									/* if (flag == 1)
 									{
 										System.out.println("ERROR : ");
 										break;
-									}
+									} */
 								}
 								if(!item.isFormField())
 								{
 									String fieldName = item.getFieldName();
 								    String fileName = item.getName();
+								    //System.out.println(fieldName+" "+fileName);
 								    String contentType = item.getContentType();
 								    boolean isInMemory = item.isInMemory();
 								    long sizeInBytes = item.getSize();
-								    File uploadDir = new File(path);
+								    if(fileName.equalsIgnoreCase(""))
+							    			map.put(fieldName, null);
+							    		else
+							    			map.put(fieldName, fileName);
+								    /* File uploadDir = new File(path);
 									out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+uploadDir.isDirectory()+"</div>");
 									if(contentType.equals("image/jpeg") || contentType.equals("image/png"))
 									{
 										File file = File.createTempFile("img", ".jpeg", uploadDir);
 										item.write(file);
-									}
+									} */
 								}
 								
 							}
-							
+							//System.out.println(map);
 							
 							
 						}catch (Exception e) {
 							// TODO: handle exception
 							e.printStackTrace();
 						}
+						
+						//VALIDATION HERE
+						
+						if(fully_validated_data == 1)
+						{
+							
+							String status = product.getStatus();							
+						}
+						
 					}
 				%>
 			</div>
-        		<form class="form-horizontal" action="<%request.getRequestURL(); %>" method="POST" enctype="multipart/form-data" onsubmit="return validate()">
+        		<form class="form-horizontal" id = "f1" action="<%request.getRequestURL(); %>" method="POST" enctype="multipart/form-data" >
 				<div class="jumbotron">
 					<legend>Add Product</legend>
 					  <div class="row">
@@ -208,27 +233,27 @@
 						  	<div class="form-group">
 						    		<label class="col-lg-2 control-label" style="text-align: center;">Product Name <span style="color: red;">*</span></label>
 						      	<div class="col-lg-5">
-						        		<input type="text" class="form-control" id="pname" name="pname" placeholder="Product Name">
+						        		<input type="text" class="form-control" id="pname" name="pname" value="<% if(map.containsKey("pname")){if(map.get("pname") == null)out.println(""); else out.println(map.get("pname"));}%>" placeholder="Product Name">
 						      	</div>
 						    </div>
 						    <div class="form-group">
 						    		<label class="col-lg-2 control-label" style="text-align: center;">Product Description</label>
 						      	<div class="col-lg-5">
-						        		<textarea rows="4" cols="10" class="form-control" id="desc" name="desc"></textarea>
+						        		<textarea rows="4" cols="10" class="form-control" id="desc" name="desc"><% if(map.containsKey("desc")){if(map.get("desc") == null)out.println(""); else out.println(map.get("desc"));}%></textarea>
 						      	</div>
 						    </div>
 						    
 						    <div class="form-group">
 						    		<label class="col-lg-2 control-label" style="text-align: center;">Colour </label>
 						      	<div class="col-lg-5">
-						        		<input type="text" class="form-control" id="colour" name="colour" placeholder="Colour">
+						        		<input type="text" class="form-control" id="colour" value="<% if(map.containsKey("colour")){if(map.get("colour") == null)out.println(""); else out.println(map.get("colour"));}%>" name="colour" placeholder="Colour">
 						      	</div>
 						    </div>	
 						    
 						    <div class="form-group">
 						    		<label class="col-lg-2 control-label" style="text-align: center;">Brand </label>
 						      	<div class="col-lg-5">
-						        		<input type="text" class="form-control" id="brand" name="brand" placeholder="Product Brand">
+						        		<input type="text" class="form-control" id="brand" value="<% if(map.containsKey("brand")){if(map.get("brand") == null)out.println(""); else out.println(map.get("brand"));}%>" name="brand" placeholder="Product Brand">
 						      	</div>
 						    </div>
 						    
@@ -236,11 +261,9 @@
 						    		<label class="col-lg-2 control-label" style="text-align: center;">Ideal For </label>
 						      	<div class="col-lg-5">
 						        		<select name="ideal_for" id="ideal_for" onchange="reset_cat()">
-						        			<%
-						        				out.println("<option value=\'1\'>Choose an OPTION</option>");
-						        				out.println("<option value=\'men\'>Men</option>");
-						        				out.println("<option value=\'women\'>Women</option>");
-						        			%>
+					        				<option value='' <%if(map.containsKey("ideal_for")){ if(map.get("ideal_for") == null) out.println("selected");} %>>Choose an OPTION</option>
+					        				<option value='men' <% if(map.containsKey("ideal_for")){ if(map.get("ideal_for") != null) { if(map.get("ideal_for").equalsIgnoreCase("men")) out.println("selected"); } } %>>Men</option>
+					        				<option value='women' <% if(map.containsKey("ideal_for")){ if(map.get("ideal_for") != null) { if(map.get("ideal_for").equalsIgnoreCase("women")) out.println("selected"); } }%>>Women</option>
 						        		</select>
 						      	</div>
 						    </div>
@@ -249,16 +272,27 @@
 						    		<label class="col-lg-2 control-label" style="text-align: center;">Category </label>
 						      	<div class="col-lg-5">
 						        		<select name="category" id = "category">
-						        			<option value='1'>Choose Category</option>
-						        			<option value='2'>Category 1</option>
-						        			<option value='3'>Category 2</option>
-						        			<option value='4'>Category 3</option>
+						        			<option value=''>Choose a Category</option>
 						        			<%
-						        				/* String []cat_arr = product.get_categories();
+						        				String str ="";
+						        				if(map.containsKey("ideal_for"))
+						        				{
+						        					if(map.get("ideal_for") == null)
+						        						str = "";
+						        					else
+						        					{
+							        					if(map.get("ideal_for").equalsIgnoreCase("men"))
+							        						str = "men";
+							        					if(map.get("ideal_for").equalsIgnoreCase("women"))
+							        						str = "women";
+						        					}
+						        				}
+						        				String cat_arr[] = product.get_categories(str);
+						        				
 						        				for(String cat : cat_arr)
 						        				{
-						        					out.println("<option value=\'\'>"+cat+"</option>");
-						        				} */
+						        					out.println("<option value=\'"+cat.toLowerCase()+"\'>"+cat+"</option>");
+						        				}
 						        			%>
 						        		</select>
 						      	</div>
@@ -268,14 +302,12 @@
 						    		<label class="col-lg-2 control-label" style="text-align: center;">Size </label>
 						      	<div class="col-lg-5">
 						        		<select name="size" id="size">
-						        			<%
-						        				out.println("<option value=\'1\'>Choose an OPTION</option>");
-						        				out.println("<option value=\'xs\'>XS</option>");
-						        				out.println("<option value=\'s\'>S</option>");
-						        				out.println("<option value=\'m\'>M</option>");
-						        				out.println("<option value=\'l\'>L</option>");
-						        				out.println("<option value=\'xl\'>XL</option>");
-						        			%>
+						        			<option value='' <%if(map.containsKey("size")){ if(map.get("size") == null) out.println("selected");} %>>Choose an OPTION</option>
+						        			<option value='xs' <% if(map.containsKey("size")){ if(map.get("size") != null) { if(map.get("size").equalsIgnoreCase("xs")) out.println("selected"); } } %>>XS</option>
+					        				<option value='s' <% if(map.containsKey("size")){ if(map.get("size") != null) { if(map.get("size").equalsIgnoreCase("s")) out.println("selected"); } } %>>S</option>
+					        				<option value='m' <% if(map.containsKey("size")){ if(map.get("size") != null) { if(map.get("size").equalsIgnoreCase("m")) out.println("selected"); } } %>>M</option>
+					        				<option value='l' <% if(map.containsKey("size")){ if(map.get("size") != null) { if(map.get("size").equalsIgnoreCase("l")) out.println("selected"); } } %>>L</option>
+					        				<option value='xl' <% if(map.containsKey("size")){ if(map.get("size") != null) { if(map.get("size").equalsIgnoreCase("xl")) out.println("selected"); } } %>>XL</option>
 						        		</select>
 						      	</div>
 						    </div>
@@ -284,15 +316,13 @@
 						    		<label class="col-lg-2 control-label" style="text-align: center;">Fabric </label>
 						      	<div class="col-lg-5">
 						        		<select name="fabric" id="fabric">
-						        			<%
-						        				out.println("<option value=\'1\'>Choose an OPTION</option>");
-						        				out.println("<option value=\'cotton\'>Cotton</option>");
-						        				out.println("<option value=\'silk\'>Silk</option>");
-						        				out.println("<option value=\'linen\'>Linen</option>");
-						        				out.println("<option value=\'wool\'>Wool</option>");
-						        				out.println("<option value=\'jute\'>Jute</option>");
-						        				out.println("<option value=\'gerogette\'>Gerogette</option>");
-						        			%>
+						        				<option value='' <%if(map.containsKey("fabric")){ if(map.get("fabric") == null) out.println("selected");} %>>Choose an OPTION</option>
+						        				<option value='cotton' <% if(map.containsKey("fabric")){ if(map.get("fabric") != null) { if(map.get("fabric").equalsIgnoreCase("cotton")) out.println("selected"); } } %>>Cotton</option>
+						        				<option value='silk' <% if(map.containsKey("fabric")){ if(map.get("fabric") != null) { if(map.get("fabric").equalsIgnoreCase("silk")) out.println("selected"); } } %>>Silk</option>
+						        				<option value='linen' <% if(map.containsKey("fabric")){ if(map.get("fabric") != null) { if(map.get("fabric").equalsIgnoreCase("linen")) out.println("selected"); } } %>>Linen</option>
+						        				<option value='wool' <% if(map.containsKey("fabric")){ if(map.get("fabric") != null) { if(map.get("fabric").equalsIgnoreCase("wool")) out.println("selected"); } } %>>Wool</option>
+						        				<option value='jute' <% if(map.containsKey("fabric")){ if(map.get("fabric") != null) { if(map.get("fabric").equalsIgnoreCase("jute")) out.println("selected"); } } %>>Jute</option>
+						        				<option value='gerogette' <% if(map.containsKey("fabric")){ if(map.get("fabric") != null) { if(map.get("fabric").equalsIgnoreCase("gerogette")) out.println("selected"); } } %>>Gerogette</option>
 						        		</select>
 						      	</div>
 						    </div>
@@ -301,12 +331,10 @@
 						    		<label class="col-lg-2 control-label" style="text-align: center;">Neck Type </label>
 						      	<div class="col-lg-5">
 						        		<select name="neck_type" id="neck_type">
-						        			<%
-						        				out.println("<option value=\'1\'>Choose an OPTION</option>");
-						        				out.println("<option value=\'v\'>V</option>");
-						        				out.println("<option value=\'round\'>Round</option>");
-						        				out.println("<option value=\'square\'>Square</option>");
-						        			%>
+						        				<option value='' <%if(map.containsKey("neck_type")){ if(map.get("neck_type") == null) out.println("selected");} %>>Choose an OPTION</option>
+						        				<option value='v' <% if(map.containsKey("neck_type")){ if(map.get("neck_type") != null) { if(map.get("neck_type").equalsIgnoreCase("v")) out.println("selected"); } } %>>V</option>
+						        				<option value='round' <% if(map.containsKey("neck_type")){ if(map.get("neck_type") != null) { if(map.get("neck_type").equalsIgnoreCase("round")) out.println("selected"); } } %>>Round</option>
+						        				<option value='square' <% if(map.containsKey("neck_type")){ if(map.get("neck_type") != null) { if(map.get("neck_type").equalsIgnoreCase("square")) out.println("selected"); } } %>>Square</option>
 						        		</select>
 						      	</div>
 						    </div>	    
