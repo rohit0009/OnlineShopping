@@ -21,6 +21,19 @@
 		   $('#category [value="1"]').attr("selected",true);
 	       $('#submitaddP').click();
 		}
+		function validate()
+		{
+			alert("hi");
+			var pname = document.getElementById('pname');
+			var desc = document.getElementById('desc');
+			var colour = document.getElementById('colour');
+			var brand = document.getElementById('brand');
+			//var ideal_for = document.getElementById('ideal_for');
+			var file1 = document.getElementById('file1');
+			
+			alert(pname.value + " " + desc.value + " " + colour.value + " " + brand.value +" " + file1.value);
+			return false;
+		}
 		function updatePreview(str) {
 			var preview = document.querySelector('.preview-'+str);
 			var input = document.getElementById('file'+str);
@@ -206,7 +219,7 @@
 						    </div>
 						    
 						    <div class="form-group">
-						    		<label class="col-lg-2 control-label" style="text-align: center;">Color </label>
+						    		<label class="col-lg-2 control-label" style="text-align: center;">Colour </label>
 						      	<div class="col-lg-5">
 						        		<input type="text" class="form-control" id="colour" name="colour" placeholder="Colour">
 						      	</div>
@@ -257,11 +270,11 @@
 						        		<select name="size" id="size">
 						        			<%
 						        				out.println("<option value=\'1\'>Choose an OPTION</option>");
-						        				out.println("<option value=\'men\'>XS</option>");
-						        				out.println("<option value=\'women\'>S</option>");
-						        				out.println("<option value=\'women\'>M</option>");
-						        				out.println("<option value=\'women\'>L</option>");
-						        				out.println("<option value=\'women\'>XL</option>");
+						        				out.println("<option value=\'xs\'>XS</option>");
+						        				out.println("<option value=\'s\'>S</option>");
+						        				out.println("<option value=\'m\'>M</option>");
+						        				out.println("<option value=\'l\'>L</option>");
+						        				out.println("<option value=\'xl\'>XL</option>");
 						        			%>
 						        		</select>
 						      	</div>
@@ -273,12 +286,12 @@
 						        		<select name="fabric" id="fabric">
 						        			<%
 						        				out.println("<option value=\'1\'>Choose an OPTION</option>");
-						        				out.println("<option value=\'men\'>Cotton</option>");
-						        				out.println("<option value=\'women\'>Silk</option>");
-						        				out.println("<option value=\'women\'>Linen</option>");
-						        				out.println("<option value=\'women\'>Wool</option>");
-						        				out.println("<option value=\'women\'>Jute</option>");
-						        				out.println("<option value=\'women\'>Gerogette</option>");
+						        				out.println("<option value=\'cotton\'>Cotton</option>");
+						        				out.println("<option value=\'silk\'>Silk</option>");
+						        				out.println("<option value=\'linen\'>Linen</option>");
+						        				out.println("<option value=\'wool\'>Wool</option>");
+						        				out.println("<option value=\'jute\'>Jute</option>");
+						        				out.println("<option value=\'gerogette\'>Gerogette</option>");
 						        			%>
 						        		</select>
 						      	</div>
@@ -290,9 +303,9 @@
 						        		<select name="neck_type" id="neck_type">
 						        			<%
 						        				out.println("<option value=\'1\'>Choose an OPTION</option>");
-						        				out.println("<option value=\'men\'>V</option>");
-						        				out.println("<option value=\'women\'>Round</option>");
-						        				out.println("<option value=\'women\'>Square</option>");
+						        				out.println("<option value=\'v\'>V</option>");
+						        				out.println("<option value=\'round\'>Round</option>");
+						        				out.println("<option value=\'square\'>Square</option>");
 						        			%>
 						        		</select>
 						      	</div>
