@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="osp.Supplier"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -122,7 +122,6 @@
 <title>Add Suppliers</title>
 </head>
 <body>
-
 <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -167,6 +166,32 @@
         </div>
         	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         		<div class="jumbotron">
+				<%
+					if(request.getMethod().equalsIgnoreCase("post"))
+					{
+						Supplier sup = new Supplier();
+						if( sup.getStatus().contains("ERROR"))
+						{
+							out.print("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+sup.getStatus()+"</div>");
+						}
+						else
+						{
+							sup.setS_fname(request.getParameter("fname"));
+							sup.setS_lname(request.getParameter("lname"));
+							sup.setEmail(request.getParameter("inputEmail"));
+							sup.setContact(Long.parseLong(request.getParameter("contactNo")) );
+							String res = sup.addSupplier();
+							if(res.contains("ERROR"))
+							{
+								out.print("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+res+"</div>");
+							}
+							else
+							{
+								out.print("<div class=\"alert alert-dismissible alert-success\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+res+"</div>");
+							}
+						}
+					}
+				%>
         			<p class="lead">
         			
         				 <div class="container">
@@ -202,19 +227,6 @@
 					      <div class="col-lg-9 control-label">
 					        <input type="text" class="form-control" name ="contactNo" id="contactNo" placeholder="Contact Number">
 					      </div>
-					    </div>
-					    
-					    <div class="form-group">
-					      <label for="product_id" class="col-lg-3 control-label">Product</label>
-					      <div class="col-lg-9 control-label">
-					      <select multiple="" class="form-control" id="p_id">
-					        <option>1</option>
-					        <option>2</option>
-					        <option>3</option>
-					        <option>4</option>
-					        <option>5</option>
-					      </select>
-					    </div>
 					    </div>
 					    
 					    <div class="form-group">
