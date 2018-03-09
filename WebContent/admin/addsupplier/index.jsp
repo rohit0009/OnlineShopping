@@ -236,27 +236,18 @@
 					        <button type="submit" class="btn btn-primary">Submit</button>
 					      </div>
 					    </div>
+					    </div>
 					    
 					  
 					  </fieldset>
 					  
 					</form>
         			
-        			</p><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-        			<%
-					/* System.out.println("1"+request.getPathInfo());
-					System.out.println(request.getServletPath());
-					System.out.println(request.getRequestURI());
-					System.out.println(request.getServerName());
-					System.out.println(request.getRequestURL());
-					System.out.println(); */
-					
-					
-					
-				%>
+        			</p>
         		</div>
         	</div>
       </div>
+    </div>
     </div>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
