@@ -1,12 +1,21 @@
 package osp;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+
+
 public class Product extends Category{
 	
 	private int pid,s_id,cat_id,i_id;
-	private String pname = "",ideal_for = "",fabric = "",color = "",description = "",neck_type = "",image_path = "",image_path_2 = "",image_path_3= "";
-	private String brand ="";
+	private String pname = "",ideal_for = "",fabric = "",color = "",description = "",image_path = "",image_path_2 = "",image_path_3= "";
+	private String brand ="",size="";
 	private double price;
-	private int size,total_items_order,items_left;
+	private int total_items_order,items_left;
+	
+	private PreparedStatement p_inv = null;
+	private PreparedStatement p_product = null;
+	private ResultSet rs = null;
 	
 	
 	private String status = "";
@@ -26,10 +35,39 @@ public class Product extends Category{
 	
 	public String add()
 	{
-		
-		
-		
-		return "SUCCESS : Product added.";
+		try {
+			p_product = conn.prepareStatement("INSERT INTO `product` ( `pname`, `ideal_for`, `size`, `fabric`, `color`, `description`, `image_path`, `image_path_2`, `image_path_3`, `brand`, `s_id`, `cat_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+			p_product.setString(1, pname);
+			p_product.setString(2, ideal_for);
+			p_product.setString(3, size);
+			p_product.setString(4, fabric);
+			p_product.setString(5, color);
+			p_product.setString(6, description);
+			p_product.setString(7, image_path);
+			p_product.setString(8, image_path_2);
+			p_product.setString(9, image_path_3);
+			p_product.setString(10, brand);
+			p_product.setInt(11, 5002);
+			p_product.setInt(12, cat_id);
+			int res = p_product.executeUpdate();
+			if(res > 0)
+			{
+				status = "OK : Query Success";
+				ResultSet rs_p_id = p_product.getGeneratedKeys();
+				while(rs_p_id.next())
+				{
+					System.out.println(rs_p_id.getInt(1));
+				}
+				p_inv = conn.prepareStatement("INSERT INTO `inventory` (`price`, `total_items_ordered`, `items_left`, `p_id`) VALUES (?, ?, ?, ?)");
+				return "SUCCESS : Product added.";
+			}
+			return "ERROR : QUERY FAILED";
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "ERROR : SQL FAILED";
+		}
 	}
 	
 	
@@ -121,12 +159,7 @@ public class Product extends Category{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	/**
-	 * @param neck_type the neck_type to set
-	 */
-	public void setNeck_type(String neck_type) {
-		this.neck_type = neck_type;
-	}
+	
 	/**
 	 * @param image_path the image_path to set
 	 */
@@ -160,7 +193,7 @@ public class Product extends Category{
 	/**
 	 * @param size the size to set
 	 */
-	public void setSize(int size) {
+	public void setSize(String size) {
 		this.size = size;
 	}
 	/**

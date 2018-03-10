@@ -1,10 +1,10 @@
 <%@page import="osp.Product"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.io.*,org.apache.tomcat.util.http.fileupload.*,org.apache.tomcat.util.http.fileupload.disk.*,org.apache.tomcat.util.http.fileupload.servlet.*,javax.servlet.*,javax.servlet.http.*,java.util.*,java.util.Map.*"%>
+    pageEncoding="UTF-8" import="java.io.*,org.apache.tomcat.util.http.fileupload.*,org.apache.tomcat.util.http.fileupload.disk.*,org.apache.tomcat.util.http.fileupload.servlet.*,javax.servlet.*,javax.servlet.http.*,java.util.*,java.util.Map.*,java.util.regex.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="../../bootstrap/css/bootstrap.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -19,7 +19,18 @@
 		function reset_cat()
 		{
 		   $('#category [value="1"]').attr("selected",true);
+		   //$('#neck_type [value="1"]').attr("selected",true);
+		   /* var query = $('#f1').attr("action");
+		   alert(query+" hi"); */
 	       $('#submitaddP').click();
+		}
+		function disable_neck()
+		{
+			//var conceptName = $('#category').find(":selected").text();
+			//alert(conceptName);
+			$('#neck_type [value="1"]').attr("selected",true);
+			$('#submitaddP').click();
+			//$("#category option:contains("+conceptName+")").attr('selected', true);
 		}
 		function validate()
 		{
@@ -90,19 +101,63 @@
 
 		  return false;
 		}
-	
-	
 	</script>
 </head>
 <body>
 	<%!
-		Product product =null;
-		HashMap<String , String> map= null;
-		FileItemFactory itemFactory = null;
-		ServletFileUpload fileUpload = null;
-		String path = "/Users/rohitshewale/Documents/eclipse-workspace/OnlineShopping/WebContent/images";
-		int fully_validated_data = 0;
-	%>
+				Product product =null;
+				HashMap<String , String> map= null;
+				FileItemFactory itemFactory = null;
+				ServletFileUpload fileUpload = null;
+				String path = "/Users/rohitshewale/Documents/eclipse-workspace/OnlineShopping/WebContent/images";
+				int fully_validated_data = 0;
+				
+				public boolean allLetters(String args,JspWriter out,String parameter)throws IOException
+				{
+					String pattern = "^[A-Za-z\\s]+$";
+			        Pattern p=Pattern.compile(pattern,Pattern.CASE_INSENSITIVE);
+					
+					if(args.matches(pattern))  
+					{  
+						return true;
+					}  
+					else  
+					{  
+						out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+parameter+" must have LETTERS ONLY.</div>");  
+						return false;
+					}
+				}
+				public boolean allNumeric(String args,JspWriter out,String parameter)throws IOException
+				{
+					String pattern = "^[0-9]+$";
+			        Pattern p=Pattern.compile(pattern,Pattern.CASE_INSENSITIVE);
+					
+					if(args.matches(pattern))  
+					{  
+						return true;
+					}  
+					else  
+					{  
+						out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+parameter+" must have NUMBERS ONLY.</div>");  
+						return false;  
+					}
+				}
+				public boolean inFormat(String args,JspWriter out,String parameter)throws IOException
+				{
+					String pattern = "[0-9]+([.][0-9]{1,2})?";
+			        Pattern p=Pattern.compile(pattern,Pattern.CASE_INSENSITIVE);
+					
+					if(args.matches(pattern))  
+					{  
+						return true;
+					}  
+					else  
+					{  
+						out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+parameter+" is in INCORRECT FORMAT!</div>");  
+						return false;  
+					}
+				}
+			%>
 	<nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -148,83 +203,129 @@
         	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         		<div id="alert">
 				<%
+					
+						//System.out.println(map);
 					out.print(request.getMethod());
-					out.print("women does not".contains("men"));
 					map = new HashMap<String , String>();
 					itemFactory = new DiskFileItemFactory();
 					fileUpload = new ServletFileUpload(itemFactory);
 					product = new Product();
-
+			
 					if(request.getMethod().equalsIgnoreCase("post"))
 					{
-						try {
-							Map<String,List<FileItem>> items = fileUpload.parseParameterMap(request);
+						
+						Map<String,List<FileItem>> items = fileUpload.parseParameterMap(request);
+						
+						for(Entry<String, List<FileItem>> mapitem : items.entrySet())
+						{
+							FileItem item = mapitem.getValue().get(0);
 							
-							for(Entry<String, List<FileItem>> mapitem : items.entrySet())
+							if (item.isFormField())
 							{
-								FileItem item = mapitem.getValue().get(0);
 								
-								if (item.isFormField())
-								{
-									
-									String name = item.getFieldName();
-									/* String value = item.getString();
-									System.out.println(name+" "+value); */
-									
-								    String value = item.getString();
-								    if(value.equalsIgnoreCase(""))
-								    		map.put(name, null);
-								    else
-								    		map.put(name, value);
-								    //System.out.println(name+" "+value);
-									
-									/* if (flag == 1)
-									{
-										System.out.println("ERROR : ");
-										break;
-									} */
-								}
-								if(!item.isFormField())
-								{
-									String fieldName = item.getFieldName();
-								    String fileName = item.getName();
-								    //System.out.println(fieldName+" "+fileName);
-								    String contentType = item.getContentType();
-								    boolean isInMemory = item.isInMemory();
-								    long sizeInBytes = item.getSize();
-								    if(fileName.equalsIgnoreCase(""))
-							    			map.put(fieldName, null);
-							    		else
-							    			map.put(fieldName, fileName);
-								    /* File uploadDir = new File(path);
-									out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+uploadDir.isDirectory()+"</div>");
-									if(contentType.equals("image/jpeg") || contentType.equals("image/png"))
-									{
-										File file = File.createTempFile("img", ".jpeg", uploadDir);
-										item.write(file);
-									} */
-								}
+								String name = item.getFieldName();
+								/* String value = item.getString();
+								System.out.println(name+" "+value); */
 								
+							    String value = item.getString();
+							    if(value.equalsIgnoreCase(""))
+							    		map.put(name, null);
+							    else
+							    		map.put(name, value);
+							    //System.out.println(name+" "+value);
+								
+								/* if (flag == 1)
+								{
+									System.out.println("ERROR : ");
+									break;
+								} */
 							}
-							//System.out.println(map);
+							if(!item.isFormField())
+							{
+								String fieldName = item.getFieldName();
+							    String fileName = item.getName();
+							    //System.out.println(fieldName+" "+fileName);
+							    String contentType = item.getContentType();
+							    boolean isInMemory = item.isInMemory();
+							    long sizeInBytes = item.getSize();
+							    if(fileName.equalsIgnoreCase(""))
+						    			map.put(fieldName, null);
+						    		else
+						    			map.put(fieldName, fileName);
+							    /* File uploadDir = new File(path);
+								out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+uploadDir.isDirectory()+"</div>");
+								if(contentType.equals("image/jpeg") || contentType.equals("image/png"))
+								{
+									File file = File.createTempFile("img", ".jpeg", uploadDir);
+									item.write(file);
+								} */
+							}
 							
-							
-						}catch (Exception e) {
-							// TODO: handle exception
-							e.printStackTrace();
 						}
+			
+						
+						
 						
 						//VALIDATION HERE
 						
+						if(map.get("pname") == null || map.get("desc") == null || map.get("colour") == null || map.get("brand") == null || map.get("ideal_for") == null || map.get("category") == null || map.get("size") == null || map.get("fabric") == null || map.get("price") == null || map.get("item_ordered") == null || map.get("file1") == null || map.get("file2") == null || map.get("file3") == null)
+						{
+							out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>Please enter all fields.</div>");
+						}
+						else
+						{
+							if(allLetters(map.get("pname"), out, "Product Name"))
+							{
+								if(allLetters(map.get("colour"), out, "Product Colour"))
+								{
+									if(allLetters(map.get("brand"), out, "Product Brand"))
+									{
+										if(inFormat(map.get("price"), out, "Price"))
+										{
+											if(allNumeric(map.get("item_ordered"), out, "Total Items Ordered"))
+											{
+												fully_validated_data = 1;
+											}
+										}
+									}
+								}
+							}
+							
+							
+							
+						}
+						
 						if(fully_validated_data == 1)
 						{
-							
-							String status = product.getStatus();							
+							String status = product.getStatus();
+							if(!status.contains("ERROR"))
+							{
+								product.setPname(map.get("pname"));
+								product.setDescription(map.get("desc"));
+								product.setColor(map.get("colour"));
+								product.setBrand(map.get("brand"));
+								product.setIdeal_for(map.get("ideal_for"));
+								product.setCat_id(Integer.parseInt(map.get("category")));
+								product.setSize(map.get("size"));
+								product.setFabric(map.get("fabric"));
+								product.setPrice(Double.parseDouble(map.get("price")));
+								product.setTotal_items_order(Integer.parseInt(map.get("item_ordered")));
+								product.setItems_left(Integer.parseInt(map.get("item_ordered")));
+								product.setImage_path(path+map.get("file1"));
+								product.setImage_path_2(path+map.get("file2"));
+								product.setImage_path_3(path+map.get("file3"));
+								status = product.add();
+								if(!product.getStatus().contains("ERROR"))
+								{
+									out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+product.getStatus()+"</div>");
+								}
+							}
 						}
 						
 					}
 				%>
 			</div>
+			
         		<form class="form-horizontal" id = "f1" action="<%request.getRequestURL(); %>" method="POST" enctype="multipart/form-data" >
 				<div class="jumbotron">
 					<legend>Add Product</legend>
@@ -237,30 +338,30 @@
 						      	</div>
 						    </div>
 						    <div class="form-group">
-						    		<label class="col-lg-2 control-label" style="text-align: center;">Product Description</label>
+						    		<label class="col-lg-2 control-label" style="text-align: center;">Product Description <span style="color: red;">*</span></label>
 						      	<div class="col-lg-5">
 						        		<textarea rows="4" cols="10" class="form-control" id="desc" name="desc"><% if(map.containsKey("desc")){if(map.get("desc") == null)out.println(""); else out.println(map.get("desc"));}%></textarea>
 						      	</div>
 						    </div>
 						    
 						    <div class="form-group">
-						    		<label class="col-lg-2 control-label" style="text-align: center;">Colour </label>
+						    		<label class="col-lg-2 control-label" style="text-align: center;">Colour <span style="color: red;">*</span></label>
 						      	<div class="col-lg-5">
 						        		<input type="text" class="form-control" id="colour" value="<% if(map.containsKey("colour")){if(map.get("colour") == null)out.println(""); else out.println(map.get("colour"));}%>" name="colour" placeholder="Colour">
 						      	</div>
 						    </div>	
 						    
 						    <div class="form-group">
-						    		<label class="col-lg-2 control-label" style="text-align: center;">Brand </label>
+						    		<label class="col-lg-2 control-label" style="text-align: center;">Brand <span style="color: red;">*</span></label>
 						      	<div class="col-lg-5">
 						        		<input type="text" class="form-control" id="brand" value="<% if(map.containsKey("brand")){if(map.get("brand") == null)out.println(""); else out.println(map.get("brand"));}%>" name="brand" placeholder="Product Brand">
 						      	</div>
 						    </div>
 						    
 						    <div class="form-group">
-						    		<label class="col-lg-2 control-label" style="text-align: center;">Ideal For </label>
+						    		<label class="col-lg-2 control-label" style="text-align: center;">Ideal For <span style="color: red;">*</span></label>
 						      	<div class="col-lg-5">
-						        		<select name="ideal_for" id="ideal_for" onchange="reset_cat()">
+						        		<select class="form-control" name="ideal_for" id="ideal_for" onchange="reset_cat()">
 					        				<option value='' <%if(map.containsKey("ideal_for")){ if(map.get("ideal_for") == null) out.println("selected");} %>>Choose an OPTION</option>
 					        				<option value='men' <% if(map.containsKey("ideal_for")){ if(map.get("ideal_for") != null) { if(map.get("ideal_for").equalsIgnoreCase("men")) out.println("selected"); } } %>>Men</option>
 					        				<option value='women' <% if(map.containsKey("ideal_for")){ if(map.get("ideal_for") != null) { if(map.get("ideal_for").equalsIgnoreCase("women")) out.println("selected"); } }%>>Women</option>
@@ -269,10 +370,10 @@
 						    </div>
 						    
 						    <div class="form-group">
-						    		<label class="col-lg-2 control-label" style="text-align: center;">Category </label>
+						    		<label class="col-lg-2 control-label" style="text-align: center;">Category <span style="color: red;">*</span></label>
 						      	<div class="col-lg-5">
-						        		<select name="category" id = "category">
-						        			<option value=''>Choose a Category</option>
+						        		<select class="form-control" name="category" id = "category">
+						        			<option value=''>Choose an OPTION</option>
 						        			<%
 						        				String str ="";
 						        				if(map.containsKey("ideal_for"))
@@ -287,11 +388,13 @@
 							        						str = "women";
 						        					}
 						        				}
-						        				String cat_arr[] = product.get_categories(str);
+						        				String item[] = product.get_categories(str);
 						        				
-						        				for(String cat : cat_arr)
+						        				for(String cat : item)
 						        				{
-						        					out.println("<option value=\'"+cat.toLowerCase()+"\'>"+cat+"</option>");
+						        					%>
+						        						<option value='<% out.println(cat.toLowerCase()); %>'><% out.println(cat);%> </option>
+						        					<%
 						        				}
 						        			%>
 						        		</select>
@@ -299,9 +402,9 @@
 						    </div>
 						    
 						    <div class="form-group">
-						    		<label class="col-lg-2 control-label" style="text-align: center;">Size </label>
+						    		<label class="col-lg-2 control-label" style="text-align: center;">Size <span style="color: red;">*</span></label>
 						      	<div class="col-lg-5">
-						        		<select name="size" id="size">
+						        		<select class="form-control" name="size" id="size">
 						        			<option value='' <%if(map.containsKey("size")){ if(map.get("size") == null) out.println("selected");} %>>Choose an OPTION</option>
 						        			<option value='xs' <% if(map.containsKey("size")){ if(map.get("size") != null) { if(map.get("size").equalsIgnoreCase("xs")) out.println("selected"); } } %>>XS</option>
 					        				<option value='s' <% if(map.containsKey("size")){ if(map.get("size") != null) { if(map.get("size").equalsIgnoreCase("s")) out.println("selected"); } } %>>S</option>
@@ -313,9 +416,9 @@
 						    </div>
 						    
 						    <div class="form-group">
-						    		<label class="col-lg-2 control-label" style="text-align: center;">Fabric </label>
+						    		<label class="col-lg-2 control-label" style="text-align: center;">Fabric <span style="color: red;">*</span></label>
 						      	<div class="col-lg-5">
-						        		<select name="fabric" id="fabric">
+						        		<select class="form-control" name="fabric" id="fabric">
 						        				<option value='' <%if(map.containsKey("fabric")){ if(map.get("fabric") == null) out.println("selected");} %>>Choose an OPTION</option>
 						        				<option value='cotton' <% if(map.containsKey("fabric")){ if(map.get("fabric") != null) { if(map.get("fabric").equalsIgnoreCase("cotton")) out.println("selected"); } } %>>Cotton</option>
 						        				<option value='silk' <% if(map.containsKey("fabric")){ if(map.get("fabric") != null) { if(map.get("fabric").equalsIgnoreCase("silk")) out.println("selected"); } } %>>Silk</option>
@@ -327,20 +430,26 @@
 						      	</div>
 						    </div>
 						    
-						    <div class="form-group">
-						    		<label class="col-lg-2 control-label" style="text-align: center;">Neck Type </label>
-						      	<div class="col-lg-5">
-						        		<select name="neck_type" id="neck_type">
-						        				<option value='' <%if(map.containsKey("neck_type")){ if(map.get("neck_type") == null) out.println("selected");} %>>Choose an OPTION</option>
-						        				<option value='v' <% if(map.containsKey("neck_type")){ if(map.get("neck_type") != null) { if(map.get("neck_type").equalsIgnoreCase("v")) out.println("selected"); } } %>>V</option>
-						        				<option value='round' <% if(map.containsKey("neck_type")){ if(map.get("neck_type") != null) { if(map.get("neck_type").equalsIgnoreCase("round")) out.println("selected"); } } %>>Round</option>
-						        				<option value='square' <% if(map.containsKey("neck_type")){ if(map.get("neck_type") != null) { if(map.get("neck_type").equalsIgnoreCase("square")) out.println("selected"); } } %>>Square</option>
-						        		</select>
-						      	</div>
-						    </div>	    
 						    
 						    <div class="form-group">
-						    		<label class="col-lg-2 control-label" style="text-align: center;">Image 1</label>
+								<label class="col-lg-2 control-label" style="text-align: center;">Price <span style="color: red;">*</span></label>
+								<div class="input-group col-lg-5">
+									<span class="input-group-addon">₹</span>
+										<input type="text" class="form-control" id ="price" name="price" value="<% if(map.containsKey("price")){if(map.get("price") == null)out.println(""); else out.println(map.get("price"));}%>" placeholder="Price">
+										<span class="input-group-btn">
+									</span>
+								</div>
+							</div>
+							
+							<div class="form-group">
+						    		<label class="col-lg-2 control-label" style="text-align: center;">Total Items Ordered <span style="color: red;">*</span></label>
+						      	<div class="col-lg-5">
+						        		<input type="text" class="form-control" id="item_ordered" value="<% if(map.containsKey("item_ordered")){if(map.get("item_ordered") == null)out.println(""); else out.println(map.get("item_ordered"));}%>" name="item_ordered" placeholder="Total Items Ordered">
+						      	</div>
+						    </div>
+						    
+						    <div class="form-group">
+						    		<label class="col-lg-2 control-label" style="text-align: center;">Image 1 <span style="color: red;">*</span></label>
 						      	<div class="col-lg-5">
 						        		<input type="file" id="file1" accept=".png,.jpeg,.jpg" name="file1" onchange="updatePreview('1')">
 						      	</div>
@@ -349,7 +458,7 @@
 						      	</div>
 						    </div>
 						    <div class="form-group">
-						    		<label class="col-lg-2 control-label" style="text-align: center;">Image 2</label>
+						    		<label class="col-lg-2 control-label" style="text-align: center;">Image 2 <span style="color: red;">*</span></label>
 						      	<div class="col-lg-5">
 						        		<input type="file" id="file2" accept=".png,.jpeg,.jpg" name="file2" onchange="updatePreview('2')">
 						      	</div>
@@ -358,7 +467,7 @@
 						      	</div>
 						    </div>
 						    <div class="form-group">
-						    		<label class="col-lg-2 control-label" style="text-align: center;">Image 3</label>
+						    		<label class="col-lg-2 control-label" style="text-align: center;">Image 3 <span style="color: red;">*</span></label>
 						      	<div class="col-lg-5">
 						        		<input type="file" id="file3" accept=".png,.jpeg,.jpg" name="file3" onchange="updatePreview('3')">
 						      	</div>
@@ -378,8 +487,6 @@
         	</div>
       </div>
     </div>
-	
-	
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="../../bootstrap/js/bootstrap.min.js"></script>
