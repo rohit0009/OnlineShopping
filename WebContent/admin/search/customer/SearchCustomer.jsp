@@ -1,47 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1" import="osp.SearchCustomer"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
 <link rel="stylesheet" type="text/css" href="../../../bootstrap/css/bootstrap.css">
 <link href="../../dashboard.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-
-<script>
-	function validateCustForm()
-	{
-		var searchedValue=document.getElementById("searchedValue");
-		if(searchedValue.value == '')
-		{
-			document.getElementById("alert").innerHTML = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>Please enter something to search.</div>';
-		}
-		else
-		{
-			if(allLetter(searchedValue))
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-	function allLetter(uname)  
-	{   
-		var letters = /^[A-Za-z]+$/;  
-		if(uname.value.match(letters))  
-		{  
-			return true;  
-		}  
-		else  
-		{
-			document.getElementById("alert").innerHTML = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>'+' must have alphabetic characters only</div>';
-			uname.focus();  
-			return false;  
-		}  
-	}
-</script>
 
 	<style>
 		@media (min-width: 1200px){
@@ -50,12 +17,11 @@
 			}
 		}
 	</style>
-
-<title>Search Customer</title>
+<title>Customer Details</title>
 </head>
 <body>
 
-	<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -86,7 +52,7 @@
           </ul>
           <ul class="nav nav-sidebar">
           	<li><a href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/admin/search/supplier"); %>">Search Supplier</a></li>
-	      	<li class="active"><a>Search Customer</a></li>
+	      	<li class="active"><a href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/admin/search/customer"); %>">Search Customer</a></li>
 	      </ul>
 	      <ul class="nav nav-sidebar">
 	          <li><a href="#" id="btn-1" data-toggle="collapse" data-target="#submenu1" aria-expanded="false">Coupon <span class="caret"></span></a>
@@ -99,14 +65,37 @@
         </div>
         	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         		<div class="jumbotron">
+        		
+        		<%
+        		if(request.getMethod().equalsIgnoreCase("post"))
+				{
+					SearchCustomer sc = new SearchCustomer();
+					if( sc.getStatus().contains("ERROR"))
+					{
+						out.print("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+sc.getStatus()+"</div>");
+					}
+					else
+					{
+						sc.set_fname(request.getParameter("searchedValue"));
+						//sc.set_lname(request.getParameter("lname"));
+						sc.displayCustomer();
+					}
+				}
+        		%>
+        		
         			<p class="lead">
-        			<center>
-        				<div id="alert"></div>
-        				<form class="form-inline my-2 my-lg-0" name="searchCustForm" action="SearchCustomer.jsp" method="post" onsubmit="return validateCustForm()">
-      						<input class="form-control mr-sm-2" type="text" name="searchedValue" id="searchedValue" placeholder="Search">
-     						<button class="btn btn-info" type="submit">Search</button>
-    					</form>
-    				</center>
+        			<form>
+        				<fieldset>
+        					<legend>
+        					<a href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/admin/search/customer"); %>">Back</a>
+        					<center>Customer Details</center></legend>
+        					
+        					<table border=2>
+        					
+        					</table>
+        					
+        				</fieldset>
+        			</form>
         			</p>
         		</div>
         	</div>
