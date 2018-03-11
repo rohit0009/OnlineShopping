@@ -104,6 +104,28 @@
         				<div id="alert"></div>
         				<form class="form-inline my-2 my-lg-0" name="searchCustForm" action="SearchCustomer.jsp" method="post" onsubmit="return validateCustForm()">
       						<input class="form-control mr-sm-2" type="text" name="searchedValue" id="searchedValue" placeholder="Search">
+      						
+      						
+      						<fieldset class="form-group">
+      <legend>Radio buttons</legend>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked="">
+          Option one is this and that—be sure to include why it's great
+        </label>
+      </div>
+      <div class="form-check">
+      <label class="form-check-label">
+          <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">
+          Option two can be something else and selecting it will deselect option one
+        </label>
+      </div>
+      						<div class="form-check disabled">
+								<label class="form-check-label">
+								<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios3" value="option3" disabled="">
+								Option three is disabled
+								</label>
+							</div>
      						<button class="btn btn-info" type="submit">Search</button>
     					</form>
     				</center>

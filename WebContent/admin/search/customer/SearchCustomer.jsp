@@ -10,6 +10,9 @@
 <link href="../../dashboard.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
+
+
+
 	<style>
 		@media (min-width: 1200px){
 			.container {
@@ -67,6 +70,7 @@
         		<div class="jumbotron">
         		
         		<%
+        		out.println(request.getParameter("searcedValue"));
         		if(request.getMethod().equalsIgnoreCase("post"))
 				{
 					SearchCustomer sc = new SearchCustomer();
@@ -78,6 +82,7 @@
 					{
 						sc.set_fname(request.getParameter("searchedValue"));
 						//sc.set_lname(request.getParameter("lname"));
+						//return hashmap
 						sc.displayCustomer();
 					}
 				}
@@ -88,10 +93,17 @@
         				<fieldset>
         					<legend>
         					<a href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/admin/search/customer"); %>">Back</a>
-        					<center>Customer Details</center></legend>
+        					<center>Customer Details</center>
+        					</legend>
         					
         					<table border=2>
-        					
+        					<th>Customer ID</th>
+        					<th>First Name</th>
+        					<th>Last Name</th>
+        					<th>Email</th>
+        					<th>Password</th>
+        					<th>Contact</th>
+        					<th>Gender</th>
         					</table>
         					
         				</fieldset>
