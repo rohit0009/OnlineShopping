@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-import java.util.Properties;    
 import javax.mail.*;    
 import javax.mail.internet.*;
 
@@ -176,5 +175,5 @@ class MyMailers
         	  	return "ERROR : Runtime Error occured while sending mail";
         	  }
           return "SUCCESS : Mail Sent.";
-       }  
+       }
 }
