@@ -109,7 +109,7 @@
 				HashMap<String , String> map= null;
 				FileItemFactory itemFactory = null;
 				ServletFileUpload fileUpload = null;
-				String path = "/Users/rohitshewale/Documents/eclipse-workspace/OnlineShopping/WebContent/images";
+				String path = "/Users/rohitshewale/Documents/eclipse-workspace/OnlineShopping/WebContent/images/";
 				int fully_validated_data = 0;
 				
 				public boolean allLetters(String args,JspWriter out,String parameter)throws IOException
@@ -300,26 +300,38 @@
 							String status = product.getStatus();
 							if(!status.contains("ERROR"))
 							{
-								product.setPname(map.get("pname"));
-								product.setDescription(map.get("desc"));
-								product.setColor(map.get("colour"));
-								product.setBrand(map.get("brand"));
-								product.setIdeal_for(map.get("ideal_for"));
-								product.setCat_id(Integer.parseInt(map.get("category")));
-								product.setSize(map.get("size"));
-								product.setFabric(map.get("fabric"));
-								product.setPrice(Double.parseDouble(map.get("price")));
-								product.setTotal_items_order(Integer.parseInt(map.get("item_ordered")));
-								product.setItems_left(Integer.parseInt(map.get("item_ordered")));
-								product.setImage_path(path+map.get("file1"));
-								product.setImage_path_2(path+map.get("file2"));
-								product.setImage_path_3(path+map.get("file3"));
-								status = product.add();
+								System.out.println(map.get("category").toString());
+								product.setCat_id(product.get_Cat_id(map.get("category").toString()));
 								if(!product.getStatus().contains("ERROR"))
 								{
-									out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+product.getStatus()+"</div>");
+									product.setPname(map.get("pname"));
+									product.setDescription(map.get("desc"));
+									product.setColor(map.get("colour"));
+									product.setBrand(map.get("brand"));
+									product.setIdeal_for(map.get("ideal_for"));
+									
+									//product.setCat_id(Integer.parseInt(map.get("category")));
+									product.setSize(map.get("size"));
+									product.setFabric(map.get("fabric"));
+									product.setPrice(Double.parseDouble(map.get("price")));
+									product.setTotal_items_order(Integer.parseInt(map.get("item_ordered")));
+									product.setItems_left(Integer.parseInt(map.get("item_ordered")));
+									product.setImage_path(path+map.get("file1"));
+									product.setImage_path_2(path+map.get("file2"));
+									product.setImage_path_3(path+map.get("file3"));
+									status = product.add();
+									if(!product.getStatus().contains("ERROR"))
+									{
+										out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+product.getStatus()+"</div>");
+									}
+									else
+										out.println("<div class=\"alert alert-dismissible alert-success\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+product.getStatus()+"</div>");
 								}
+								else
+									out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+product.getStatus()+"</div>");
 							}
+							else
+								out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+product.getStatus()+"</div>");
 						}
 						
 					}
@@ -393,7 +405,7 @@
 						        				for(String cat : item)
 						        				{
 						        					%>
-						        						<option value='<% out.println(cat.toLowerCase()); %>'><% out.println(cat);%> </option>
+						        						<option value='<% out.println(cat); %>'><% out.println(cat);%> </option>
 						        					<%
 						        				}
 						        			%>

@@ -2,6 +2,7 @@ package osp;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.PreparedStatement;
 
 
@@ -16,7 +17,7 @@ public class Product extends Category{
 	private PreparedStatement p_inv = null;
 	private PreparedStatement p_product = null;
 	private ResultSet rs = null;
-	
+	private Statement stmt = null;
 	
 	private String status = "";
 	
@@ -68,11 +69,47 @@ public class Product extends Category{
 			e.printStackTrace();
 			return "ERROR : SQL FAILED";
 		}
+		finally {
+			try {
+				if(p_inv != null)
+					p_inv.close();
+				if(p_product != null)
+					p_product.close();
+				if(rs != null)
+					rs.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	
 	
-	
+	public int get_Cat_id(String cat_name)
+	{
+		cat_name = cat_name.trim();
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("select cat_id,cat_name from category");
+			while(rs.next())
+			{
+				if(cat_name.equals(rs.getString(2)))
+				{
+					status = "SUCCESS : OK";
+					System.out.println(rs.getInt(1));
+					return rs.getInt(1);
+				}
+			}
+			status = "ERROR : Category NOT FOUND";
+			return -1;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			status = "ERROR : QUERY FAILED";
+			e.printStackTrace();
+			return -1;
+		}
+	}
 	
 	
 	/**
@@ -93,12 +130,7 @@ public class Product extends Category{
 	public int getS_id() {
 		return s_id;
 	}
-	/**
-	 * @return the cat_id
-	 */
-	public int getCat_id() {
-		return cat_id;
-	}
+	
 	/**
 	 * @return the i_id
 	 */
