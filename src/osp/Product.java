@@ -55,11 +55,23 @@ public class Product extends Category{
 			{
 				status = "OK : Query Success";
 				ResultSet rs_p_id = p_product.getGeneratedKeys();
-				while(rs_p_id.next())
-				{
-					System.out.println(rs_p_id.getInt(1));
-				}
+				int new_key;
+				rs_p_id.next();
+				
+				new_key = rs_p_id.getInt(1);
+				
 				p_inv = conn.prepareStatement("INSERT INTO `inventory` (`price`, `total_items_ordered`, `items_left`, `p_id`) VALUES (?, ?, ?, ?)");
+				p_inv.setDouble(1, price);
+				p_inv.setInt(2, total_items_order);
+				p_inv.setInt(3, total_items_order);
+				p_inv.setInt(4, new_key);
+				int inv_res = p_inv.executeUpdate();
+				if(inv_res > 0)
+				{
+					status = "OK : Success";
+				}
+				else
+					return "ERROR : QUERY FAILED";
 				return "SUCCESS : Product added.";
 			}
 			return "ERROR : QUERY FAILED";

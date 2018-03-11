@@ -300,7 +300,7 @@
 							String status = product.getStatus();
 							if(!status.contains("ERROR"))
 							{
-								System.out.println(map.get("category").toString());
+								//System.out.println(map.get("category").toString());
 								product.setCat_id(product.get_Cat_id(map.get("category").toString()));
 								if(!product.getStatus().contains("ERROR"))
 								{
@@ -316,16 +316,48 @@
 									product.setPrice(Double.parseDouble(map.get("price")));
 									product.setTotal_items_order(Integer.parseInt(map.get("item_ordered")));
 									product.setItems_left(Integer.parseInt(map.get("item_ordered")));
-									product.setImage_path(path+map.get("file1"));
-									product.setImage_path_2(path+map.get("file2"));
-									product.setImage_path_3(path+map.get("file3"));
+									product.setImage_path(path+map.get("ideal_for")+"/"+map.get("category")+"/"+map.get("colour")+"/"+map.get("file1"));
+									product.setImage_path_2(path+map.get("ideal_for")+"/"+map.get("category")+"/"+map.get("colour")+"/"+map.get("file2"));
+									product.setImage_path_3(path+map.get("ideal_for")+"/"+map.get("category")+"/"+map.get("colour")+"/"+map.get("file3"));
 									status = product.add();
 									if(!product.getStatus().contains("ERROR"))
 									{
 										out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+product.getStatus()+"</div>");
 									}
 									else
+									{
+										Map<String,List<FileItem>> items1 = fileUpload.parseParameterMap(request);
+										
+										for(Entry<String, List<FileItem>> mapitem : items.entrySet())
+										{
+											FileItem item = mapitem.getValue().get(0);
+											
+											if(!item.isFormField())
+											{
+											    File uploadDir = new File(path+map.get("ideal_for")+"/"+map.get("category")+"/"+map.get("colour")+"/");
+											    if(!uploadDir.isDirectory())
+											    {
+											    		try{
+											    			uploadDir.mkdir();
+											    		}catch(Exception e)
+											    		{
+											    			System.out.println("Dir creation failed");
+											    			e.printStackTrace();
+											    		}
+											    		File file = File.createTempFile("img", ".jpeg", uploadDir);
+													item.write(file);
+											    }
+											    else
+											    {
+											    		File file = File.createTempFile("img", ".jpeg", uploadDir);
+													item.write(file);
+											    }
+												
+											}
+											
+										}
 										out.println("<div class=\"alert alert-dismissible alert-success\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+product.getStatus()+"</div>");
+									}
 								}
 								else
 									out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+product.getStatus()+"</div>");
