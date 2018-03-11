@@ -2,8 +2,8 @@
 -- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Mar 06, 2018 at 12:51 AM
+-- Host: localhost
+-- Generation Time: Mar 11, 2018 at 12:43 PM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 7.1.7
 
@@ -65,6 +65,26 @@ CREATE TABLE `category` (
   `cat_desc` varchar(80) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`cat_id`, `cat_name`, `cat_desc`) VALUES
+(1, 'Men T-shirt', 'This is a category for Men t-shirt'),
+(2, 'Men Shirt', 'This is a category for Men Shirt'),
+(3, 'Men Jacket', 'This is a category for Men Jacket'),
+(4, 'Men Track Pant', 'This is a category for Men Track Pant'),
+(5, 'Men Jeans', 'This is a category for Men Jeans'),
+(6, 'Men Trouser', 'This is a category for Men Trouser'),
+(7, 'Men Shorts', 'This is a category for Men Shorts'),
+(8, 'Women Shirt', 'This is category for Women Shirts'),
+(9, 'Women Top', 'This is category for Women Top'),
+(10, 'Women Sweatshirt', 'This is category for Women Sweatshirts'),
+(11, 'Women Jeans', 'This is category for Women Jeans'),
+(12, 'Women Capris', 'This is category for Women Capris'),
+(13, 'Women Saree', 'This is category for Women Sarees'),
+(14, 'Women Kurtas', 'This is category for Women Kurtas');
+
 -- --------------------------------------------------------
 
 --
@@ -108,10 +128,9 @@ CREATE TABLE `product` (
   `fabric` varchar(30) NOT NULL,
   `color` varchar(20) NOT NULL,
   `description` varchar(30) NOT NULL,
-  `neck_type` varchar(20) NOT NULL,
-  `image_path` varchar(80) NOT NULL,
-  `image_path_2` varchar(80) NOT NULL,
-  `image_path_3` varchar(80) NOT NULL,
+  `image_path` varchar(150) NOT NULL,
+  `image_path_2` varchar(150) NOT NULL,
+  `image_path_3` varchar(150) NOT NULL,
   `brand` varchar(30) NOT NULL,
   `s_id` int(11) NOT NULL,
   `cat_id` int(11) NOT NULL
@@ -274,22 +293,22 @@ ALTER TABLE `cart`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100001;
+  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `coupon`
 --
 ALTER TABLE `coupon`
-  MODIFY `coupon_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=200001;
+  MODIFY `coupon_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `i_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=500001;
+  MODIFY `i_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=400001;
+  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `registered_user`
 --
