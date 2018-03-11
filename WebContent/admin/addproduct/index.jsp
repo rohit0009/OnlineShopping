@@ -109,7 +109,7 @@
 				HashMap<String , String> map= null;
 				FileItemFactory itemFactory = null;
 				ServletFileUpload fileUpload = null;
-				String path = "/Users/rohitshewale/Documents/eclipse-workspace/OnlineShopping/WebContent/images/";
+				String path = "your path";
 				int fully_validated_data = 0;
 				
 				public boolean allLetters(String args,JspWriter out,String parameter)throws IOException
@@ -316,9 +316,9 @@
 									product.setPrice(Double.parseDouble(map.get("price")));
 									product.setTotal_items_order(Integer.parseInt(map.get("item_ordered")));
 									product.setItems_left(Integer.parseInt(map.get("item_ordered")));
-									product.setImage_path(path+map.get("ideal_for")+"/"+map.get("category")+"/"+map.get("colour")+"/"+map.get("file1"));
-									product.setImage_path_2(path+map.get("ideal_for")+"/"+map.get("category")+"/"+map.get("colour")+"/"+map.get("file2"));
-									product.setImage_path_3(path+map.get("ideal_for")+"/"+map.get("category")+"/"+map.get("colour")+"/"+map.get("file3"));
+									product.setImage_path(path+map.get("ideal_for")+"\\"+map.get("category")+"\\"+map.get("colour")+"\\"+map.get("file1"));
+									product.setImage_path_2(path+map.get("ideal_for")+"\\"+map.get("category")+"\\"+map.get("colour")+"\\"+map.get("file2"));
+									product.setImage_path_3(path+map.get("ideal_for")+"\\"+map.get("category")+"\\"+map.get("colour")+"\\"+map.get("file3"));
 									status = product.add();
 									if(!product.getStatus().contains("ERROR"))
 									{
@@ -334,7 +334,7 @@
 											
 											if(!item.isFormField())
 											{
-											    File uploadDir = new File(path+map.get("ideal_for")+"/"+map.get("category")+"/"+map.get("colour")+"/");
+											    File uploadDir = new File(path+map.get("ideal_for")+"\\"+map.get("category")+"\\"+map.get("colour")+"\\");
 											    if(!uploadDir.isDirectory())
 											    {
 											    		try{
