@@ -42,7 +42,7 @@ public class User {
 		PreparedStatement pstmt = null;
 		String result = null;
 		
-		if( (conn = db.connect()) != null )
+		if( conn != null )
 		{
 			try {
 				stmt = conn.createStatement();
@@ -90,7 +90,7 @@ public class User {
 		else
 		{
 			db.destroy();
-			return "ERROR : Connection not Successfull";
+			return "ERROR : Connection not Successful";
 		}
 	}
 	
