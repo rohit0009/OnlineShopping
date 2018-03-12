@@ -70,7 +70,7 @@
         		<div class="jumbotron">
         		
         		<%
-        		out.println(request.getParameter("searcedValue"));
+        		//out.println(request.getParameter("searcedValue"));
         		if(request.getMethod().equalsIgnoreCase("post"))
 				{
 					SearchCustomer sc = new SearchCustomer();
