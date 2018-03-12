@@ -109,7 +109,7 @@
 				HashMap<String , String> map= null;
 				FileItemFactory itemFactory = null;
 				ServletFileUpload fileUpload = null;
-				String path = "your\\path\\at\\the\\end\\this\\is\\important\\";
+				String path = "C:\\Users\\Neha\\eclipse-workspace\\OnlineShopping\\WebContent\\images\\";
 				int fully_validated_data = 0;
 				
 				public boolean allLetters(String args,JspWriter out,String parameter)throws IOException
