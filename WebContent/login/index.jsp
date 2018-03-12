@@ -1,3 +1,4 @@
+<%@page import="osp.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -68,14 +69,35 @@
 </head>
 <body><br>
 	<div class="container">
-		<%
-			if("post".equalsIgnoreCase(request.getMethod()))
-			{
-				out.println(request.getParameter("email"));
-				out.println(request.getParameter("password"));
-			}
-		%>
-		<div id="alert"></div>
+		<div id="alert">
+			<%
+				if(request.getMethod().equalsIgnoreCase("post"))
+				{
+					String email = request.getParameter("email");
+					String password = request.getParameter("password");
+					User user = new User();
+					if(user.getStatus().contains("ERROR"))
+					{
+						out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+user.getStatus()+"</div>");
+					}
+					else
+					{
+						user.setEmail(email.trim());
+						user.setPassword(password.trim());
+						int current_user_id = user.login();
+						if(user.getStatus().contains("ERROR"))
+						{
+							out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+user.getStatus()+"</div>");
+						}
+						else
+						{
+							session.setAttribute("u_id", current_user_id);
+							response.sendRedirect("..");
+						}
+					}
+				}
+			%>
+		</div>
 		<div class="well">
 			<form class="form-horizontal" name="loginform" method="POST" action="<%request.getRequestURL(); %>" onsubmit="return validate()">
 				

@@ -94,10 +94,31 @@ public class User {
 		}
 	}
 	
-	public String login()
+	public int login()
 	{
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
 		
-		return "SUCCESS";
+		try
+		{
+			pstmt = conn.prepareStatement("select u_id from registered_user where email=? and password=?");
+			pstmt.setString(1, email);
+			pstmt.setString(2, password);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next())
+			{
+				status = "SUCCESS : OK";
+				return rs.getInt(1); 
+			}
+			status = "ERROR : USER NOT FOUND";
+			return -1;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			status = "ERROR : EXCEPTION (QUERY FAILED)";
+			return -1;
+		}
 	}
 	
 	/**
