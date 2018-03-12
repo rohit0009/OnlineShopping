@@ -5,7 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.mail.*;    
 import javax.mail.internet.*;
 
@@ -84,6 +89,55 @@ public class Supplier
 		{
 			db.destroy();
 			return "ERROR : Connection not Successful";
+		}
+	}
+	
+	public String[] get_Suppliers()
+	{
+		Statement st=null;
+		ResultSet rs = null;
+		String arr[];
+		
+        List<String> list = new ArrayList<String>();
+		try {
+			st = conn.createStatement();
+			rs = st.executeQuery("select s_fname,s_lname from supplier");
+			
+			while(rs.next())
+			{
+				list.add(rs.getString(1)+" "+rs.getString(2));
+			}
+			arr = new String[list.size()];
+			list.toArray(arr);
+			return arr;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			arr = new String[] {};
+			return arr;
+		}
+	}
+	
+	public int get_S_id(String s_name)
+	{
+		s_name = s_name.trim();
+		String split_Name[] = s_name.split(" ");
+		try {
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery("select s_id from supplier where s_fname = '"+split_Name[0]+"' and s_lname = '"+split_Name[1]+"'");
+			
+			while(rs.next())
+			{
+				return rs.getInt(1);
+			}
+			status = "ERROR : QUERY FAILED / Supplier doesn't exists!";
+			return -1;
+		}
+		catch(SQLException e)
+		{
+			status = "ERROR : QUERY Failed";
+			e.printStackTrace();
+			return -1;
 		}
 	}
 	

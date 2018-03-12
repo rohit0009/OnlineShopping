@@ -48,7 +48,7 @@ public class Product extends Category{
 			p_product.setString(8, image_path_2);
 			p_product.setString(9, image_path_3);
 			p_product.setString(10, brand);
-			p_product.setInt(11, 5002);
+			p_product.setInt(11, s_id);
 			p_product.setInt(12, cat_id);
 			int res = p_product.executeUpdate();
 			if(res > 0)
@@ -109,7 +109,6 @@ public class Product extends Category{
 				if(cat_name.equals(rs.getString(2)))
 				{
 					status = "SUCCESS : OK";
-					System.out.println(rs.getInt(1));
 					return rs.getInt(1);
 				}
 			}

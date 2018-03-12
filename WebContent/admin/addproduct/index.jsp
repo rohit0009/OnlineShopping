@@ -1,6 +1,6 @@
-<%@page import="osp.Product"%>
+<%@page import="osp.Product,osp.Supplier"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.io.*,org.apache.tomcat.util.http.fileupload.*,org.apache.tomcat.util.http.fileupload.disk.*,org.apache.tomcat.util.http.fileupload.servlet.*,javax.servlet.*,javax.servlet.http.*,java.util.*,java.util.Map.*,java.util.regex.*"%>
+    pageEncoding="UTF-8" import="java.io.*,org.apache.tomcat.util.http.fileupload.*,org.apache.tomcat.util.http.fileupload.disk.*,org.apache.tomcat.util.http.fileupload.servlet.*,javax.servlet.*,javax.servlet.http.*,java.util.*,java.util.Map.*,java.util.regex.*,org.apache.commons.io.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -269,7 +269,7 @@
 						
 						//VALIDATION HERE
 						
-						if(map.get("pname") == null || map.get("desc") == null || map.get("colour") == null || map.get("brand") == null || map.get("ideal_for") == null || map.get("category") == null || map.get("size") == null || map.get("fabric") == null || map.get("price") == null || map.get("item_ordered") == null || map.get("file1") == null || map.get("file2") == null || map.get("file3") == null)
+						if(map.get("pname") == null || map.get("desc") == null || map.get("colour") == null || map.get("brand") == null || map.get("ideal_for") == null || map.get("category") == null || map.get("size") == null || map.get("fabric") == null || map.get("price") == null || map.get("item_ordered") == null || map.get("file1") == null || map.get("file2") == null || map.get("file3") == null || map.get("supplier") == null)
 						{
 							out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>Please enter all fields.</div>");
 						}
@@ -290,84 +290,94 @@
 										}
 									}
 								}
-							}
-							
-							
-							
+							}	
 						}
 						
 						if(fully_validated_data == 1)
 						{
-							String status = product.getStatus();
-							if(!status.contains("ERROR"))
+							Supplier supplier = null;
+							supplier = new Supplier();
+							if(!supplier.getStatus().contains("ERROR"))
 							{
-								//System.out.println(map.get("category").toString());
-								product.setCat_id(product.get_Cat_id(map.get("category").toString()));
-								if(!product.getStatus().contains("ERROR"))
+								String status = product.getStatus();
+								if(!status.contains("ERROR"))
 								{
-									product.setPname(map.get("pname"));
-									product.setDescription(map.get("desc"));
-									product.setColor(map.get("colour"));
-									product.setBrand(map.get("brand"));
-									product.setIdeal_for(map.get("ideal_for"));
-									
-									//product.setCat_id(Integer.parseInt(map.get("category")));
-									product.setSize(map.get("size").trim());
-									product.setFabric(map.get("fabric").trim());
-									product.setPrice(Double.parseDouble(map.get("price")));
-									product.setTotal_items_order(Integer.parseInt(map.get("item_ordered")));
-									product.setItems_left(Integer.parseInt(map.get("item_ordered")));
-									product.setImage_path(path+map.get("ideal_for")+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim()+"\\"+map.get("file1").trim());
-									product.setImage_path_2(path+map.get("ideal_for")+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim()+"\\"+map.get("file2").trim());
-									product.setImage_path_3(path+map.get("ideal_for")+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim()+"\\"+map.get("file3").trim());
-									status = product.add();
+									//System.out.println(map.get("category").toString());
+									product.setCat_id(product.get_Cat_id(map.get("category").toString()));
 									if(!product.getStatus().contains("ERROR"))
 									{
-										Map<String,List<FileItem>> items1 = fileUpload.parseParameterMap(request);
+										product.setPname(map.get("pname"));
+										product.setDescription(map.get("desc"));
+										product.setColor(map.get("colour"));
+										product.setBrand(map.get("brand"));
+										product.setIdeal_for(map.get("ideal_for"));
 										
-										for(Entry<String, List<FileItem>> mapitem : items.entrySet())
+										product.setS_id(supplier.get_S_id(map.get("supplier")));
+										//product.setCat_id(Integer.parseInt(map.get("category")));
+										product.setSize(map.get("size").trim());
+										product.setFabric(map.get("fabric").trim());
+										product.setPrice(Double.parseDouble(map.get("price")));
+										product.setTotal_items_order(Integer.parseInt(map.get("item_ordered")));
+										product.setItems_left(Integer.parseInt(map.get("item_ordered")));
+										product.setImage_path(path+map.get("ideal_for")+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim()+"\\"+map.get("file1").trim());
+										product.setImage_path_2(path+map.get("ideal_for")+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim()+"\\"+map.get("file2").trim());
+										product.setImage_path_3(path+map.get("ideal_for")+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim()+"\\"+map.get("file3").trim());
+										status = product.add();
+										if(!product.getStatus().contains("ERROR"))
 										{
-											FileItem item = mapitem.getValue().get(0);
+											Map<String,List<FileItem>> items1 = fileUpload.parseParameterMap(request);
 											
-											if(!item.isFormField())
+											for(Entry<String, List<FileItem>> mapitem : items.entrySet())
 											{
-											    File uploadDir = new File(path+map.get("ideal_for").trim()+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim());
-											    System.out.println(uploadDir.isDirectory());
-											    if(!uploadDir.isDirectory())
-											    {
-											    		try{
-											    			boolean dir_created = uploadDir.mkdirs();
-											    			if( !dir_created )
-											    				System.out.println("Dir creation failed TRY");
-											    		}catch(Exception e)
-											    		{
-											    			System.out.println("Dir creation failed");
-											    			e.printStackTrace();
-											    		}
-											    		File file = File.createTempFile("img", ".jpg", uploadDir);
+												FileItem item = mapitem.getValue().get(0);
+												
+												if(!item.isFormField())
+												{
+												    File uploadDir = new File(path+map.get("ideal_for").trim()+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim());
+												    System.out.println(uploadDir.isDirectory());
+												    if(!uploadDir.isDirectory())
+												    {
+												    		try{
+												    			boolean dir_created = uploadDir.mkdirs();
+												    			if( !dir_created )
+												    				System.out.println("Dir creation failed TRY");
+												    		}catch(Exception e)
+												    		{
+												    			System.out.println("Dir creation failed");
+												    			e.printStackTrace();
+												    		}
+												    		String ext = FilenameUtils.getExtension(item.getName());
+												    		File file = File.createTempFile("img", "."+ext, uploadDir);
+															item.write(file);
+												    }
+												    else
+												    {
+												    	String ext = FilenameUtils.getExtension(item.getName());
+											    		File file = File.createTempFile("img", "."+ext, uploadDir);
 														item.write(file);
-											    }
-											    else
-											    {
-										    		File file = File.createTempFile("img", ".jpeg", uploadDir);
-													item.write(file);
-											    }
+												    }
+													
+												}
 												
 											}
-											
+											map.clear();
+											fully_validated_data = 0;
+											out.println("<div class=\"alert alert-dismissible alert-success\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>Product Added Successfully</div>");
 										}
-										out.println("<div class=\"alert alert-dismissible alert-success\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>Product Added Successfully</div>");
+										else
+										{
+											out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+product.getStatus()+"</div>");
+										}
 									}
 									else
-									{
 										out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+product.getStatus()+"</div>");
-									}
 								}
 								else
 									out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+product.getStatus()+"</div>");
 							}
 							else
-								out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+product.getStatus()+"</div>");
+								out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+supplier.getStatus()+"</div>");
+						
 						}
 						
 					}
@@ -523,6 +533,31 @@
 						      		<p>No Preview Available</p>
 						      	</div>
 						    </div>
+						    
+						    <div class="form-group">
+						    		<label class="col-lg-2 control-label" style="text-align: center;">Supplier <span style="color: red;">*</span></label>
+						      	<div class="col-lg-5">
+						        		<select class="form-control" name="supplier" id = "supplier">
+						        			<option value=''>Choose an OPTION</option>
+						        			<%
+						        				Supplier supplier_ob = null;
+						        				supplier_ob = new Supplier();
+						        				if(!supplier_ob.getStatus().contains("ERROR"))
+						        				{
+						        					String suppliers[] = supplier_ob.get_Suppliers();
+							        				
+							        				for(String supplier : suppliers)
+							        				{
+							        					%>
+							        						<option value='<% out.println(supplier); %>'><% out.println(supplier);%> </option>
+							        					<%
+							        				}
+						        				}
+						        			%>
+						        		</select>
+						      	</div>
+						    </div>
+						    
 						    <div class="form-group">
 						    		<div class="col-lg-5">
 						    			<input type="submit" class="btn btn-success col-lg-offset-5" id="submitaddP" name="submitaddP" value="Add Product">
