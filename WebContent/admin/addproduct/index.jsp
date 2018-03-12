@@ -109,7 +109,8 @@
 				HashMap<String , String> map= null;
 				FileItemFactory itemFactory = null;
 				ServletFileUpload fileUpload = null;
-				String path = "C:\\Users\\Neha\\eclipse-workspace\\OnlineShopping\\WebContent\\images\\";
+				// \\at the end of string PATH
+				String path = "D:\\workspacemca\\OnlineShopping\\WebContent\\images\\";
 				int fully_validated_data = 0;
 				
 				public boolean allLetters(String args,JspWriter out,String parameter)throws IOException
@@ -311,20 +312,16 @@
 									product.setIdeal_for(map.get("ideal_for"));
 									
 									//product.setCat_id(Integer.parseInt(map.get("category")));
-									product.setSize(map.get("size"));
-									product.setFabric(map.get("fabric"));
+									product.setSize(map.get("size").trim());
+									product.setFabric(map.get("fabric").trim());
 									product.setPrice(Double.parseDouble(map.get("price")));
 									product.setTotal_items_order(Integer.parseInt(map.get("item_ordered")));
 									product.setItems_left(Integer.parseInt(map.get("item_ordered")));
-									product.setImage_path(path+map.get("ideal_for")+"\\"+map.get("category")+"\\"+map.get("colour")+"\\"+map.get("file1"));
-									product.setImage_path_2(path+map.get("ideal_for")+"\\"+map.get("category")+"\\"+map.get("colour")+"\\"+map.get("file2"));
-									product.setImage_path_3(path+map.get("ideal_for")+"\\"+map.get("category")+"\\"+map.get("colour")+"\\"+map.get("file3"));
+									product.setImage_path(path+map.get("ideal_for")+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim()+"\\"+map.get("file1").trim());
+									product.setImage_path_2(path+map.get("ideal_for")+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim()+"\\"+map.get("file2").trim());
+									product.setImage_path_3(path+map.get("ideal_for")+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim()+"\\"+map.get("file3").trim());
 									status = product.add();
 									if(!product.getStatus().contains("ERROR"))
-									{
-										out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+product.getStatus()+"</div>");
-									}
-									else
 									{
 										Map<String,List<FileItem>> items1 = fileUpload.parseParameterMap(request);
 										
@@ -334,22 +331,25 @@
 											
 											if(!item.isFormField())
 											{
-											    File uploadDir = new File(path+map.get("ideal_for")+"\\"+map.get("category")+"\\"+map.get("colour")+"\\");
+											    File uploadDir = new File(path+map.get("ideal_for").trim()+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim());
+											    System.out.println(uploadDir.isDirectory());
 											    if(!uploadDir.isDirectory())
 											    {
 											    		try{
-											    			uploadDir.mkdir();
+											    			boolean dir_created = uploadDir.mkdirs();
+											    			if( !dir_created )
+											    				System.out.println("Dir creation failed TRY");
 											    		}catch(Exception e)
 											    		{
 											    			System.out.println("Dir creation failed");
 											    			e.printStackTrace();
 											    		}
-											    		File file = File.createTempFile("img", ".jpeg", uploadDir);
-													item.write(file);
+											    		File file = File.createTempFile("img", ".jpg", uploadDir);
+														item.write(file);
 											    }
 											    else
 											    {
-											    		File file = File.createTempFile("img", ".jpeg", uploadDir);
+										    		File file = File.createTempFile("img", ".jpeg", uploadDir);
 													item.write(file);
 											    }
 												
@@ -357,6 +357,10 @@
 											
 										}
 										out.println("<div class=\"alert alert-dismissible alert-success\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>Product Added Successfully</div>");
+									}
+									else
+									{
+										out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+product.getStatus()+"</div>");
 									}
 								}
 								else
