@@ -44,7 +44,7 @@ public class SearchCustomer
 				rs = stmt.executeQuery("select * from registered_user");
 				while(rs.next())
 				{
-					if(rs.getString(2).equals(c_fname) || rs.getString(3).equals(c_lname))
+					if(rs.getString(2).equals(c_fname))
 					{
 						System.out.println(rs.getString("u_id"));
 						System.out.println(rs.getString("u_fname"));
