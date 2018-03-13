@@ -159,6 +159,23 @@
 					}
 				}
 			%>
+			<%
+				if(session.getAttribute("u_id") == null && session.getAttribute("u_fname") == null && session.getAttribute("u_lname") == null && session.getAttribute("is_Admin") == null)
+				{
+					out.println("<div class=\"jumbotron\">You are not Logged In. Please ");
+					out.println("<a href=\"http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/login\">Login</a></div>");
+				}
+				else
+				{
+					String bool = (String)session.getAttribute("is_Admin");
+					if(!bool.equalsIgnoreCase("true"))
+					{
+						out.println("<div class=\"jumbotron\">You are not allowed to Access this Page Contents ");
+						out.println("<a href=\"http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping\">Shop items</a></div>");
+					}
+					else
+					{
+			%>
 	<nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -575,3 +592,7 @@
     <script src="../../bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
+<%
+	}
+}
+%>

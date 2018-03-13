@@ -6,6 +6,7 @@
 	out.println("Current User Id is "+session.getAttribute("u_id"));
 	out.println("Current User Id is "+session.getAttribute("u_fname"));
 	out.println("Current User Id is "+session.getAttribute("u_lname"));
+	out.println("Current User Id is "+session.getAttribute("is_Admin"));
 	out.println("<a href='logout.jsp'>Logout</a>");
 	//session.removeAttribute("u_id");
 %>

@@ -103,7 +103,7 @@ public class User {
 		List<String> list= new ArrayList<String>();
 		try
 		{
-			pstmt = conn.prepareStatement("select u_id,u_fname,u_lname from registered_user where email=? and password=?");
+			pstmt = conn.prepareStatement("select u_id,u_fname,u_lname,r_id from registered_user where email=? and password=?");
 			pstmt.setString(1, email);
 			pstmt.setString(2, password);
 			rs = pstmt.executeQuery();
@@ -114,6 +114,14 @@ public class User {
 				list.add(""+rs.getInt(1));
 				list.add(rs.getString(2));
 				list.add(rs.getString(3));
+				if(rs.getInt(4) == 1002)
+				{
+					list.add("true");
+				}
+				else
+				{
+					list.add("false");
+				}
 				arr = new String[list.size()];
 				list.toArray(arr);
 				return arr; 

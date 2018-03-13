@@ -99,6 +99,7 @@
 							session.setAttribute("u_id", current_user_id);
 							session.setAttribute("u_fname", current_user[1]);
 							session.setAttribute("u_lname", current_user[2]);
+							session.setAttribute("is_Admin", current_user[3]);
 							response.sendRedirect("..");
 						}
 					}
@@ -131,8 +132,8 @@
 				    		</div>
 				    </div>
 				    <div class="form-group">
-				    		<div class="col-lg-1">
-				        		<button type="submit" class="btn btn-primary">Login</button>
+			    		<div class="col-lg-1">
+			        		<button type="submit" class="btn btn-primary">Login</button>
 				      	</div>
 				    </div>
 			    	</fieldset>
