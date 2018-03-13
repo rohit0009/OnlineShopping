@@ -3,12 +3,11 @@
     pageEncoding="UTF-8"%>
 
 <%
-	Enumeration<String> e = session.getAttributeNames();
-	while(e.hasMoreElements())
-	{
-		String ele = e.nextElement();
-		System.out.println(ele+" "+session.getValue(ele));
-	}
+	out.println("Current User Id is "+session.getAttribute("u_id"));
+	out.println("Current User Id is "+session.getAttribute("u_fname"));
+	out.println("Current User Id is "+session.getAttribute("u_lname"));
+	out.println("<a href='logout.jsp'>Logout</a>");
+	//session.removeAttribute("u_id");
 %>
 <!DOCTYPE html>
 <html>
