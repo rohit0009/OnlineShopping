@@ -70,10 +70,11 @@
         		<div class="jumbotron">
         		
         		<%
+        		SearchCustomer sc = new SearchCustomer();
         		//out.println(request.getParameter("searcedValue"));
         		if(request.getMethod().equalsIgnoreCase("post"))
 				{
-					SearchCustomer sc = new SearchCustomer();
+					
 					if( sc.getStatus().contains("ERROR"))
 					{
 						out.print("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+sc.getStatus()+"</div>");
@@ -95,17 +96,20 @@
         					<a href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/admin/search/customer"); %>">Back</a>
         					<center>Customer Details</center>
         					</legend>
-        					
         					<table border=2>
-        					<th>Customer ID</th>
-        					<th>First Name</th>
-        					<th>Last Name</th>
-        					<th>Email</th>
-        					<th>Password</th>
-        					<th>Contact</th>
-        					<th>Gender</th>
+        						<tr>
+        							<th>Customer ID</th>
+		        					<th>First Name</th>
+		        					<th>Last Name</th>
+		        					<th>Email</th>
+		        					<th>Password</th>
+		        					<th>Contact</th>
+		        					<th>Gender</th>
+		        				</tr>
+		        				<tr>
+									<td><% sc.setCustID(); %> </td>
+								</tr>
         					</table>
-        					
         				</fieldset>
         			</form>
         			</p>

@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import java.util.Properties;    
@@ -17,6 +19,7 @@ public class SearchCustomer
 	private String c_fname = null;
 	private String c_lname = null;
 	private String status = "";
+	HashMap<Integer,String> hmap = new HashMap<Integer,String>();
 	
 	private Database db = null;
 	private Connection conn = null;
@@ -46,14 +49,13 @@ public class SearchCustomer
 				{
 					if(rs.getString(2).equals(c_fname))
 					{
-						System.out.println(rs.getString("u_id"));
-						System.out.println(rs.getString("u_fname"));
-						System.out.println(rs.getString("u_lname"));
-						System.out.println(rs.getString("email"));
-						System.out.println(rs.getString("password"));
-						System.out.println(rs.getString("contact"));
-						System.out.println(rs.getString("gender"));
-						System.out.println(rs.getString("r_id"));
+						hmap.put(1,rs.getString("u_id"));
+						hmap.put(2,rs.getString("u_fname"));
+						hmap.put(3,rs.getString("u_lname"));
+						hmap.put(4,rs.getString("email"));
+						hmap.put(5,rs.getString("password"));
+						hmap.put(6,rs.getString("contact"));
+						hmap.put(7,rs.getString("gender"));
 					}
 				}
 			}
@@ -69,6 +71,14 @@ public class SearchCustomer
 		{
 			db.destroy();
 			System.out.println("ERROR : Connection not Successful");
+		}
+	}
+	
+	public void setCustID()
+	{
+		for(Map.Entry m:hmap.entrySet())
+		{
+			System.out.println(m.getValue());
 		}
 	}
 	
