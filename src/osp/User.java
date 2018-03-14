@@ -5,7 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;    
 import javax.mail.*;    
 import javax.mail.internet.*; 
@@ -94,10 +95,47 @@ public class User {
 		}
 	}
 	
-	public String login()
+	public String [] login()
 	{
-		
-		return "SUCCESS";
+		ResultSet rs = null;
+		PreparedStatement pstmt = null;
+		String arr[];
+		List<String> list= new ArrayList<String>();
+		try
+		{
+			pstmt = conn.prepareStatement("select u_id,u_fname,u_lname,r_id from registered_user where email=? and password=?");
+			pstmt.setString(1, email);
+			pstmt.setString(2, password);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next())
+			{
+				status = "SUCCESS : OK";
+				list.add(""+rs.getInt(1));
+				list.add(rs.getString(2));
+				list.add(rs.getString(3));
+				if(rs.getInt(4) == 1002)
+				{
+					list.add("true");
+				}
+				else
+				{
+					list.add("false");
+				}
+				arr = new String[list.size()];
+				list.toArray(arr);
+				return arr; 
+			}
+			status = "ERROR : USER NOT FOUND";
+			arr = new String[] {};
+			return arr;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			status = "ERROR : USER NOT FOUND";
+			arr = new String[] {};
+			return arr;
+		}
 	}
 	
 	/**

@@ -24,29 +24,6 @@
 		   alert(query+" hi"); */
 	       $('#submitaddP').click();
 		}
-		function disable_neck()
-		{
-			//var conceptName = $('#category').find(":selected").text();
-			//alert(conceptName);
-			$('#neck_type [value="1"]').attr("selected",true);
-			$('#submitaddP').click();
-			//$("#category option:contains("+conceptName+")").attr('selected', true);
-		}
-		function validate()
-		{
-			alert("hi");
-			var pname = document.getElementById('pname');
-			var desc = document.getElementById('desc');
-			var colour = document.getElementById('colour');
-			var brand = document.getElementById('brand');
-			var ideal_for = document.getElementById('ideal_for');
-			var file1 = document.getElementById('file1');
-			var file2 = document.getElementById('file2');
-			var file3 = document.getElementById('file3');
-			
-			alert(pname.value + " " + desc.value + " " + colour.value + " " + brand.value +" " + file1.value);
-			return false;
-		}
 		function updatePreview(str) {
 			var preview = document.querySelector('.preview-'+str);
 			var input = document.getElementById('file'+str);
@@ -110,7 +87,7 @@
 				FileItemFactory itemFactory = null;
 				ServletFileUpload fileUpload = null;
 				// \\at the end of string PATH
-				String path = "D:\\workspacemca\\OnlineShopping\\WebContent\\images\\";
+				String path = "D:/workspacemca/OnlineShopping/WebContent/images/";
 				int fully_validated_data = 0;
 				
 				public boolean allLetters(String args,JspWriter out,String parameter)throws IOException
@@ -159,6 +136,23 @@
 					}
 				}
 			%>
+			<%
+				if(session.getAttribute("u_id") == null && session.getAttribute("u_fname") == null && session.getAttribute("u_lname") == null && session.getAttribute("is_Admin") == null)
+				{
+					out.println("<div class=\"jumbotron\">You are not Logged In. Please ");
+					out.println("<a href=\"http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/login\">Login</a></div></body></html>");
+				}
+				else
+				{
+					String bool = (String)session.getAttribute("is_Admin");
+					if(!bool.equalsIgnoreCase("true"))
+					{
+						out.println("<div class=\"jumbotron\">You are not allowed to Access this Page Contents ");
+						out.println("<a href=\"http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping\">Shop items</a></div></body></html>");
+					}
+					else
+					{
+			%>
 	<nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -175,7 +169,7 @@
             <li><a href="../..">Go to Site</a></li>
             <li class="active"><a href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/admin"); %>">Dashboard</a></li>
             <li><a href="#">Profile</a></li>
-            	<li><a href="#">Logout</a></li>
+            	<li><a href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/logout.jsp"); %>">Logout</a></li>
           </ul>
         </div>
       </div>
@@ -225,21 +219,11 @@
 							{
 								
 								String name = item.getFieldName();
-								/* String value = item.getString();
-								System.out.println(name+" "+value); */
-								
 							    String value = item.getString();
 							    if(value.equalsIgnoreCase(""))
 							    		map.put(name, null);
 							    else
 							    		map.put(name, value);
-							    //System.out.println(name+" "+value);
-								
-								/* if (flag == 1)
-								{
-									System.out.println("ERROR : ");
-									break;
-								} */
 							}
 							if(!item.isFormField())
 							{
@@ -253,19 +237,9 @@
 						    			map.put(fieldName, null);
 						    		else
 						    			map.put(fieldName, fileName);
-							    /* File uploadDir = new File(path);
-								out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+uploadDir.isDirectory()+"</div>");
-								if(contentType.equals("image/jpeg") || contentType.equals("image/png"))
-								{
-									File file = File.createTempFile("img", ".jpeg", uploadDir);
-									item.write(file);
-								} */
 							}
 							
 						}
-			
-						
-						
 						
 						//VALIDATION HERE
 						
@@ -306,6 +280,47 @@
 									product.setCat_id(product.get_Cat_id(map.get("category").toString()));
 									if(!product.getStatus().contains("ERROR"))
 									{
+										Map<String,List<FileItem>> items1 = fileUpload.parseParameterMap(request);
+										
+										for(Entry<String, List<FileItem>> mapitem : items.entrySet())
+										{
+											FileItem item = mapitem.getValue().get(0);
+											
+											if(!item.isFormField())
+											{
+											    File uploadDir = new File(path+map.get("ideal_for").trim()+"/"+map.get("category").trim()+"/"+map.get("colour").trim());
+											    System.out.println(uploadDir.isDirectory());
+											    if(!uploadDir.exists())
+											    {
+											    		try{
+											    			boolean dir_created = uploadDir.mkdirs();
+											    			if( !dir_created )
+											    				System.out.println("Dir creation failed TRY");
+											    		}catch(Exception e)
+											    		{
+											    			System.out.println("Dir creation failed");
+											    			e.printStackTrace();
+											    		}
+											    		String ext = FilenameUtils.getExtension(item.getName());
+											    		//System.out.println(item.getName()+"_1");
+											    		//File file = new File(path+map.get("ideal_for").trim()+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim() , "img_"+map.get("colour")+"."+ext);
+											    		File file = File.createTempFile("img", "."+ext, uploadDir);
+											    		map.put(item.getFieldName(),file.getName());
+														item.write(file);
+											    }
+											    else
+											    {
+											    	String ext = FilenameUtils.getExtension(item.getName());
+											    	//System.out.println(item.getName()+"_2");
+											    	//File file = new File(path+map.get("ideal_for").trim()+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim());
+										    		File file = File.createTempFile("img", "."+ext, uploadDir);
+										    		map.put(item.getFieldName(),file.getName());
+													item.write(file);
+											    }
+												
+											}
+											
+										}
 										product.setPname(map.get("pname"));
 										product.setDescription(map.get("desc"));
 										product.setColor(map.get("colour"));
@@ -319,47 +334,13 @@
 										product.setPrice(Double.parseDouble(map.get("price")));
 										product.setTotal_items_order(Integer.parseInt(map.get("item_ordered")));
 										product.setItems_left(Integer.parseInt(map.get("item_ordered")));
-										product.setImage_path(path+map.get("ideal_for")+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim()+"\\"+map.get("file1").trim());
-										product.setImage_path_2(path+map.get("ideal_for")+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim()+"\\"+map.get("file2").trim());
-										product.setImage_path_3(path+map.get("ideal_for")+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim()+"\\"+map.get("file3").trim());
+										product.setImage_path(path+map.get("ideal_for")+"/"+map.get("category").trim()+"/"+map.get("colour").trim()+"/"+map.get("file1").toLowerCase().trim());
+										product.setImage_path_2(path+map.get("ideal_for")+"/"+map.get("category").trim()+"/"+map.get("colour").trim()+"/"+map.get("file2").toLowerCase().trim());
+										product.setImage_path_3(path+map.get("ideal_for")+"/"+map.get("category").trim()+"/"+map.get("colour").trim()+"/"+map.get("file3").toLowerCase().trim());
 										status = product.add();
 										if(!product.getStatus().contains("ERROR"))
 										{
-											Map<String,List<FileItem>> items1 = fileUpload.parseParameterMap(request);
 											
-											for(Entry<String, List<FileItem>> mapitem : items.entrySet())
-											{
-												FileItem item = mapitem.getValue().get(0);
-												
-												if(!item.isFormField())
-												{
-												    File uploadDir = new File(path+map.get("ideal_for").trim()+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim());
-												    System.out.println(uploadDir.isDirectory());
-												    if(!uploadDir.isDirectory())
-												    {
-												    		try{
-												    			boolean dir_created = uploadDir.mkdirs();
-												    			if( !dir_created )
-												    				System.out.println("Dir creation failed TRY");
-												    		}catch(Exception e)
-												    		{
-												    			System.out.println("Dir creation failed");
-												    			e.printStackTrace();
-												    		}
-												    		String ext = FilenameUtils.getExtension(item.getName());
-												    		File file = File.createTempFile("img", "."+ext, uploadDir);
-															item.write(file);
-												    }
-												    else
-												    {
-												    	String ext = FilenameUtils.getExtension(item.getName());
-											    		File file = File.createTempFile("img", "."+ext, uploadDir);
-														item.write(file);
-												    }
-													
-												}
-												
-											}
 											map.clear();
 											fully_validated_data = 0;
 											out.println("<div class=\"alert alert-dismissible alert-success\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>Product Added Successfully</div>");
@@ -575,3 +556,7 @@
     <script src="../../bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
+<%
+	}
+}
+%>

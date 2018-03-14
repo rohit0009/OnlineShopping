@@ -1,5 +1,10 @@
+<%@page import="osp.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	if(session.getAttribute("u_id") != null)
+		response.sendRedirect("..");
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -68,14 +73,39 @@
 </head>
 <body><br>
 	<div class="container">
-		<%
-			if("post".equalsIgnoreCase(request.getMethod()))
-			{
-				out.println(request.getParameter("email"));
-				out.println(request.getParameter("password"));
-			}
-		%>
-		<div id="alert"></div>
+		<div id="alert">
+			<%
+				if(request.getMethod().equalsIgnoreCase("post"))
+				{
+					String email = request.getParameter("email");
+					String password = request.getParameter("password");
+					User user = new User();
+					if(user.getStatus().contains("ERROR"))
+					{
+						out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+user.getStatus()+"</div>");
+					}
+					else
+					{
+						user.setEmail(email.trim());
+						user.setPassword(password.trim());
+						String current_user[] = user.login();
+						if(user.getStatus().contains("ERROR"))
+						{
+							out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+user.getStatus()+"</div>");
+						}
+						else
+						{
+							int current_user_id = Integer.parseInt(current_user[0]);
+							session.setAttribute("u_id", current_user_id);
+							session.setAttribute("u_fname", current_user[1]);
+							session.setAttribute("u_lname", current_user[2]);
+							session.setAttribute("is_Admin", current_user[3]);
+							response.sendRedirect("..");
+						}
+					}
+				}
+			%>
+		</div>
 		<div class="well">
 			<form class="form-horizontal" name="loginform" method="POST" action="<%request.getRequestURL(); %>" onsubmit="return validate()">
 				
@@ -102,8 +132,8 @@
 				    		</div>
 				    </div>
 				    <div class="form-group">
-				    		<div class="col-lg-1">
-				        		<button type="submit" class="btn btn-primary">Login</button>
+			    		<div class="col-lg-1">
+			        		<button type="submit" class="btn btn-primary">Login</button>
 				      	</div>
 				    </div>
 			    	</fieldset>
