@@ -104,7 +104,7 @@
         				<div id="alert"></div>
         				<form class="form-horizontal" name="searchCustForm" action="SearchCustomer.jsp" method="post" onsubmit="return validateCustForm()">
       						<div class="form-group">
-      						<label for="inputEmail" class="col-lg-offset-2 col-lg-2 control-label">Email</label>
+      						<label for="inputEmail" class="col-lg-offset-2 col-lg-2 control-label">Search Something <span style="color: red">*</span></label>
       						<div class ="col-lg-4">
       							<input class="form-control" type="text" name="searchedValue" id="searchedValue" placeholder="Search">
       						</div>
