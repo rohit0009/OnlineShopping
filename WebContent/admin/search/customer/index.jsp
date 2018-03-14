@@ -102,16 +102,31 @@
         			<p class="lead">
         			<center>
         				<div id="alert"></div>
-        				<form class="form-inline my-2 my-lg-0" name="searchCustForm" action="SearchCustomer.jsp" method="post" onsubmit="return validateCustForm()">
-      						<div><input class="form-control mr-sm-2" type="text" name="searchedValue" id="searchedValue" placeholder="Search">
-       						<button class="btn btn-info" type="submit">Search</button></div>
-       						<fieldset>
-       						<div class="form-check"><input type="radio" class="form-check-input" name="SearchByName" id="firstName" value="u_fname">First Name
-       						<input type="radio" class="form-check-input" name="SearchByName" id="lastName" value="u_lname">Last Name</div>
-       						</fieldset>
+        				<form class="form-horizontal" name="searchCustForm" action="SearchCustomer.jsp" method="post" onsubmit="return validateCustForm()">
+      						<div class="form-group">
+      						<label for="inputEmail" class="col-lg-offset-2 col-lg-2 control-label">Email</label>
+      						<div class ="col-lg-4">
+      							<input class="form-control" type="text" name="searchedValue" id="searchedValue" placeholder="Search">
+      						</div>
+       							
+       						</div>
+       						<div class="form-group">
+      							<label class="col-lg-offset-2 col-lg-2 control-label">Radios</label>
+      							<div class="col-lg-4">
+	      							<div class="radio">
+								        <label>
+								        	<input type="radio" name="SearchByName" id="firstName" value="u_fname" checked="">First Name
+								        </label>
+								        <label>
+								        	<input type="radio" name="SearchByName" id="lastName" value="u_lname">Last Name
+								        </label>
+						    		</div>
+						    		
+					    		</div>
+       						</div>
+       							<button class="btn btn-info" type="submit">Search</button>
     					</form>
     				</center>
-        			</p>
         		</div>
         	</div>
       </div>
