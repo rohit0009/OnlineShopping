@@ -34,12 +34,12 @@ public class SearchCustomer
 		}
 	}
 	
-	public HashMap<Integer, HashMap<String , String>> displayCustomer()
+	public HashMap<String, HashMap<String , String>> displayCustomer()
 	{
-		HashMap<Integer ,HashMap<String , String>> hmap = new HashMap<Integer , HashMap<String , String>>();
+		HashMap<String ,HashMap<String , String>> hmap = new HashMap<String , HashMap<String , String>>();
 		Statement stmt = null;
 		ResultSet rs = null;
-		hmap = new HashMap<Integer , HashMap<String , String>>();
+		hmap = new HashMap<String , HashMap<String , String>>();
 		hmap.put(null, null);
 		
 		int counter = 0;
@@ -48,7 +48,7 @@ public class SearchCustomer
 			try
 			{
 				stmt = conn.createStatement();
-				rs = stmt.executeQuery("select * from registered_user where "+c_attr+" LIKE '"+searchedValue+"' and r_id = 1002");
+				rs = stmt.executeQuery("select * from registered_user where "+c_attr+" LIKE '"+searchedValue+"%' and r_id = 1001");
 				
 				
 				while(rs.next())
@@ -59,11 +59,11 @@ public class SearchCustomer
 					internal_map.put("u_fname" , rs.getString("u_fname"));
 					internal_map.put("u_lname" , rs.getString("u_lname"));
 					internal_map.put("email" , rs.getString("email"));
-					//internal_map.put("password" , rs.getString("password"));
+
 					internal_map.put("contact" , rs.getString("contact"));
 					internal_map.put("gender" , rs.getString("gender"));
 					counter++;
-					hmap.put(counter, internal_map);
+					hmap.put(""+counter, internal_map);
 				}
 				status = "OK : SUCCESS";
 				return hmap;

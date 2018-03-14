@@ -73,7 +73,6 @@
         		
         		<%
         		SearchCustomer sc = new SearchCustomer();
-        		//out.println(request.getParameter("searcedValue"));
         		if(request.getMethod().equalsIgnoreCase("post"))
 				{
 					
@@ -85,12 +84,10 @@
 					{
 						sc.setC_attr(request.getParameter("SearchByName"));
 						sc.setSearchedValue(request.getParameter("searchedValue"));
-						//sc.set_lname(request.getParameter("lname"));
-						//return hashmap
-						HashMap<Integer , HashMap<String , String>> result = sc.displayCustomer();
 						
-						Entry <Integer , HashMap<String , String>> entry = result.entrySet().iterator().next();
-						if(entry.getKey() == null)
+						HashMap<String , HashMap<String , String>> result = sc.displayCustomer();
+					
+						if(result.get("1") == null)
 						{
 							out.println("<p class=\"lead\">No Customers found! Please Try Again</p>");
 						}
@@ -98,17 +95,23 @@
 						{
 							out.println("<center>Customer Details</center>");
 							out.println("<table class=\"table table-hover\">");
-							out.println("<thead><tr><th>Customer ID</th><th>First Name</th><th>Last Name</th><th>Email</th><th>Password</th><th>Contact</th><th>Gender</th></tr></thead>");
+							out.println("<thead><tr><th>Customer ID</th><th>First Name</th><th>Last Name</th><th>Email</th><th>Contact</th><th>Gender</th></tr></thead>");
 							out.println("<tbody>");
-							for(Entry <Integer , HashMap<String,String>> customer : result.entrySet())
-							{
-								HashMap<String , String> details = customer.getValue();
-								out.println("<tr>");
-								for(Entry <String , String> val : details.entrySet())
+							
+							int counter = 1;
+							for(HashMap<String,String> customer : result.values()){
+								if(counter == 1)
 								{
-									out.println("<td>"+customer.getValue()+"</td>");
+									counter++;
+									continue;
 								}
-								out.println("</tr>");
+								out.println("<tr>");
+								out.println("<td>"+customer.get("u_id")+"</td>");
+								out.println("<td>"+customer.get("u_fname")+"</td>");
+								out.println("<td>"+customer.get("u_lname")+"</td>");
+								out.println("<td>"+customer.get("contact")+"</td>");
+								out.println("<td>"+customer.get("email")+"</td>");
+								out.println("<td>"+customer.get("gender")+"</td></tr>");
 							}
 							out.println("</tbody></table>");
 						}
