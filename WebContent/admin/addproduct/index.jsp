@@ -24,29 +24,6 @@
 		   alert(query+" hi"); */
 	       $('#submitaddP').click();
 		}
-		function disable_neck()
-		{
-			//var conceptName = $('#category').find(":selected").text();
-			//alert(conceptName);
-			$('#neck_type [value="1"]').attr("selected",true);
-			$('#submitaddP').click();
-			//$("#category option:contains("+conceptName+")").attr('selected', true);
-		}
-		function validate()
-		{
-			alert("hi");
-			var pname = document.getElementById('pname');
-			var desc = document.getElementById('desc');
-			var colour = document.getElementById('colour');
-			var brand = document.getElementById('brand');
-			var ideal_for = document.getElementById('ideal_for');
-			var file1 = document.getElementById('file1');
-			var file2 = document.getElementById('file2');
-			var file3 = document.getElementById('file3');
-			
-			alert(pname.value + " " + desc.value + " " + colour.value + " " + brand.value +" " + file1.value);
-			return false;
-		}
 		function updatePreview(str) {
 			var preview = document.querySelector('.preview-'+str);
 			var input = document.getElementById('file'+str);
@@ -163,7 +140,7 @@
 				if(session.getAttribute("u_id") == null && session.getAttribute("u_fname") == null && session.getAttribute("u_lname") == null && session.getAttribute("is_Admin") == null)
 				{
 					out.println("<div class=\"jumbotron\">You are not Logged In. Please ");
-					out.println("<a href=\"http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/login\">Login</a></div>");
+					out.println("<a href=\"http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/login\">Login</a></div></body></html>");
 				}
 				else
 				{
@@ -171,7 +148,7 @@
 					if(!bool.equalsIgnoreCase("true"))
 					{
 						out.println("<div class=\"jumbotron\">You are not allowed to Access this Page Contents ");
-						out.println("<a href=\"http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping\">Shop items</a></div>");
+						out.println("<a href=\"http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping\">Shop items</a></div></body></html>");
 					}
 					else
 					{
@@ -242,21 +219,11 @@
 							{
 								
 								String name = item.getFieldName();
-								/* String value = item.getString();
-								System.out.println(name+" "+value); */
-								
 							    String value = item.getString();
 							    if(value.equalsIgnoreCase(""))
 							    		map.put(name, null);
 							    else
 							    		map.put(name, value);
-							    //System.out.println(name+" "+value);
-								
-								/* if (flag == 1)
-								{
-									System.out.println("ERROR : ");
-									break;
-								} */
 							}
 							if(!item.isFormField())
 							{
@@ -270,19 +237,9 @@
 						    			map.put(fieldName, null);
 						    		else
 						    			map.put(fieldName, fileName);
-							    /* File uploadDir = new File(path);
-								out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+uploadDir.isDirectory()+"</div>");
-								if(contentType.equals("image/jpeg") || contentType.equals("image/png"))
-								{
-									File file = File.createTempFile("img", ".jpeg", uploadDir);
-									item.write(file);
-								} */
 							}
 							
 						}
-			
-						
-						
 						
 						//VALIDATION HERE
 						
@@ -336,9 +293,9 @@
 										product.setPrice(Double.parseDouble(map.get("price")));
 										product.setTotal_items_order(Integer.parseInt(map.get("item_ordered")));
 										product.setItems_left(Integer.parseInt(map.get("item_ordered")));
-										product.setImage_path(path+map.get("ideal_for")+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim()+"\\"+map.get("file1").trim());
-										product.setImage_path_2(path+map.get("ideal_for")+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim()+"\\"+map.get("file2").trim());
-										product.setImage_path_3(path+map.get("ideal_for")+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim()+"\\"+map.get("file3").trim());
+										product.setImage_path(path+map.get("ideal_for")+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim()+"\\"+map.get("file1").toLowerCase().trim());
+										product.setImage_path_2(path+map.get("ideal_for")+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim()+"\\"+map.get("file2").toLowerCase().trim());
+										product.setImage_path_3(path+map.get("ideal_for")+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim()+"\\"+map.get("file3").toLowerCase().trim());
 										status = product.add();
 										if(!product.getStatus().contains("ERROR"))
 										{
@@ -364,13 +321,17 @@
 												    			e.printStackTrace();
 												    		}
 												    		String ext = FilenameUtils.getExtension(item.getName());
-												    		File file = File.createTempFile("img", "."+ext, uploadDir);
+												    		System.out.println(item.getName()+"_1");
+												    		File file = new File(path+map.get("ideal_for").trim()+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim() , "img_"+map.get("colour")+"."+ext);
+												    		//File file = File.createTempFile("img", "."+ext, uploadDir);
 															item.write(file);
 												    }
 												    else
 												    {
 												    	String ext = FilenameUtils.getExtension(item.getName());
-											    		File file = File.createTempFile("img", "."+ext, uploadDir);
+												    	System.out.println(item.getName()+"_2");
+												    	File file = new File(path+map.get("ideal_for").trim()+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim());
+											    		//File file = File.createTempFile("img", "."+ext, uploadDir);
 														item.write(file);
 												    }
 													
