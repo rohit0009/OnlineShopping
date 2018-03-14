@@ -111,7 +111,7 @@
        							
        						</div>
        						<div class="form-group">
-      							<label class="col-lg-offset-2 col-lg-2 control-label">Radios</label>
+      							<label class="col-lg-offset-2 col-lg-2 control-label">Search by</label>
       							<div class="col-lg-4">
 	      							<div class="radio">
 								        <label>
