@@ -106,8 +106,8 @@
       						<div><input class="form-control mr-sm-2" type="text" name="searchedValue" id="searchedValue" placeholder="Search">
        						<button class="btn btn-info" type="submit">Search</button></div>
        						<fieldset>
-       						<div class="form-check"><input type="radio" class="form-check-input" name="SearchByName" id="firstName" value="firstName">First Name
-       						<input type="radio" class="form-check-input" name="SearchByName" id="lastName" value="lastName">Last Name</div>
+       						<div class="form-check"><input type="radio" class="form-check-input" name="SearchByName" id="firstName" value="u_fname">First Name
+       						<input type="radio" class="form-check-input" name="SearchByName" id="lastName" value="u_lname">Last Name</div>
        						</fieldset>
     					</form>
     				</center>

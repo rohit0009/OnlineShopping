@@ -16,10 +16,10 @@ import javax.mail.internet.*;
 public class SearchCustomer
 {
 	private String searchedValue = null;
-	private String c_fname = null;
-	private String c_lname = null;
+	private String c_attr = null;
+
 	private String status = "";
-	HashMap<Integer,String> hmap = new HashMap<Integer,String>();
+	
 	
 	private Database db = null;
 	private Connection conn = null;
@@ -34,85 +34,75 @@ public class SearchCustomer
 		}
 	}
 	
-	public void displayCustomer()
+	public HashMap<Integer, HashMap<String , String>> displayCustomer()
 	{
+		HashMap<Integer ,HashMap<String , String>> hmap = new HashMap<Integer , HashMap<String , String>>();
 		Statement stmt = null;
 		ResultSet rs = null;
+		hmap = new HashMap<Integer , HashMap<String , String>>();
+		hmap.put(null, null);
 		
+		int counter = 0;
 		if(conn != null)
 		{
 			try
 			{
 				stmt = conn.createStatement();
-				rs = stmt.executeQuery("select * from registered_user");
+				rs = stmt.executeQuery("select * from registered_user where "+c_attr+" LIKE '"+searchedValue+"' and r_id = 1002");
+				
+				
 				while(rs.next())
 				{
-					if(rs.getString(2).equals(c_fname))
-					{
-						hmap.put(1,rs.getString("u_id"));
-						hmap.put(2,rs.getString("u_fname"));
-						hmap.put(3,rs.getString("u_lname"));
-						hmap.put(4,rs.getString("email"));
-						hmap.put(5,rs.getString("password"));
-						hmap.put(6,rs.getString("contact"));
-						hmap.put(7,rs.getString("gender"));
-					}
+					HashMap<String, String> internal_map = new HashMap<String , String>();
+					
+					internal_map.put("u_id" , ""+rs.getInt("u_id"));
+					internal_map.put("u_fname" , rs.getString("u_fname"));
+					internal_map.put("u_lname" , rs.getString("u_lname"));
+					internal_map.put("email" , rs.getString("email"));
+					//internal_map.put("password" , rs.getString("password"));
+					internal_map.put("contact" , rs.getString("contact"));
+					internal_map.put("gender" , rs.getString("gender"));
+					counter++;
+					hmap.put(counter, internal_map);
 				}
+				status = "OK : SUCCESS";
+				return hmap;
 			}
 			catch (SQLException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				db.destroy();
-				System.out.println("ERROR : Connection not Successful");
+				status = "ERROR : Connection not Successful";
+				return hmap;
 			}
 		}
 		else
 		{
 			db.destroy();
-			System.out.println("ERROR : Connection not Successful");
+			status= "ERROR : Connection not Successful";
+			return hmap;
 		}
 	}
 	
-	public void setCustID()
-	{
-		for(Map.Entry m:hmap.entrySet())
-		{
-			System.out.println(m.getValue());
-		}
-	}
 	
 	public String getStatus()
 	{
 		return status;
 	}
 
-	/**
-	 * @return the u_fname
-	 */
-	public String get_fname()
+	public String getC_attr()
 	{
-		return c_fname;
+		return c_attr;
 	}
 
-	/**
-	 * @return the u_lname
-	 */
-	/*public String get_lname()
+	public void setC_attr(String c_attr)
 	{
-		return c_lname;
-	}*/
+		this.c_attr = c_attr;
+	}
 	
-	public void set_fname(String c_fname)
+	public void setSearchedValue(String searchedValue)
 	{
-		this.c_fname = c_fname;
+		this.searchedValue = searchedValue;
 	}
-
-	/**
-	 * @param u_lname the u_lname to set
-	 */
-	/*public void set_lname(String c_lname)
-	{
-		this.c_lname = c_lname;
-	}*/
 }

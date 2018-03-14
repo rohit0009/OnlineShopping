@@ -1,3 +1,5 @@
+<%@page import="java.util.Map.Entry"%>
+<%@page import="java.util.HashMap"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1" import="osp.SearchCustomer"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -81,38 +83,47 @@
 					}
 					else
 					{
-						sc.set_fname(request.getParameter("searchedValue"));
+						sc.setC_attr(request.getParameter("SearchByName"));
+						sc.setSearchedValue(request.getParameter("searchedValue"));
 						//sc.set_lname(request.getParameter("lname"));
 						//return hashmap
-						sc.displayCustomer();
+						HashMap<Integer , HashMap<String , String>> result = sc.displayCustomer();
+						
+						Entry <Integer , HashMap<String , String>> entry = result.entrySet().iterator().next();
+						if(entry.getKey() == null)
+						{
+							out.println("<p class=\"lead\">No Customers found! Please Try Again</p>");
+						}
+						else
+						{
+							out.println("<center>Customer Details</center>");
+							out.println("<table class=\"table table-hover\">");
+							out.println("<thead><tr><th>Customer ID</th><th>First Name</th><th>Last Name</th><th>Email</th><th>Password</th><th>Contact</th><th>Gender</th></tr></thead>");
+							out.println("<tbody>");
+							for(Entry <Integer , HashMap<String,String>> customer : result.entrySet())
+							{
+								HashMap<String , String> details = customer.getValue();
+								out.println("<tr>");
+								for(Entry <String , String> val : details.entrySet())
+								{
+									out.println("<td>"+customer.getValue()+"</td>");
+								}
+								out.println("</tr>");
+							}
+							out.println("</tbody></table>");
+						}
 					}
 				}
         		%>
         		
-        			<p class="lead">
-        			<form>
-        				<fieldset>
-        					<legend>
+        			
+        			
+        				
         					<a href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/admin/search/customer"); %>">Back</a>
-        					<center>Customer Details</center>
-        					</legend>
-        					<table border=2>
-        						<tr>
-        							<th>Customer ID</th>
-		        					<th>First Name</th>
-		        					<th>Last Name</th>
-		        					<th>Email</th>
-		        					<th>Password</th>
-		        					<th>Contact</th>
-		        					<th>Gender</th>
-		        				</tr>
-		        				<tr>
-									<td><% sc.setCustID(); %> </td>
-								</tr>
-        					</table>
-        				</fieldset>
-        			</form>
-        			</p>
+        					
+        				
+        			
+        			
         		</div>
         	</div>
       </div>
