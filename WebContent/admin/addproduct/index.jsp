@@ -280,52 +280,12 @@
 									product.setCat_id(product.get_Cat_id(map.get("category").toString()));
 									if(!product.getStatus().contains("ERROR"))
 									{
-										Map<String,List<FileItem>> items1 = fileUpload.parseParameterMap(request);
 										
-										for(Entry<String, List<FileItem>> mapitem : items.entrySet())
-										{
-											FileItem item = mapitem.getValue().get(0);
-											
-											if(!item.isFormField())
-											{
-											    File uploadDir = new File(path+map.get("ideal_for").trim()+"/"+map.get("category").trim()+"/"+map.get("colour").trim());
-											    System.out.println(uploadDir.isDirectory());
-											    if(!uploadDir.exists())
-											    {
-											    		try{
-											    			boolean dir_created = uploadDir.mkdirs();
-											    			if( !dir_created )
-											    				System.out.println("Dir creation failed TRY");
-											    		}catch(Exception e)
-											    		{
-											    			System.out.println("Dir creation failed");
-											    			e.printStackTrace();
-											    		}
-											    		String ext = FilenameUtils.getExtension(item.getName());
-											    		//System.out.println(item.getName()+"_1");
-											    		//File file = new File(path+map.get("ideal_for").trim()+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim() , "img_"+map.get("colour")+"."+ext);
-											    		File file = File.createTempFile("img", "."+ext, uploadDir);
-											    		map.put(item.getFieldName(),file.getName());
-														item.write(file);
-											    }
-											    else
-											    {
-											    	String ext = FilenameUtils.getExtension(item.getName());
-											    	//System.out.println(item.getName()+"_2");
-											    	//File file = new File(path+map.get("ideal_for").trim()+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim());
-										    		File file = File.createTempFile("img", "."+ext, uploadDir);
-										    		map.put(item.getFieldName(),file.getName());
-													item.write(file);
-											    }
-												
-											}
-											
-										}
-										product.setPname(map.get("pname"));
-										product.setDescription(map.get("desc"));
-										product.setColor(map.get("colour"));
-										product.setBrand(map.get("brand"));
-										product.setIdeal_for(map.get("ideal_for"));
+										product.setPname(map.get("pname").trim());
+										product.setDescription(map.get("desc").trim());
+										product.setColor(map.get("colour").trim());
+										product.setBrand(map.get("brand").trim());
+										product.setIdeal_for(map.get("ideal_for").trim());
 										
 										product.setS_id(supplier.get_S_id(map.get("supplier")));
 										//product.setCat_id(Integer.parseInt(map.get("category")));
@@ -340,7 +300,47 @@
 										status = product.add();
 										if(!product.getStatus().contains("ERROR"))
 										{
+											Map<String,List<FileItem>> items1 = fileUpload.parseParameterMap(request);
 											
+											for(Entry<String, List<FileItem>> mapitem : items.entrySet())
+											{
+												FileItem item = mapitem.getValue().get(0);
+												
+												if(!item.isFormField())
+												{
+												    File uploadDir = new File(path+map.get("ideal_for").trim()+"/"+map.get("category").trim()+"/"+map.get("colour").trim());
+												    System.out.println(uploadDir.isDirectory());
+												    if(!uploadDir.exists())
+												    {
+												    		try{
+												    			boolean dir_created = uploadDir.mkdirs();
+												    			if( !dir_created )
+												    				System.out.println("Dir creation failed TRY");
+												    		}catch(Exception e)
+												    		{
+												    			System.out.println("Dir creation failed");
+												    			e.printStackTrace();
+												    		}
+												    		String ext = FilenameUtils.getExtension(item.getName());
+												    		//System.out.println(item.getName()+"_1");
+												    		//File file = new File(path+map.get("ideal_for").trim()+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim() , "img_"+map.get("colour")+"."+ext);
+												    		File file = File.createTempFile("img", "."+ext, uploadDir);
+												    		map.put(item.getFieldName(),file.getName());
+															item.write(file);
+												    }
+												    else
+												    {
+												    	String ext = FilenameUtils.getExtension(item.getName());
+												    	//System.out.println(item.getName()+"_2");
+												    	//File file = new File(path+map.get("ideal_for").trim()+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim());
+											    		File file = File.createTempFile("img", "."+ext, uploadDir);
+											    		map.put(item.getFieldName(),file.getName());
+														item.write(file);
+												    }
+													
+												}
+												
+											}
 											map.clear();
 											fully_validated_data = 0;
 											out.println("<div class=\"alert alert-dismissible alert-success\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>Product Added Successfully</div>");

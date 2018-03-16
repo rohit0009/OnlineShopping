@@ -37,6 +37,16 @@ public class Product extends Category{
 	public String add()
 	{
 		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("select * from product");
+			while(rs.next())
+			{
+				if(rs.getString("pname").equalsIgnoreCase(pname) && rs.getString("ideal_for").equalsIgnoreCase(ideal_for) && rs.getString("size").equalsIgnoreCase(size) && rs.getString("fabric").equalsIgnoreCase(fabric) && rs.getString("color").equalsIgnoreCase(color) && rs.getString("brand").equalsIgnoreCase(brand) )
+				{
+					status = "ERROR : This Product already EXISITS";
+					return status;
+				}
+			}
 			p_product = conn.prepareStatement("INSERT INTO `product` ( `pname`, `ideal_for`, `size`, `fabric`, `color`, `description`, `image_path`, `image_path_2`, `image_path_3`, `brand`, `s_id`, `cat_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
 			p_product.setString(1, pname);
 			p_product.setString(2, ideal_for);
@@ -53,7 +63,6 @@ public class Product extends Category{
 			int res = p_product.executeUpdate();
 			if(res > 0)
 			{
-				status = "OK : Query Success";
 				ResultSet rs_p_id = p_product.getGeneratedKeys();
 				int new_key;
 				rs_p_id.next();
@@ -68,18 +77,23 @@ public class Product extends Category{
 				int inv_res = p_inv.executeUpdate();
 				if(inv_res > 0)
 				{
-					status = "OK : Success";
+					status = "SUCCESS : Product added.";
+					return status;
 				}
 				else
-					return "ERROR : QUERY FAILED";
-				return "SUCCESS : Product added.";
+				{
+					status = "ERROR : QUERY FAILED";
+					return status;
+				}
 			}
-			return "ERROR : QUERY FAILED";
+			status = "ERROR : QUERY FAILED";
+			return status;
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return "ERROR : SQL FAILED";
+			status = "ERROR : QUERY FAILED";
+			return status;
 		}
 		finally {
 			try {
