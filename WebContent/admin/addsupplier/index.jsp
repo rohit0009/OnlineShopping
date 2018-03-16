@@ -122,6 +122,23 @@
 <title>Add Suppliers</title>
 </head>
 <body>
+<%
+	if(session.getAttribute("u_id") == null && session.getAttribute("u_fname") == null && session.getAttribute("u_lname") == null && session.getAttribute("is_Admin") == null)
+	{
+		out.println("<div class=\"jumbotron\" style=\"padding-left: 40px;margin-left : 50px;margin-right : 50px;font-size :25px;\">You are not Logged In. Please ");
+		out.println("<a href=\"http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/login\">Login</a></div></body></html>");
+	}
+	else
+	{
+		String bool = (String)session.getAttribute("is_Admin");
+		if(!bool.equalsIgnoreCase("true"))
+		{
+			out.println("<div class=\"jumbotron\" style=\"padding-left: 40px;margin-left : 50px;margin-right : 50px;font-size :25px;\">You are not allowed to Access this Page ");
+			out.println("<a href=\"http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping\">Shop items</a></div></body></html>");
+		}
+		else
+		{
+%>
 <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -252,6 +269,9 @@
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="../../bootstrap/js/bootstrap.min.js"></script>
-
+<%
+		}
+	}
+%>
 </body>
 </html>
