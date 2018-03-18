@@ -24,60 +24,6 @@
 		   alert(query+" hi"); */
 	       $('#submitaddP').click();
 		}
-		function updatePreview(str) {
-			var preview = document.querySelector('.preview-'+str);
-			var input = document.getElementById('file'+str);
-			while(preview.firstChild)
-			{
-			    preview.removeChild(preview.firstChild);
-			}
-
-			  var curFiles = input.files;
-			  if(curFiles.length === 0)
-			  {
-			    var para = document.createElement('p');
-			    para.textContent = 'No files currently selected for upload';
-			    preview.appendChild(para);
-			  }
-			  else 
-			  {
-			      var para = document.createElement('p');
-			      if(validFileType(curFiles[0]))
-			      {
-			    	  	if(curFiles[0].size > 2097152)
-			    	  	{
-			    	  			para.textContent = 'File name size is greater than 2MB!';
-			    	  			input.value= ''
-					        preview.appendChild(para)	
-			    	  	}
-			    	  	else
-			    	  	{
-			    	  			para.textContent = 'File name ' + curFiles[0].name;
-					        var image = document.createElement('img');
-					        image.src = window.URL.createObjectURL(curFiles[0]);
-							image.className = 'img-thumbnail';
-							preview.appendChild(image);
-							preview.appendChild(para)	
-			    	  	}
-			      }
-			      else
-			      {
-			        para.textContent = 'File name ' + curFiles[0].name + ': Not a valid file type. Update your selection.';
-			        input.value = ""
-			        preview.appendChild(para)
-			      }
-			    }
-			}
-		function validFileType(file) {
-			var fileTypes = ['image/jpeg','image/png' ,'image/jpg']
-		  for(var i = 0; i < fileTypes.length; i++) {
-		    if(file.type === fileTypes[i]) {
-		      return true;
-		    }
-		  }
-
-		  return false;
-		}
 	</script>
 </head>
 <body>
@@ -486,28 +432,19 @@
 						    <div class="form-group">
 						    		<label class="col-lg-2 control-label" style="text-align: center;">Image 1 <span style="color: red;">*</span></label>
 						      	<div class="col-lg-5">
-						        		<input type="file" id="file1" accept=".png,.jpeg,.jpg" name="file1" onchange="updatePreview('1')">
-						      	</div>
-						      	<div class="col-lg-5 preview-1" style="border: 1px solid black">
-						      		<p>No Preview Available</p>
+						        		<input type="file" id="file1" accept=".png,.jpeg,.jpg" name="file1">
 						      	</div>
 						    </div>
 						    <div class="form-group">
 						    		<label class="col-lg-2 control-label" style="text-align: center;">Image 2 <span style="color: red;">*</span></label>
 						      	<div class="col-lg-5">
-						        		<input type="file" id="file2" accept=".png,.jpeg,.jpg" name="file2" onchange="updatePreview('2')">
-						      	</div>
-						      	<div class="col-lg-5 preview-2" style="border: 1px solid black">
-						      		<p>No Preview Available</p>
+						        		<input type="file" id="file2" accept=".png,.jpeg,.jpg" name="file2">
 						      	</div>
 						    </div>
 						    <div class="form-group">
 						    		<label class="col-lg-2 control-label" style="text-align: center;">Image 3 <span style="color: red;">*</span></label>
 						      	<div class="col-lg-5">
-						        		<input type="file" id="file3" accept=".png,.jpeg,.jpg" name="file3" onchange="updatePreview('3')">
-						      	</div>
-						      	<div class="col-lg-5 preview-3" style="border: 1px solid black">
-						      		<p>No Preview Available</p>
+						        		<input type="file" id="file3" accept=".png,.jpeg,.jpg" name="file3">
 						      	</div>
 						    </div>
 						    
