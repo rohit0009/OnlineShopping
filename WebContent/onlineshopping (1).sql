@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 18, 2018 at 11:49 AM
--- Server version: 10.1.24-MariaDB
--- PHP Version: 7.1.6
+-- Generation Time: Mar 18, 2018 at 05:53 PM
+-- Server version: 10.1.25-MariaDB
+-- PHP Version: 7.1.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -141,7 +141,9 @@ INSERT INTO `inventory` (`i_id`, `price`, `total_items_ordered`, `items_left`, `
 (58, 1500, 10, 10, 64),
 (59, 3000, 10, 10, 65),
 (60, 1500, 40, 40, 66),
-(61, 1500.5, 100, 100, 67);
+(61, 1500.5, 100, 100, 67),
+(62, 899, 6, 6, 68),
+(63, 999, 8, 8, 69);
 
 -- --------------------------------------------------------
 
@@ -186,7 +188,9 @@ INSERT INTO `product` (`p_id`, `pname`, `ideal_for`, `size`, `fabric`, `color`, 
 (64, 'Gray Jeans', 'men', 'm', 'cotton', 'Gray', 'L,Zard Regular Fit Men\'S Jeans', 'D:/workspacemca/OnlineShopping/WebContent/images/men/Men Jeans/Gray/img6291240363212818946.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/men/Men Jeans/Gray/img1092063205003624023.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/men/Men Jeans/Gray/img4087967941204867583.jpg', 'Levis', 5005, 5),
 (65, 'Shorts Red', 'men', 'l', 'cotton', 'Red', 'High quality Men\'s Shorts direct from the manufacturers', 'D:/workspacemca/OnlineShopping/WebContent/images/men/Men Shorts/Red/img3608054830376961169.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/men/Men Shorts/Red/img5325121903397079573.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/men/Men Shorts/Red/img9132817956475667391.jpg', 'Jordan', 5002, 7),
 (66, 'Shorts', 'men', 'l', 'cotton', 'Gray', 'High quality Men\'s Shorts direct from the manufacturers', 'D:/workspacemca/OnlineShopping/WebContent/images/men/Men Shorts/Gray/img3527310851277178069.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/men/Men Shorts/Gray/img2937785863978947261.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/men/Men Shorts/Gray/img7477857772274885168.jpg', 'Nike', 5002, 7),
-(67, 'Shorts', 'men', 'm', 'cotton', 'Black', 'High quality Men\'s Shorts direct from the manufacturers', 'D:/workspacemca/OnlineShopping/WebContent/images/men/Men Shorts/Black/img2354967654969739527.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/men/Men Shorts/Black/img6572992847048988587.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/men/Men Shorts/Black/img6621284093552218873.jpg', 'Highlander', 5001, 7);
+(67, 'Shorts', 'men', 'm', 'cotton', 'Black', 'High quality Men\'s Shorts direct from the manufacturers', 'D:/workspacemca/OnlineShopping/WebContent/images/men/Men Shorts/Black/img2354967654969739527.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/men/Men Shorts/Black/img6572992847048988587.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/men/Men Shorts/Black/img6621284093552218873.jpg', 'Highlander', 5001, 7),
+(68, 'Cold Shoulder Womens Black Top', 'women', 's', 'linen', 'Black', 'This casual sexy creation goes with just about any pair of jeans. As for heels or flats, again itâ??s up to you.', 'C:/Users/Neha/eclipse-workspace/OnlineShopping/WebContent/images/women/Women Top/Black/img3731915374955909526.jpg', 'C:/Users/Neha/eclipse-workspace/OnlineShopping/WebContent/images/women/Women Top/Black/img7019745535552898991.jpg', 'C:/Users/Neha/eclipse-workspace/OnlineShopping/WebContent/images/women/Women Top/Black/img6586376504605601672.jpg', 'Gucci', 5001, 9),
+(69, 'Rare Casual Sleeveless Womens White Top', 'women', 'm', 'linen', 'White', 'White top in a patterned weave and floral detailing, has a round neck', 'C:/Users/Neha/eclipse-workspace/OnlineShopping/WebContent/images/women/Women Top/White/img7133632018636538423.jpg', 'C:/Users/Neha/eclipse-workspace/OnlineShopping/WebContent/images/women/Women Top/White/img5454532067058575172.jpg', 'C:/Users/Neha/eclipse-workspace/OnlineShopping/WebContent/images/women/Women Top/White/img1810215809913677179.jpg', 'Mango', 5003, 9);
 
 -- --------------------------------------------------------
 
@@ -354,12 +358,12 @@ ALTER TABLE `coupon`
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `i_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `i_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 --
 -- AUTO_INCREMENT for table `registered_user`
 --
