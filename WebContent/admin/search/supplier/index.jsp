@@ -126,10 +126,10 @@
       							<div class="col-lg-4">
 	      							<div class="radio">
 								        <label>
-								        	<input type="radio" name="SearchByName" id="firstName" value="u_fname" checked="">First Name
+								        	<input type="radio" name="SearchByName" id="firstName" value="s_fname" checked="">First Name
 								        </label>
 								        <label>
-								        	<input type="radio" name="SearchByName" id="lastName" value="u_lname">Last Name
+								        	<input type="radio" name="SearchByName" id="lastName" value="s_lname">Last Name
 								        </label>
 						    		</div>
 						    		

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
@@ -20,6 +21,9 @@ public class Supplier
 	private String s_email = null;
 	private long s_contact;
 	private String status = "";
+	
+	private String searchedValue = null;
+	private String s_attr = null;
 	
 	private Database db = null;
 	private Connection conn = null;
@@ -90,6 +94,55 @@ public class Supplier
 		}
 	}
 	
+	public HashMap<String, HashMap<String , String>> displaySupplier()
+	{
+		HashMap<String ,HashMap<String , String>> hmap = new HashMap<String , HashMap<String , String>>();
+		Statement stmt = null;
+		ResultSet rs = null;
+		hmap = new HashMap<String , HashMap<String , String>>();
+		hmap.put(null, null);
+		
+		int counter = 0;
+		if(conn != null)
+		{
+			try
+			{
+				stmt = conn.createStatement();
+				rs = stmt.executeQuery("select * from supplier where " +s_attr+ " LIKE '" +searchedValue+ "%'");
+				
+				
+				while(rs.next())
+				{
+					HashMap<String, String> internal_map = new HashMap<String , String>();
+					
+					internal_map.put("s_id" , ""+rs.getInt("s_id"));
+					internal_map.put("s_fname" , rs.getString("s_fname"));
+					internal_map.put("s_lname" , rs.getString("s_lname"));
+					internal_map.put("s_email" , rs.getString("s_email"));
+					internal_map.put("s_contact" , rs.getString("s_contact"));
+					counter++;
+					hmap.put(""+counter, internal_map);
+				}
+				status = "OK : SUCCESS";
+				return hmap;
+			}
+			catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				db.destroy();
+				status = "ERROR : Connection not Successful";
+				return hmap;
+			}
+		}
+		else
+		{
+			db.destroy();
+			status= "ERROR : Connection not Successful";
+			return hmap;
+		}
+	}
+
 	public String[] get_Suppliers()
 	{
 		Statement st=null;
@@ -148,7 +201,7 @@ public class Supplier
 	}
 
 	/**
-	 * @return the u_fname
+	 * @return the s_fname
 	 */
 	public String getS_fname()
 	{
@@ -164,7 +217,7 @@ public class Supplier
 	}
 
 	/**
-	 * @param u_fname the u_fname to set
+	 * @param s_fname the s_fname to set
 	 */
 	public void setS_fname(String s_fname)
 	{
@@ -193,6 +246,18 @@ public class Supplier
 	public void setContact(long s_contact)
 	{
 		this.s_contact = s_contact;
+	}
+	
+	public void setSearchedValue(String searchedValue) {
+		this.searchedValue = searchedValue;
+	}
+
+	public String getS_attr() {
+		return s_attr;
+	}
+
+	public void setS_attr(String s_attr) {
+		this.s_attr = s_attr;
 	}
 }
 
