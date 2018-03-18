@@ -1,3 +1,7 @@
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="osp.Database"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -13,7 +17,23 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <body>
-	
+	<%
+		if(session.getAttribute("u_id") == null && session.getAttribute("u_fname") == null && session.getAttribute("u_lname") == null && session.getAttribute("is_Admin") == null)
+		{
+			out.println("<div class=\"jumbotron\" style=\"padding-left: 40px;margin-left : 50px;margin-right : 50px;font-size :25px;\">You are not Logged In. Please ");
+			out.println("<a href=\"http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/login\">Login</a></div></body></html>");
+		}
+		else
+		{
+			String bool = (String)session.getAttribute("is_Admin");
+			if(!bool.equalsIgnoreCase("true"))
+			{
+				out.println("<div class=\"jumbotron\" style=\"padding-left: 40px;margin-left : 50px;margin-right : 50px;font-size :25px;\">You are not allowed to Access this Page ");
+				out.println("<a href=\"http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping\">Shop items</a></div></body></html>");
+			}
+			else
+			{
+	%>
 	<nav class="navbar navbar-default navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -52,121 +72,159 @@
           </ul>
         </div>
         	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-        		<div class="jumbotron">
-        			<div class="row">
-        				<div class="col-lg-4">
-		        			<div class="panel panel-primary">
-							<div class="panel-heading">
-								<h3 class="panel-title">Coupon Id : <% %></h3>
-							</div>
-							<div class="panel-body">
-								<form class="form-horizontal">
-									<div class="form-group">
-								    		<label class="control-label col-lg-5">Coupon Description</label>
-								    		<div class="col-lg-7">
-								    			<textarea class="form-control" rows="2" cols="7" disabled="true">1000 - 2000</textarea>
+        		<%!
+        			ResultSet rs =null;
+        			Statement st = null;
+        			Connection conn = null;
+        		%>
+        		
+				<%
+					Database db = new Database();
+					conn = db.connect();
+					st = conn.createStatement();
+					rs = st.executeQuery("select * from coupon");
+					if(!rs.isBeforeFirst())
+					{
+						out.println("<div class=\"well\"><p class=\"lead\">No Coupons Found.</p></div>");
+					}
+					else
+					{
+						out.println("<center><p class=\"lead\">List of Coupons</p></center>");
+						int coupon_count = 0;
+						while(rs.next())
+						{
+							coupon_count++;
+							if(coupon_count == 1)
+							{
+						%>
+							<div class="row">
+		       					<div class="col-lg-4">
+			        				<div class="well well-lg">
+			        					<center>Coupon Id : <%=rs.getString("coupon_id") %></center>
+			        					<form class="form-horizontal">
+											<div class="form-group">
+									    		<label class="control-label col-lg-5">Coupon Description</label>
+									    		<div class="col-lg-7">
+									    			<textarea class="form-control" rows="2" cols="7" disabled="true"><%=rs.getString("coupon_desc") %></textarea>
+									    		</div>
 								    		</div>
-							    		</div>
-							    		<div class="form-group">
-								    		<label class="control-label col-lg-5">From Amount</label>
-								    		<div class="col-lg-7">
-								    			<input type="text" class="form-control" value="1000 - 2000" disabled="true"></input>
+								    		<div class="form-group">
+									    		<label class="control-label col-lg-5">From Amount</label>
+									    		<div class="col-lg-7">
+									    			<input type="text" class="form-control" value="<%=rs.getString("from_amount") %>" disabled="true"></input>
+									    		</div>
 								    		</div>
-							    		</div>
-							    		<div class="form-group">
-								    		<label class="control-label col-lg-5">To Amount</label>
-								    		<div class="col-lg-7">
-								    			<input type="text" class="form-control" value="1000 - 2000" disabled="true"></input>
+								    		<div class="form-group">
+									    		<label class="control-label col-lg-5">To Amount</label>
+									    		<div class="col-lg-7">
+									    			<input type="text" class="form-control" value="<%=rs.getString("to_amount") %>" disabled="true"></input>
+									    		</div>
 								    		</div>
-							    		</div>
-							    		<div class="form-group">
-								    		<label class="control-label col-lg-5">Discount (%)</label>
-								    		<div class="col-lg-7">
-								    			<input type="text" class="form-control" value="1000 - 2000" disabled="true"></input>
+								    		<div class="form-group">
+									    		<label class="control-label col-lg-5">Discount (%)</label>
+									    		<div class="col-lg-7">
+									    			<input type="text" class="form-control" value="<%=rs.getString("discount") %>" disabled="true"></input>
+									    		</div>
 								    		</div>
-							    		</div>
-						    		</form>
-						  	</div>
-						</div>
-					</div>
-					<div class="col-lg-4">
-		        			<div class="panel panel-primary">
-							<div class="panel-heading">
-								<h3 class="panel-title">Coupon Id : <% %></h3>
-							</div>
-							<div class="panel-body">
-								<form class="form-horizontal">
-									<div class="form-group">
-								    		<label class="control-label col-lg-5">Coupon Description</label>
-								    		<div class="col-lg-7">
-								    			<textarea class="form-control" rows="2" cols="7" disabled="true">1000 - 2000</textarea>
-								    		</div>
-							    		</div>
-							    		<div class="form-group">
-								    		<label class="control-label col-lg-5">From Amount</label>
-								    		<div class="col-lg-7">
-								    			<input type="text" class="form-control" value="1000 - 2000" disabled="true"></input>
-								    		</div>
-							    		</div>
-							    		<div class="form-group">
-								    		<label class="control-label col-lg-5">To Amount</label>
-								    		<div class="col-lg-7">
-								    			<input type="text" class="form-control" value="1000 - 2000" disabled="true"></input>
-								    		</div>
-							    		</div>
-							    		<div class="form-group">
-								    		<label class="control-label col-lg-5">Discount (%)</label>
-								    		<div class="col-lg-7">
-								    			<input type="text" class="form-control" value="1000 - 2000" disabled="true"></input>
-								    		</div>
-							    		</div>
-						    		</form>
-						  	</div>
-						</div>
-					</div>
-					<div class="col-lg-4">
-		        			<div class="panel panel-primary">
-							<div class="panel-heading">
-								<h3 class="panel-title">Coupon Id : <% %></h3>
-							</div>
-							<div class="panel-body">
-								<form class="form-horizontal">
-									<div class="form-group">
-								    		<label class="control-label col-lg-5">Coupon Description</label>
-								    		<div class="col-lg-7">
-								    			<textarea class="form-control" rows="2" cols="7" disabled="true">1000 - 2000</textarea>
-								    		</div>
-							    		</div>
-							    		<div class="form-group">
-								    		<label class="control-label col-lg-5">From Amount</label>
-								    		<div class="col-lg-7">
-								    			<input type="text" class="form-control" value="1000 - 2000" disabled="true"></input>
-								    		</div>
-							    		</div>
-							    		<div class="form-group">
-								    		<label class="control-label col-lg-5">To Amount</label>
-								    		<div class="col-lg-7">
-								    			<input type="text" class="form-control" value="1000 - 2000" disabled="true"></input>
-								    		</div>
-							    		</div>
-							    		<div class="form-group">
-								    		<label class="control-label col-lg-5">Discount (%)</label>
-								    		<div class="col-lg-7">
-								    			<input type="text" class="form-control" value="1000 - 2000" disabled="true"></input>
-								    		</div>
-							    		</div>
-						    		</form>
-						  	</div>
-						</div>
-					</div>
+							    		</form>
+							    	</div>
+							    </div>
+		        		<%
+							}
+							else if(coupon_count == 2)
+							{
+								%>
+									<div class="col-lg-4">
+				        				<div class="well well-lg">
+				        					<center>Coupon Id : <%=rs.getString("coupon_id") %></center>
+				        					<form class="form-horizontal">
+												<div class="form-group">
+										    		<label class="control-label col-lg-5">Coupon Description</label>
+										    		<div class="col-lg-7">
+										    			<textarea class="form-control" rows="2" cols="7" disabled="true"><%=rs.getString("coupon_desc") %></textarea>
+										    		</div>
+									    		</div>
+									    		<div class="form-group">
+										    		<label class="control-label col-lg-5">From Amount</label>
+										    		<div class="col-lg-7">
+										    			<input type="text" class="form-control" value="<%=rs.getString("from_amount") %>" disabled="true"></input>
+										    		</div>
+									    		</div>
+									    		<div class="form-group">
+										    		<label class="control-label col-lg-5">To Amount</label>
+										    		<div class="col-lg-7">
+										    			<input type="text" class="form-control" value="<%=rs.getString("to_amount") %>" disabled="true"></input>
+										    		</div>
+									    		</div>
+									    		<div class="form-group">
+										    		<label class="control-label col-lg-5">Discount (%)</label>
+										    		<div class="col-lg-7">
+										    			<input type="text" class="form-control" value="<%=rs.getString("discount") %>" disabled="true"></input>
+										    		</div>
+									    		</div>
+								    		</form>
+								    	</div>
+								    </div>
+								
+								<%
+							}
+							else if(coupon_count == 3)
+							{
+								%>
+									<div class="col-lg-4">
+				        				<div class="well well-lg">
+				        					<center>Coupon Id : <%=rs.getString("coupon_id") %></center>
+				        					<form class="form-horizontal">
+												<div class="form-group">
+										    		<label class="control-label col-lg-5">Coupon Description</label>
+										    		<div class="col-lg-7">
+										    			<textarea class="form-control" rows="2" cols="7" disabled="true"><%=rs.getString("coupon_desc") %></textarea>
+										    		</div>
+									    		</div>
+									    		<div class="form-group">
+										    		<label class="control-label col-lg-5">From Amount</label>
+										    		<div class="col-lg-7">
+										    			<input type="text" class="form-control" value="<%=rs.getString("from_amount") %>" disabled="true"></input>
+										    		</div>
+									    		</div>
+									    		<div class="form-group">
+										    		<label class="control-label col-lg-5">To Amount</label>
+										    		<div class="col-lg-7">
+										    			<input type="text" class="form-control" value="<%=rs.getString("to_amount") %>" disabled="true"></input>
+										    		</div>
+									    		</div>
+									    		<div class="form-group">
+										    		<label class="control-label col-lg-5">Discount (%)</label>
+										    		<div class="col-lg-7">
+										    			<input type="text" class="form-control" value="<%=rs.getString("discount") %>" disabled="true"></input>
+										    		</div>
+									    		</div>
+								    		</form>
+								    	</div>
+								    </div>
+								    </div>
+								
+								<%
+								coupon_count = 0;
+							}
+						}
+						if(coupon_count == 1 || coupon_count == 2)
+						{
+							out.println("</div>");
+						}
+					}
 					
-				</div>
-        		</div>
-        	</div>
+				%>
+				<button class="btn btn-link"><a href="<%="http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/admin/coupon/add" %>">Add Coupons</a></button>
+				<button class="btn btn-link"><a href="<%="http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/admin/coupon/remove" %>">Remove Coupons</a></button>
+			  	</div>
+	      </div>
       </div>
-    </div>
-	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="../../bootstrap/js/bootstrap.min.js"></script>
+    <%
+			}
+		}
+    %>
 </body>
 </html>
