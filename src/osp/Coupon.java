@@ -1,5 +1,114 @@
 package osp;
 
-public class Coupon {
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
+public class Coupon
+{
+	String coupon_desc="";
+	float discount;
+	int from_amount,to_amount;
+	String status = "";
+	
+	Database db = null;
+	Connection conn = null;
+	
+	public Coupon()
+	{
+		db = new Database();
+		conn = db.connect();
+		if(db.getStatus().contains("ERROR"))
+		{
+			status += "ERROR : Something went wrong. ";
+		}
+	}
+	
+	public String add()
+	{
+		Statement st = null;
+		Statement st1 = null;
+		ResultSet rs = null;
+		ResultSet rs1 = null;
+		
+		// TODO Auto-generated method stub
+		try
+		{
+			st = conn.createStatement();
+			st1 = conn.createStatement();
+			
+			rs = st.executeQuery("SELECT * from coupon where from_amount BETWEEN "+from_amount+" and "+to_amount);
+			rs1 = st1.executeQuery("SELECT * from coupon where to_amount BETWEEN "+from_amount+" and "+to_amount);
+			
+			if(rs == null)
+				System.out.println("null");
+			
+			if(rs1 == null)
+				System.out.println("null");
+			
+			while(rs.next())
+			{
+				status = "ERROR : COUPON cannot be added! Please try again";
+				return status;
+			}
+			
+			while(rs1.next())
+			{
+				status = "ERROR : COUPON cannot be added! Please try again";
+				return status;
+			}
+			
+			int res = st.executeUpdate("INSERT INTO `coupon` (`coupon_desc`, `discount`, `from_amount`, `to_amount`) VALUES ('"+coupon_desc+"', "+discount+", "+from_amount+", "+to_amount+")");
+			if(res > 0)
+			{
+				status = "SUCCESS : Coupon added SUCESSFULLY";
+				return status;
+			}
+			status = "ERROR : QUERY FAILED";
+			return status;
+		}
+		catch (Exception e)
+		{
+			// TODO: handle exception
+			status = "ERROR : Something went wrong";
+			e.printStackTrace();
+			return status;
+		}
+		
+	}
+	
+	
+	public String getCoupon_desc() {
+		return coupon_desc;
+	}
+	public void setCoupon_desc(String coupon_desc) {
+		this.coupon_desc = coupon_desc;
+	}
+	public float getDiscount() {
+		return discount;
+	}
+	public void setDiscount(float discount) {
+		this.discount = discount;
+	}
+	public int getFrom_amount() {
+		return from_amount;
+	}
+	public void setFrom_amount(int from_amount) {
+		this.from_amount = from_amount;
+	}
+	public int getTo_amount() {
+		return to_amount;
+	}
+	public void setTo_amount(int to_amount) {
+		this.to_amount = to_amount;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
 }

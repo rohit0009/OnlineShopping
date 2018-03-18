@@ -1,3 +1,4 @@
+<%@page import="osp.Coupon"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -135,7 +136,29 @@
         		<div class="jumbotron">
         			
         			<div class="container">
-        				<div id="alert"></div>
+        				<div id="alert">
+        					<%
+        						if(request.getMethod().equalsIgnoreCase("post"))
+        						{
+	        						Coupon c = new Coupon();
+	        						if(!c.getStatus().contains("ERROR"))
+	        						{
+	        							c.setCoupon_desc(request.getParameter("desc"));
+	        							c.setFrom_amount(Integer.parseInt(request.getParameter("fRange")));
+	        							c.setTo_amount(Integer.parseInt(request.getParameter("tRange")));
+	        							c.setDiscount(Float.parseFloat(request.getParameter("discount")));
+	        							c.add();
+	        							if(!c.getStatus().contains("ERROR"))
+	        								out.println("<div class=\"alert alert-dismissible alert-success\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+c.getStatus()+"</div>");
+	        							else
+	        								out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+c.getStatus()+"</div>");
+	        						}
+	        						else
+	        							out.println("<div class=\"alert alert-dismissible alert-danger\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>"+c.getStatus()+"</div>");
+        						}
+        					
+        					%>
+        				</div>
         				<form class="form-horizontal" name="addCouponForm" action="<%request.getRequestURL(); %>" method ="POST" onsubmit="return validateForm()">
     	  				
 	  					<fieldset>
