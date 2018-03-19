@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 18, 2018 at 05:53 PM
--- Server version: 10.1.25-MariaDB
--- PHP Version: 7.1.7
+-- Generation Time: Mar 19, 2018 at 08:04 AM
+-- Server version: 10.1.24-MariaDB
+-- PHP Version: 7.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -143,7 +143,20 @@ INSERT INTO `inventory` (`i_id`, `price`, `total_items_ordered`, `items_left`, `
 (60, 1500, 40, 40, 66),
 (61, 1500.5, 100, 100, 67),
 (62, 899, 6, 6, 68),
-(63, 999, 8, 8, 69);
+(63, 999, 8, 8, 69),
+(64, 500, 50, 50, 70),
+(65, 1500, 20, 20, 71),
+(66, 1600, 25, 25, 72),
+(67, 1200, 22, 22, 73),
+(68, 1200, 15, 15, 74),
+(69, 1300, 25, 25, 75),
+(70, 1400, 20, 20, 76),
+(71, 2000, 20, 20, 77),
+(72, 1800, 15, 15, 78),
+(73, 1900, 20, 20, 79),
+(74, 650, 25, 25, 80),
+(75, 800, 20, 20, 81),
+(76, 900, 20, 20, 82);
 
 -- --------------------------------------------------------
 
@@ -189,8 +202,21 @@ INSERT INTO `product` (`p_id`, `pname`, `ideal_for`, `size`, `fabric`, `color`, 
 (65, 'Shorts Red', 'men', 'l', 'cotton', 'Red', 'High quality Men\'s Shorts direct from the manufacturers', 'D:/workspacemca/OnlineShopping/WebContent/images/men/Men Shorts/Red/img3608054830376961169.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/men/Men Shorts/Red/img5325121903397079573.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/men/Men Shorts/Red/img9132817956475667391.jpg', 'Jordan', 5002, 7),
 (66, 'Shorts', 'men', 'l', 'cotton', 'Gray', 'High quality Men\'s Shorts direct from the manufacturers', 'D:/workspacemca/OnlineShopping/WebContent/images/men/Men Shorts/Gray/img3527310851277178069.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/men/Men Shorts/Gray/img2937785863978947261.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/men/Men Shorts/Gray/img7477857772274885168.jpg', 'Nike', 5002, 7),
 (67, 'Shorts', 'men', 'm', 'cotton', 'Black', 'High quality Men\'s Shorts direct from the manufacturers', 'D:/workspacemca/OnlineShopping/WebContent/images/men/Men Shorts/Black/img2354967654969739527.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/men/Men Shorts/Black/img6572992847048988587.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/men/Men Shorts/Black/img6621284093552218873.jpg', 'Highlander', 5001, 7),
-(68, 'Cold Shoulder Womens Black Top', 'women', 's', 'linen', 'Black', 'This casual sexy creation goes with just about any pair of jeans. As for heels or flats, again itâ??s up to you.', 'C:/Users/Neha/eclipse-workspace/OnlineShopping/WebContent/images/women/Women Top/Black/img3731915374955909526.jpg', 'C:/Users/Neha/eclipse-workspace/OnlineShopping/WebContent/images/women/Women Top/Black/img7019745535552898991.jpg', 'C:/Users/Neha/eclipse-workspace/OnlineShopping/WebContent/images/women/Women Top/Black/img6586376504605601672.jpg', 'Gucci', 5001, 9),
-(69, 'Rare Casual Sleeveless Womens White Top', 'women', 'm', 'linen', 'White', 'White top in a patterned weave and floral detailing, has a round neck', 'C:/Users/Neha/eclipse-workspace/OnlineShopping/WebContent/images/women/Women Top/White/img7133632018636538423.jpg', 'C:/Users/Neha/eclipse-workspace/OnlineShopping/WebContent/images/women/Women Top/White/img5454532067058575172.jpg', 'C:/Users/Neha/eclipse-workspace/OnlineShopping/WebContent/images/women/Women Top/White/img1810215809913677179.jpg', 'Mango', 5003, 9);
+(68, 'Cold Shoulder Womens Black Top', 'women', 's', 'linen', 'Black', 'This casual sexy creation goes with just about any pair of jeans. As for heels or flats, again itâ??s up to you.', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Top/Black/img3731915374955909526.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Top/Black/img7019745535552898991.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Top/Black/img6586376504605601672.jpg', 'Gucci', 5001, 9),
+(69, 'Rare Casual Sleeveless Womens White Top', 'women', 'm', 'linen', 'White', 'White top in a patterned weave and floral detailing, has a round neck', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Top/White/img7133632018636538423.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Top/White/img5454532067058575172.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Top/White/img1810215809913677179.jpg', 'Mango', 5003, 9),
+(70, 'Causual Blue Top', 'women', 's', 'cotton', 'Blue', 'The Dry State brings you this limited edition 100% Cotton Tshirt having a quality which none can match.', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Top/Blue/img5493963862281664488.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Top/Blue/img4167550329707747635.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Top/Blue/img7142723943871210370.jpg', 'Libas', 5002, 9),
+(71, 'Full Sleeves Sweatshirt', 'women', 's', 'wool', 'Red', 'Winter is naughty in many layers , so keep it out of your system with this colourful Hooded sweatshirts for Women from the house of High Hill.', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Sweatshirt/Red/img1087850567679976838.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Sweatshirt/Red/img4235244117703487867.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Sweatshirt/Red/img8920538177045277859.jpg', 'Campus', 5003, 10),
+(72, 'Full Sleeves Black sweatshirt', 'women', 'm', 'wool', 'Black', 'These Hoodies are for those who prefer wearing something comfy and relaxed on a regular basis.', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Sweatshirt/Black/img4625143471942924794.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Sweatshirt/Black/img6194283936905797915.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Sweatshirt/Black/img3425798354357025650.jpg', 'Campus', 5003, 10),
+(73, 'Full Sleeves Brown Sweatshirt', 'women', 'l', 'wool', 'Brown', 'These Hoodies are for those who prefer wearing something comfy and relaxed on a regular basis.', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Sweatshirt/Brown/img949444797776747525.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Sweatshirt/Brown/img5504662318444909468.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Sweatshirt/Brown/img8269639008375232060.jpg', 'Campus', 5001, 10),
+(74, 'Nifty Slim Women Jeans', 'women', 's', 'cotton', 'Blue', 'We take pride in our commitment to maintain quality standards in each piece that is marketed by us.', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Jeans/Blue/img6322838250442946478.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Jeans/Blue/img2888654870346219030.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Jeans/Blue/img7572459491852989673.jpg', 'Nifty', 5002, 11),
+(75, 'Nifty Slim Women BlackJeans', 'women', 'm', 'linen', 'Black', 'We take pride in our commitment to maintain quality standards in each piece that is marketed by us.', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Jeans/Black/img4068757026224494049.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Jeans/Black/img7785979475316850374.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Jeans/Black/img2505541099716505133.jpg', 'Nifty', 5002, 11),
+(76, 'Nifty Slim Women Blue Jeans', 'women', 'l', 'cotton', 'Blue', 'We take pride in our commitment to maintain quality standards in each piece that is marketed by us.', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Jeans/Blue/img8591464015757726738.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Jeans/Blue/img2095040099974764713.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Jeans/Blue/img678879573335844473.jpg', 'Nifty', 5002, 11),
+(77, 'Casual Embroidered Women kurti', 'women', 's', 'cotton', 'Black', 'A Stunning Floral Embroidery Work And Will Be Extremely Comfortable To Wear, Courtesy Its Pure Georgette Fabric.', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Kurtas/Black/img2989018883689692431.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Kurtas/Black/img1784094858313014072.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Kurtas/Black/img1382389112485808267.jpg', 'Ziya', 5003, 14),
+(78, 'Casual Green Kurti', 'women', 'm', 'cotton', 'Green', 'You have this solid print kurti thatÃ¢Â?Â?s stylish enough to transition from being classy casual wear to a smart semi-formal outfit', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Kurtas/Green/img7086301261971473045.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Kurtas/Green/img7344700212621401932.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Kurtas/Green/img6908627349555521698.jpg', 'Ziya', 5002, 14),
+(79, 'Casual Embroidered Kurti black', 'women', 'l', 'cotton', 'Black', 'You have this solid print kurti thatÃ¢Â?Â?s stylish enough to transition from being classy casual wear to a smart semi-formal outfit', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Kurtas/Black/img3867768935888905470.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Kurtas/Black/img2600351889103159877.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Kurtas/Black/img7969249699950573460.jpg', 'Aashavi', 5005, 14),
+(80, 'Solid Formal black shirt', 'women', 's', 'cotton', 'Black', 'These Shirts are designed as per the latest trends and fashioned using Georgette Fabric.', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Shirt/Black/img4682862028996612502.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Shirt/Black/img6335955115134311244.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Shirt/Black/img2118097624947113956.jpg', 'Comix', 5005, 8),
+(81, 'Solid Formal blue shirt', 'women', 'm', 'linen', 'Blue', 'This Shirts are designed as per the latest trends and fashioned using Georgette Fabric.', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Shirt/Blue/img900930715211092681.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Shirt/Blue/img7995258445062129088.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Shirt/Blue/img1886094042982195491.jpg', 'Comix', 5002, 8),
+(82, 'Navy Blue Women Shirt', 'women', 'l', 'cotton', 'Blue', 'Navy Blue colored printed top, featuring regular fit, short sleeves and collar neck.', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Shirt/Blue/img478753454409877576.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Shirt/Blue/img3513572003040347445.jpg', 'D:/workspacemca/OnlineShopping/WebContent/images/women/Women Shirt/Blue/img3315967230306266611.jpg', 'Comix', 5002, 8);
 
 -- --------------------------------------------------------
 
@@ -358,12 +384,12 @@ ALTER TABLE `coupon`
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `i_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `i_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 --
 -- AUTO_INCREMENT for table `registered_user`
 --
@@ -374,11 +400,6 @@ ALTER TABLE `registered_user`
 --
 ALTER TABLE `role`
   MODIFY `r_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1003;
---
--- AUTO_INCREMENT for table `supplier`
---
-ALTER TABLE `supplier`
-  MODIFY `s_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5006;
 --
 -- Constraints for dumped tables
 --
