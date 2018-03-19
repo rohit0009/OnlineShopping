@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class Database {
 	private Connection conn = null;
-	private String status = null;
+	private String status = "";
 	
 	
 	public Database(){
