@@ -24,6 +24,56 @@
 		   alert(query+" hi"); */
 	       $('#submitaddP').click();
 		}
+		function updatePreview(str) {
+			var preview = document.querySelector('.preview-'+str);
+			var input = document.getElementById('file'+str);
+			while(preview.firstChild)
+			{
+			    preview.removeChild(preview.firstChild);
+			}
+
+			  var curFiles = input.files;
+			  if(curFiles.length === 0)
+			  {
+			    var para = document.createElement('p');
+			    para.textContent = 'No files currently selected for upload';
+			    preview.appendChild(para);
+			  }
+			  else 
+			  {
+			      var para = document.createElement('p');
+			      if(validFileType(curFiles[0]))
+			      {
+			    	  	if(curFiles[0].size > 2097152)
+			    	  	{
+			    	  			para.textContent = 'File size is greater than 2MB!';
+			    	  			input.value= ''
+					        preview.appendChild(para)	
+			    	  	}
+			    	  	else
+			    	  	{
+			    	  			para.textContent = 'File is SUCCESSFULLY VALIDATED!';
+							preview.appendChild(para)	
+			    	  	}
+			      }
+			      else
+			      {
+			        para.textContent = 'Not a valid file type. Update your selection.';
+			        input.value = ""
+			        preview.appendChild(para)
+			      }
+			    }
+			}
+		function validFileType(file) {
+			var fileTypes = ['image/jpeg','image/png' ,'image/jpg']
+		  for(var i = 0; i < fileTypes.length; i++) {
+		    if(file.type === fileTypes[i]) {
+		      return true;
+		    }
+		  }
+
+		  return false;
+		}
 	</script>
 </head>
 <body>
@@ -114,7 +164,6 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="../..">Go to Site</a></li>
             <li class="active"><a href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/admin"); %>">Dashboard</a></li>
-            <li><a href="#">Profile</a></li>
             	<li><a href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/logout.jsp"); %>">Logout</a></li>
           </ul>
         </div>
@@ -159,7 +208,6 @@
 							
 							if (item.isFormField())
 							{
-								
 								String name = item.getFieldName();
 							    String value = item.getString();
 							    if(value.equalsIgnoreCase(""))
@@ -171,10 +219,6 @@
 							{
 								String fieldName = item.getFieldName();
 							    String fileName = item.getName();
-							    //System.out.println(fieldName+" "+fileName);
-							    String contentType = item.getContentType();
-							    boolean isInMemory = item.isInMemory();
-							    long sizeInBytes = item.getSize();
 							    if(fileName.equalsIgnoreCase(""))
 						    			map.put(fieldName, null);
 						    		else
@@ -244,19 +288,15 @@
 											    			e.printStackTrace();
 											    		}
 											    		String ext = FilenameUtils.getExtension(item.getName());
-											    		//System.out.println(item.getName()+"_1");
-											    		//File file = new File(path+map.get("ideal_for").trim()+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim() , "img_"+map.get("colour")+"."+ext);
 											    		File file = File.createTempFile("img", "."+ext, uploadDir);
 											    		map.put(item.getFieldName(),file.getName());
-														item.write(file);
+													item.write(file);
 											    }
 											    else
 											    {
-											    	String ext = FilenameUtils.getExtension(item.getName());
-											    	//System.out.println(item.getName()+"_2");
-											    	//File file = new File(path+map.get("ideal_for").trim()+"\\"+map.get("category").trim()+"\\"+map.get("colour").trim());
-										    		File file = File.createTempFile("img", "."+ext, uploadDir);
-										    		map.put(item.getFieldName(),file.getName());
+												    	String ext = FilenameUtils.getExtension(item.getName());
+											    		File file = File.createTempFile("img", "."+ext, uploadDir);
+											    		map.put(item.getFieldName(),file.getName());
 													item.write(file);
 											    }
 												
@@ -270,7 +310,7 @@
 										product.setIdeal_for(map.get("ideal_for").trim());
 										
 										product.setS_id(supplier.get_S_id(map.get("supplier")));
-										//product.setCat_id(Integer.parseInt(map.get("category")));
+
 										product.setSize(map.get("size").trim());
 										product.setFabric(map.get("fabric").trim());
 										product.setPrice(Double.parseDouble(map.get("price")));
@@ -432,19 +472,28 @@
 						    <div class="form-group">
 						    		<label class="col-lg-2 control-label" style="text-align: center;">Image 1 <span style="color: red;">*</span></label>
 						      	<div class="col-lg-5">
-						        		<input type="file" id="file1" accept=".png,.jpeg,.jpg" name="file1">
+						        		<input type="file" id="file1" accept=".png,.jpeg,.jpg" name="file1" onchange="updatePreview('1')">
+						      	</div>
+						      	<div class="col-lg-5 preview-1" style="border: 1px solid black">
+						      		<p>No files currently selected for upload</p>
 						      	</div>
 						    </div>
 						    <div class="form-group">
 						    		<label class="col-lg-2 control-label" style="text-align: center;">Image 2 <span style="color: red;">*</span></label>
 						      	<div class="col-lg-5">
-						        		<input type="file" id="file2" accept=".png,.jpeg,.jpg" name="file2">
+						        		<input type="file" id="file2" accept=".png,.jpeg,.jpg" name="file2" onchange="updatePreview('2')">
+						      	</div>
+						      	<div class="col-lg-5 preview-2" style="border: 1px solid black">
+						      		<p>No files currently selected for upload</p>
 						      	</div>
 						    </div>
 						    <div class="form-group">
 						    		<label class="col-lg-2 control-label" style="text-align: center;">Image 3 <span style="color: red;">*</span></label>
 						      	<div class="col-lg-5">
-						        		<input type="file" id="file3" accept=".png,.jpeg,.jpg" name="file3">
+						        		<input type="file" id="file3" accept=".png,.jpeg,.jpg" name="file3" onchange="updatePreview('3')">
+						      	</div>
+						      	<div class="col-lg-5 preview-3" style="border: 1px solid black">
+						      		<p>No files currently selected for upload</p>
 						      	</div>
 						    </div>
 						    

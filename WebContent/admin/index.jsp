@@ -45,7 +45,6 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="..">Go to Site</a></li>
             <li class="active"><a>Dashboard</a></li>
-            <li><a href="#">Profile</a></li>
             	<li><a href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/logout.jsp"); %>">Logout</a></li>
           </ul>
         </div>
