@@ -215,8 +215,8 @@
 					}
 					
 				%>
-				<button class="btn btn-link"><a href="<%="http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/admin/coupon/add" %>">Add Coupons</a></button>
-				<button class="btn btn-link"><a href="<%="http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/admin/coupon/remove" %>">Remove Coupons</a></button>
+				<a href="<%="http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/admin/coupon/add" %>"><button class="btn btn-link">Add Coupons</button></a>
+				<a href="<%="http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping/admin/coupon/remove" %>"><button class="btn btn-link">Remove Coupons</button></a>
 			  	</div>
 	      </div>
       </div>
