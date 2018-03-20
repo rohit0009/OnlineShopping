@@ -64,7 +64,7 @@ public class Coupon
 				return status;
 			}
 			
-			int res = st.executeUpdate("INSERT INTO `coupon` (`coupon_desc`, `discount`, `from_amount`, `to_amount`) VALUES ('"+coupon_desc+"', "+discount+", "+from_amount+", "+to_amount+")");
+			int res = st.executeUpdate("INSERT INTO `coupon` (`coupon_desc`, `discount`, `from_amount`, `to_amount`, `is_active`) VALUES ('"+coupon_desc+"', "+discount+", "+from_amount+", "+to_amount+", 1)");
 			if(res > 0)
 			{
 				status = "SUCCESS : Coupon added SUCESSFULLY";
@@ -83,7 +83,7 @@ public class Coupon
 		
 	}
 	
-	public HashMap<String, HashMap<String , String>> removeCoupon()
+	public HashMap<String, HashMap<String , String>> displayCoupon()
 	{
 		HashMap<String ,HashMap<String , String>> hmap = new HashMap<String , HashMap<String , String>>();
 		Statement stmt = null;
@@ -97,17 +97,19 @@ public class Coupon
 			try
 			{
 				stmt = conn.createStatement();
-				rs = stmt.executeQuery("select * from coupon where coupon_desc LIKE "+coupDesc+"");
+				rs = stmt.executeQuery("select * from coupon");
 				
 				
 				while(rs.next())
 				{
 					HashMap<String, String> internal_map = new HashMap<String , String>();
 					
-					//internal_map.put("u_id" , ""+rs.getInt("u_id"));
-					internal_map.put("discount" , rs.getString("discount"));
-					internal_map.put("from_amount" , rs.getString("from_amount"));
-					internal_map.put("to_amount" , rs.getString("to_amount"));
+					internal_map.put("coupon_id" , ""+rs.getInt("coupon_id"));
+					internal_map.put("coupon_desc" , ""+rs.getString("coupon_desc"));
+					internal_map.put("discount" , ""+rs.getInt("discount"));
+					internal_map.put("from_amount" , ""+rs.getDouble("from_amount"));
+					internal_map.put("to_amount" , ""+rs.getDouble("to_amount"));
+					internal_map.put("is_active" , ""+rs.getInt("is_active"));
 
 					counter++;
 					hmap.put(""+counter, internal_map);

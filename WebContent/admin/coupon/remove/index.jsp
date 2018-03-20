@@ -1,3 +1,5 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="osp.Coupon"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -10,6 +12,26 @@
 <link href="../../dashboard.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <title>Remove Coupons</title>
+<script>
+	function update()
+	{
+		var selected_value = $('#coup').find(":selected").attr("value");
+		if(selected_value == "")
+		{
+			$('#fRange').attr("value","");
+			$('#tRange').attr("value","");
+			$('#discount').attr("value","");
+		}
+		else
+		{
+			var attribute = selected_value.split("&&");
+			$('#fRange').attr("value",attribute[3]);
+			$('#tRange').attr("value",attribute[4]);
+			$('#discount').attr("value",attribute[2]);
+		}
+	}
+
+</script>
 </head>
 <body>
 <%
@@ -73,50 +95,75 @@
         				<div id="alert">
         					
         				</div>
-        				<form class="form-horizontal" name="addCouponForm" action="<%request.getRequestURL(); %>" method ="POST" onsubmit="return validateForm()">
+        				<form class="form-horizontal" name="addCouponForm" action="DeleteCoupon.jsp" method ="POST" onsubmit="return validateForm()">
     	  				
 	  					<fieldset>
 					    <legend>Remove Coupon</legend>
 					    <div class="col-lg-8">
 						    <div class="form-group">
-						      <label for="couponDesc" class="col-lg-3 control-label">Coupon Description</label>
-						      <div class="col-lg-9 control-label">
-						        <select class="form-control" name="coupDesc" id="coupDesc">
+						      <label for="couponDesc" class="col-lg-4 control-label">Select a Coupon<span style="color: red;">*</span></label>
+						      <div class="col-lg-8 control-label">
+						        <select class="form-control" name="coup" id="coup" onchange="update()">
 							        <option value=''>Choose an OPTION</option>
-										<option value='xs' >XS</option>
-						    			<option value='s' >S</option>
-						        		<option value='m' >M</option>
-				        				<option value='l' >L</option>
-				        				<option value='xl' >XL</option>
-				        		</select>
+							        <%
+							        		Coupon c = new Coupon();
+						    		  		HashMap<String, HashMap<String , String>> coupons = c.displayCoupon();
+						    		  		if(!(coupons.get("1") == null))
+						    		  		{
+						    		  			int counter = 1;
+						    		  			String value = "";
+						    		  			for(HashMap<String,String> coupon : coupons.values())
+						    		  			{
+												if(counter == 1)
+												{
+													counter++;
+													continue;
+												}
+												value = value + coupon.get("coupon_id").trim() + "&&";
+												value = value + coupon.get("coupon_desc").trim() + "&&";
+												value = value + coupon.get("discount").trim() + "&&";
+												value = value + coupon.get("from_amount").trim() + "&&";
+												value = value + coupon.get("to_amount").trim() + "&&";
+												value = value + coupon.get("is_active").trim();
+												if(coupon.get("is_active").equals("1"))
+												{
+													%>
+														<option value="<%=value %>"><%=coupon.get("from_amount")+" - "+coupon.get("to_amount") %></option>
+													<%
+												}
+												value = "";
+											}
+						    		  		}
+						    		  		
+							        %>
+				        			</select>
 						      </div>
 						    </div>
 						   
 						    <div class="form-group">
-						      <label for="range" class="col-lg-3 control-label">From Range</label>
-						      <div class="col-lg-9 control-label">
+						      <label for="range" class="col-lg-4 control-label">From Range</label>
+						      <div class="col-lg-8 control-label">
 						        <input type="text" class="form-control" name ="fRange" id="fRange" placeholder="From Range" disabled="true">
 						      </div>
 						    </div>
 						   
 						    <div class="form-group">
-						      <label for="range" class="col-lg-3 control-label">To Range</label>
-						      <div class="col-lg-9 control-label">
+						      <label for="range" class="col-lg-4 control-label">To Range</label>
+						      <div class="col-lg-8 control-label">
 						        <input type="text" class="form-control" name ="tRange" id="tRange" placeholder="To Range" disabled="true">
 						      </div>
 						    </div>
 						    
 						    <div class="form-group">
-						      <label for="discount" class="col-lg-3 control-label">Discount %</label>
-						      <div class="col-lg-9 control-label">
+						      <label for="discount" class="col-lg-4 control-label">Discount %</label>
+						      <div class="col-lg-8 control-label">
 						        <input type="text" class="form-control" name ="discount" id="discount" placeholder="Discount" disabled="true">
 						      </div>
 						    </div>
 						    
 						    <div class="form-group">
-						    	<div class="col-lg-12 col-lg-offset-3">
+						    	<div class="col-lg-12 col-lg-offset-4">
 						    		<button type="submit" class="btn btn-primary">Remove</button>
-						    		<button type="reset" class="btn btn-default">Cancel</button>
 						    	</div>
 						    </div>
 					    </div>
