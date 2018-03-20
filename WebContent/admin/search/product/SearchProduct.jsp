@@ -95,10 +95,32 @@
 	        			{
 	        				conn = db.connect();
 	        				Statement st = conn.createStatement();
+	        				Statement st1 = conn.createStatement();
 	        				ResultSet rs = st.executeQuery("SELECT * from product where cat_id ="+Integer.parseInt(request.getParameter("cat").trim()));
+	        				ResultSet rs1 = null;
 	        				if(rs.isBeforeFirst())
 	        				{
-	        					out.print("FOUND");
+	        					out.println("<center><p class=lead>Product List</p></center>");
+							out.println("<table class=\"table table-hover\">");
+							out.println("<thead><tr><th>Product ID</th><th>Product Name</th><th>Ideal For</th><th>Size</th><th>Fabric</th><th>Colour</th><th>Description</th><th>Brand</th><th>Supplier Name</th></tr></thead>");
+							out.println("<tbody>");
+							while(rs.next())
+							{
+								out.println("<tr>");
+								out.println("<td>"+rs.getInt("p_id")+"</td>");
+								out.println("<td>"+rs.getString("pname")+"</td>");
+								out.println("<td>"+rs.getString("ideal_for")+"</td>");
+								out.println("<td>"+rs.getString("size")+"</td>");
+								out.println("<td>"+rs.getString("fabric")+"</td>");
+								out.println("<td>"+rs.getString("color")+"</td>");
+								out.println("<td>"+rs.getString("description")+"</td>");
+								out.println("<td>"+rs.getString("brand")+"</td>");
+								rs1 = st1.executeQuery("select s_fname,s_lname from supplier where s_id = "+rs.getString("s_id"));
+								rs1.next();
+								out.println("<td>"+rs1.getString("s_fname")+" "+rs1.getString("s_lname")+"</td>");
+								out.println("</tr>");
+							}
+							out.println("</tbody></table>");
 	        				}
 	        				else
 	        				{

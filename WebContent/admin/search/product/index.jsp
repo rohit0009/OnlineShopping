@@ -38,7 +38,7 @@
 		}
 	</style>
 
-<title>Search Customer</title>
+<title>Search Product</title>
 </head>
 <body>
 <%

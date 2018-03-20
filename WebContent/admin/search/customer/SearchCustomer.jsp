@@ -104,7 +104,7 @@
 						}
 						else
 						{
-							out.println("<center>Customer Details</center>");
+							out.println("<center><p class=lead>Customer Details</p></center>");
 							out.println("<table class=\"table table-hover\">");
 							out.println("<thead><tr><th>Customer ID</th><th>First Name</th><th>Last Name</th><th>Email</th><th>Contact</th><th>Gender</th></tr></thead>");
 							out.println("<tbody>");
