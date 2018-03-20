@@ -2,7 +2,9 @@ package osp;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 
 public class Coupon
 {
@@ -11,6 +13,10 @@ public class Coupon
 	int from_amount,to_amount;
 	String status = "";
 	
+	String coupDesc = "";
+	
+	
+
 	Database db = null;
 	Connection conn = null;
 	
@@ -77,6 +83,62 @@ public class Coupon
 		
 	}
 	
+	public HashMap<String, HashMap<String , String>> removeCoupon()
+	{
+		HashMap<String ,HashMap<String , String>> hmap = new HashMap<String , HashMap<String , String>>();
+		Statement stmt = null;
+		ResultSet rs = null;
+		hmap = new HashMap<String , HashMap<String , String>>();
+		hmap.put(null, null);
+		
+		int counter = 0;
+		if(conn != null)
+		{
+			try
+			{
+				stmt = conn.createStatement();
+				rs = stmt.executeQuery("select * from coupon where coupon_desc LIKE "+coupDesc+"");
+				
+				
+				while(rs.next())
+				{
+					HashMap<String, String> internal_map = new HashMap<String , String>();
+					
+					//internal_map.put("u_id" , ""+rs.getInt("u_id"));
+					internal_map.put("discount" , rs.getString("discount"));
+					internal_map.put("from_amount" , rs.getString("from_amount"));
+					internal_map.put("to_amount" , rs.getString("to_amount"));
+
+					counter++;
+					hmap.put(""+counter, internal_map);
+				}
+				status = "OK : SUCCESS";
+				return hmap;
+			}
+			catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				db.destroy();
+				status = "ERROR : Connection not Successful";
+				return hmap;
+			}
+		}
+		else
+		{
+			db.destroy();
+			status= "ERROR : Connection not Successful";
+			return hmap;
+		}
+	}
+	
+	public String getCoupDesc() {
+		return coupDesc;
+	}
+
+	public void setCoupDesc(String coupDesc) {
+		this.coupDesc = coupDesc;
+	}
 	
 	public String getCoupon_desc() {
 		return coupon_desc;
