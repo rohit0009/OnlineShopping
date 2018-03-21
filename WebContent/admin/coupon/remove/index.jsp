@@ -13,6 +13,21 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <title>Remove Coupons</title>
 <script>
+
+	function validateForm()
+	{
+		var coup = document.getElementById("coup");
+		if(coup.value == "")
+		{
+			document.getElementById("alert").innerHTML = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>Please select a coupon to remove.</div>';
+		}
+		else
+		{
+			return true;
+		}
+		return false;
+	}
+	
 	function update()
 	{
 		var selected_value = $('#coup').find(":selected").attr("value");
@@ -114,25 +129,25 @@
 						    		  			String value = "";
 						    		  			for(HashMap<String,String> coupon : coupons.values())
 						    		  			{
-												if(counter == 1)
-												{
-													counter++;
-													continue;
+													if(counter == 1)
+													{
+														counter++;
+														continue;
+													}
+													value = value + coupon.get("coupon_id").trim() + "&&";
+													value = value + coupon.get("coupon_desc").trim() + "&&";
+													value = value + coupon.get("discount").trim() + "&&";
+													value = value + coupon.get("from_amount").trim() + "&&";
+													value = value + coupon.get("to_amount").trim() + "&&";
+													value = value + coupon.get("is_active").trim();
+													if(coupon.get("is_active").equals("1"))
+													{
+														%>
+															<option value="<%=value %>"><%=coupon.get("from_amount")+" - "+coupon.get("to_amount") %></option>
+														<%
+													}
+													value = "";
 												}
-												value = value + coupon.get("coupon_id").trim() + "&&";
-												value = value + coupon.get("coupon_desc").trim() + "&&";
-												value = value + coupon.get("discount").trim() + "&&";
-												value = value + coupon.get("from_amount").trim() + "&&";
-												value = value + coupon.get("to_amount").trim() + "&&";
-												value = value + coupon.get("is_active").trim();
-												if(coupon.get("is_active").equals("1"))
-												{
-													%>
-														<option value="<%=value %>"><%=coupon.get("from_amount")+" - "+coupon.get("to_amount") %></option>
-													<%
-												}
-												value = "";
-											}
 						    		  		}
 						    		  		
 							        %>
