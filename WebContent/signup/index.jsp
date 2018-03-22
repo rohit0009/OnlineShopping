@@ -8,15 +8,6 @@
 
     <link rel="stylesheet" type="text/css" href="../bootstrap/css/bootstrap.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<%
-	out.println(request.getServletPath());
-	if("post".equalsIgnoreCase(request.getMethod()))
-	{
-		out.println(request.getRequestURL());
-	}
-		//out.println(request.getRequestURI());
-	
-	%>
 	
 	<style>
 		@media (min-width: 1200px){
@@ -175,7 +166,7 @@
 
 	
     
-    <div class="container">
+    <div class="container"  style="margin-top: 20px;">
     <div id="alert">
     		<%
     			if(request.getMethod().equalsIgnoreCase("post"))
@@ -269,20 +260,24 @@
 	    </div>
 	    
 	    <div class="form-group">
-	      <div class="col-lg-12 col-lg-offset-2">
+	      <div class="col-lg-12 col-lg-offset-4">
 	      <div>
 	        <button type="reset" class="btn btn-default">Cancel</button>
 	        <button type="submit" class="btn btn-primary">Submit</button>
 	      </div>
 	    </div>
+	    </div>
+	    <div class="form-group">
+			<div class="col-lg-1">
+		       	<a href=".." class="btn btn-link">Back</a>
+			</div>
+		</div>
+						    
 	  </fieldset>
 	</form>
 	</div>
 	</div>
 	
-	<%
-		out.println(request.getMethod());
-	%>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="../bootstrap/js/bootstrap.min.js"></script>
 

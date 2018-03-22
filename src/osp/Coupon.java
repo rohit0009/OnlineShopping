@@ -43,8 +43,8 @@ public class Coupon
 			st = conn.createStatement();
 			st1 = conn.createStatement();
 			
-			rs = st.executeQuery("SELECT * from coupon where from_amount BETWEEN "+from_amount+" and "+to_amount);
-			rs1 = st1.executeQuery("SELECT * from coupon where to_amount BETWEEN "+from_amount+" and "+to_amount);
+			rs = st.executeQuery("SELECT * from coupon where from_amount BETWEEN "+from_amount+" and "+to_amount +" and is_active = 1");
+			rs1 = st1.executeQuery("SELECT * from coupon where to_amount BETWEEN "+from_amount+" and "+to_amount +" and is_active = 1");
 			
 			if(rs == null)
 				System.out.println("null");

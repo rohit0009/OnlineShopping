@@ -115,7 +115,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping"); %>">Online Shopping</a>
+          <a class="navbar-brand" href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping"); %>">FashionWorld</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -210,6 +210,12 @@
 						    		<button type="reset" class="btn btn-default">Cancel</button>
 						    	</div>
 						    </div>
+						    <div class="form-group">
+					    		<div class="col-lg-1">
+					        		<a href=".." class="btn btn-link">Back</a>
+						      	</div>
+						    </div>
+						    	
 					    </div>
 					  
 					  </fieldset>

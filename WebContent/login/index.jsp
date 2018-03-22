@@ -72,7 +72,7 @@
 	</script>
 </head>
 <body><br>
-	<div class="container">
+	<div class="container" style="margin-top: 20px;">
 		<div id="alert">
 			<%
 				if(request.getMethod().equalsIgnoreCase("post"))
@@ -110,7 +110,7 @@
 			<form class="form-horizontal" name="loginform" method="POST" action="<%request.getRequestURL(); %>" onsubmit="return validate()">
 				
 				<fieldset>
-			    		<legend><center>Login</center></legend>
+			    		<legend><center>Login to FashionWorld</center></legend>
 			    		<div class="form-group">
 			    			<label class="col-lg-9 lead control-label">Enter Credentials</label>
 			    		</div>
@@ -136,11 +136,17 @@
 			        		<button type="submit" class="btn btn-primary">Login</button>
 				      	</div>
 				    </div>
+				    <hr style="border-bottom:1px black solid;">
+				    <div class="form-group">
+			    		<div class="col-lg-1">
+			        		<a href=".." class="btn btn-link">Back</a>
+				      	</div>
+				    </div>
 			    	</fieldset>
 		    </form>
 		</div>
 	</div>
-	<%out.println(request.getMethod()); %>
+	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="../bootstrap/js/bootstrap.min.js"></script>
 </body>

@@ -158,7 +158,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping"); %>">Online Shopping</a>
+          <a class="navbar-brand" href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping"); %>">FashionWorld</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -190,8 +190,7 @@
         		<div id="alert">
 				<%
 					
-						//System.out.println(map);
-					out.print(request.getMethod());
+					
 					map = new HashMap<String , String>();
 					itemFactory = new DiskFileItemFactory();
 					fileUpload = new ServletFileUpload(itemFactory);

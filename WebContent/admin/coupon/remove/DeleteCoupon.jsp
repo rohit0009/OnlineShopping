@@ -23,7 +23,7 @@ import="java.sql.Statement"%>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping"); %>">Online Shopping</a>
+          <a class="navbar-brand" href="<%out.println("http://"+request.getServerName()+":"+request.getServerPort()+"/OnlineShopping"); %>">FashionWorld</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -72,7 +72,7 @@ import="java.sql.Statement"%>
         							
         							Statement st = conn.createStatement();
         							ResultSet rs = null;
-        							int res = st.executeUpdate("delete from coupon where coupon_id = " +Integer.parseInt(arr[0]));
+        							int res = st.executeUpdate("update coupon set is_active = 0 where coupon_id = " +Integer.parseInt(arr[0]));
         							if(res>0)
         							{
         								out.println("<div class=\"alert alert-dismissible alert-success\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\">&times;</button>Coupon deleted Successfully</div>");
