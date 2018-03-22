@@ -97,7 +97,7 @@ public class Coupon
 			try
 			{
 				stmt = conn.createStatement();
-				rs = stmt.executeQuery("select * from coupon");
+				rs = stmt.executeQuery("select * from coupon ORDER BY from_amount ASC");
 				
 				
 				while(rs.next())

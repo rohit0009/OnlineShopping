@@ -82,7 +82,7 @@
 					Database db = new Database();
 					conn = db.connect();
 					st = conn.createStatement();
-					rs = st.executeQuery("select * from coupon where is_active = 1");
+					rs = st.executeQuery("select * from coupon where is_active = 1 ORDER BY from_amount ASC");
 					if(!rs.isBeforeFirst())
 					{
 						out.println("<div class=\"well\"><p class=\"lead\">No Coupons Found.</p></div>");
